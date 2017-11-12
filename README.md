@@ -1,2 +1,2 @@
-# lotus-assets
-Sitecore Asset Handle to control any requests to assets that need extended control over.
+# lotus
+A collection of useful extensions to Sitecore functionality - built on top of the Sitecore Helix design principles and guidelines.
