@@ -43,6 +43,11 @@ namespace Lotus.Foundation.Assets.Structures
             }
         }
 
+        internal IEnumerable<IAssetPath> GetPaths()
+        {
+            return AssetPaths;
+        }
+
         internal IAssetPath GetPathByExtension(string extension)
         {
             var path = default(IAssetPath);
