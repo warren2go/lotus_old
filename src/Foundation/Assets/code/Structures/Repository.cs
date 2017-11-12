@@ -49,5 +49,12 @@ namespace Lotus.Foundation.Assets.Structures
             AssetPathByExtension.TryGetValue(extension, out path);
             return path;
         }
+
+        internal IAssetPath GetPathByFolder(string folder)
+        {
+            var path = default(IAssetPath);
+            AssetPathByFolder.TryGetValue(folder, out path);
+            return path;
+        }
     }
 }
