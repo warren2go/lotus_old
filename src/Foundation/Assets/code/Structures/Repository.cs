@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using Lotus.Foundation.Assets.Paths;
+using Lotus.Foundation.Assets.Paths.Folder;
+using Lotus.Foundation.Extensions;
 using Sitecore.Configuration;
 
 namespace Lotus.Foundation.Assets.Structures
@@ -22,8 +25,8 @@ namespace Lotus.Foundation.Assets.Structures
             if (pathsNode != null)
             {
                 var paths = pathsNode.ChildNodes.OfType<XmlElement>()
-                    .Select<XmlElement, IAssetPath>(new Func<XmlElement, IAssetPath>(Factory.CreateObject<IAssetPath>))
-                    .ToArray<IAssetPath>();
+                    .Select(Factory.CreateObject<IAssetPath>)
+                    .ToArray();
 
                 foreach (var path in paths)
                 {
@@ -38,6 +41,10 @@ namespace Lotus.Foundation.Assets.Structures
                     {
                         AssetPathByFolder.Add(key, path);
                     }
+                    if (key.StartsWith("file.", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        AssetPathByFolder.Add(key, path);
+                    }
                     AssetPaths.Add(path);
                 }
             }
@@ -48,18 +55,42 @@ namespace Lotus.Foundation.Assets.Structures
             return AssetPaths;
         }
 
-        internal IAssetPath GetPathByExtension(string extension)
+        internal IAssetPath GetExtensionPathByExtension(string extension)
         {
-            var path = default(IAssetPath);
-            AssetPathByExtension.TryGetValue(extension, out path);
-            return path;
+            return AssetPaths.FirstOrDefault(x => x.GetTargets().Contains(extension));
         }
 
-        internal IAssetPath GetPathByFolder(string folder)
+        internal IAssetPath GetExtensionPathByKey(string key)
         {
-            var path = default(IAssetPath);
-            AssetPathByFolder.TryGetValue(folder, out path);
-            return path;
+            return AssetPathByExtension.TryGetValueOrDefault(key);
+        }
+
+        internal IAssetPath GetFolderPathByUri(string uri)
+        {
+            foreach (var path in AssetPaths.Where(x => x.GetKey().StartsWith("folder.")))
+            {
+                foreach (var folderPath in path.GetTargets().Where(x => x.StartsWith("~/")))
+                {
+                    if (uri.StartsWith(folderPath.Replace("~/", "")))
+                    {
+                        return path;
+                    }
+                }
+                
+                foreach (var folderPath in path.GetTargets().Where(x => !x.StartsWith("~/")))
+                {
+                    if (uri.Contains(folderPath))
+                    {
+                        return path;
+                    }
+                }
+            }
+            return null;
+        }
+        
+        internal IAssetPath GetFolderPathByKey(string key)
+        {
+            return AssetPathByFolder.TryGetValueOrDefault(key);
         }
     }
 }

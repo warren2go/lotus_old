@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <!-- SYSTEM.WEBSERVER
+        This section is a ASP.NET configuration section when running in Integrated Mode on IIS7.
+    -->
+    <system.webServer>
+        <!--
+            Definition for the handler with the associated class to be invoked.
+        -->
+        <handlers>
+            <add verb="*" path="lotus_assets.ashx" type="Lotus.Foundation.Assets.Handlers.AssetsRequestHandler, Lotus.Foundation.Assets" name="Lotus.Foundation.AssetsRequestHandler" />
+        </handlers>
+    </system.webServer>
+    
+    <!-- LOG4NET
+        This section is for the added loggers.
+    -->
+    <log4net>
+        <appender name="Lotus.Foundation.Assets.Appender" type="log4net.Appender.SitecoreLogFileAppender, Sitecore.Logging">
+            <file value="$(dataFolder)/logs/Lotus.Foundation.Assets.{date}.txt" />
+            <appendToFile value="true" />
+            <layout type="log4net.Layout.PatternLayout">
+                <conversionPattern value="%4t %d{ABSOLUTE} %-5p %m%n" />
+            </layout>
+            <encoding value="utf-8" />
+        </appender>
+        <logger name="Lotus.Foundation.Assets.Logger" additivity="false">
+            <level value="INFO"/>
+            <appender-ref ref="Lotus.Foundation.Assets.Appender"/>
+        </logger>
+    </log4net>
+</<configuration>

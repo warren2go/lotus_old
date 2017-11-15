@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Lotus.Foundation.Assets.Configuration;
 using Lotus.Foundation.Assets.Paths;
 using Lotus.Foundation.Assets.Structures;
 using Sitecore.Configuration;
 
 namespace Lotus.Foundation.Assets
 {
-    internal class Global
+    internal static class Global
     {
         internal static Repository Repository;
 
@@ -21,11 +22,20 @@ namespace Lotus.Foundation.Assets
 
         internal static void Initialize()
         {
-            var configNode = Factory.GetConfigNode("/sitecore/lotus.assets");
-            Sitecore.Diagnostics.Assert.IsNotNull((object) configNode,
-                "Missing lotus.assets config node! Missing or outdated App_Config/Include/Lotus.Foundation.Assets.config?");
+            try
+            {
+                var configNode = Factory.GetConfigNode("/sitecore/lotus.assets");
+                Sitecore.Diagnostics.Assert.IsNotNull((object) configNode,
+                    "Missing lotus.assets config node! Missing or outdated App_Config/Include/Lotus.Foundation.Assets.config?");
 
-            Repository = new Repository(configNode);
+                Repository = new Repository(configNode);
+            }
+            catch (Exception exception)
+            {
+                AssetsLogger.Error("Error initializing assets", exception);
+
+                Repository = null;
+            }
         }
     }
 }

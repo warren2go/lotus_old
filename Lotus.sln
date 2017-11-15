@@ -14,13 +14,25 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "code", "code", "{EC6D89B5-5788-4287-9E6E-96D8EA207FE4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{ADE8F03B-0C2E-4680-87C3-A9FF293208F9}"
+ProjectSection(SolutionItems) = preProject
+	src\Foundation\Assets\config\Web.config.example = src\Foundation\Assets\config\Web.config.example
+EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App_Config", "App_Config", "{A80EA416-7F1B-4112-B4C8-CDB9AD1E27D1}"
+ProjectSection(SolutionItems) = preProject
+	src\Foundation\Assets\config\App_Config\RewriteRules.config.example = src\Foundation\Assets\config\App_Config\RewriteRules.config.example
+EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{4AEF624B-C06F-428F-8EB6-A72DD6D8F22A}"
 	ProjectSection(SolutionItems) = preProject
 		src\Foundation\Assets\config\App_Config\Include\Lotus.Foundation.Assets.config = src\Foundation\Assets\config\App_Config\Include\Lotus.Foundation.Assets.config
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{03ADD3DD-E6DE-4A67-9BF6-4FC32BA408D9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "code", "code", "{2744EF12-1874-4BC2-8A86-7E7196F07F4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lotus.Foundation.Extensions", "src\Foundation\Extensions\code\Lotus.Foundation.Extensions.csproj", "{A4B1C128-3A32-4760-9321-D5E65CD519B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +44,10 @@ Global
 		{D9DF2F85-F6BB-4BEF-AE30-C60709313EEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9DF2F85-F6BB-4BEF-AE30-C60709313EEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9DF2F85-F6BB-4BEF-AE30-C60709313EEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4B1C128-3A32-4760-9321-D5E65CD519B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4B1C128-3A32-4760-9321-D5E65CD519B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4B1C128-3A32-4760-9321-D5E65CD519B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4B1C128-3A32-4760-9321-D5E65CD519B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,5 +60,8 @@ Global
 		{ADE8F03B-0C2E-4680-87C3-A9FF293208F9} = {F7BC7E03-D674-4188-8237-DCB0103D6521}
 		{A80EA416-7F1B-4112-B4C8-CDB9AD1E27D1} = {ADE8F03B-0C2E-4680-87C3-A9FF293208F9}
 		{4AEF624B-C06F-428F-8EB6-A72DD6D8F22A} = {A80EA416-7F1B-4112-B4C8-CDB9AD1E27D1}
+		{03ADD3DD-E6DE-4A67-9BF6-4FC32BA408D9} = {E73999C9-1D21-43AD-ABEA-34781105EB4B}
+		{2744EF12-1874-4BC2-8A86-7E7196F07F4E} = {03ADD3DD-E6DE-4A67-9BF6-4FC32BA408D9}
+		{A4B1C128-3A32-4760-9321-D5E65CD519B4} = {2744EF12-1874-4BC2-8A86-7E7196F07F4E}
 	EndGlobalSection
 EndGlobal

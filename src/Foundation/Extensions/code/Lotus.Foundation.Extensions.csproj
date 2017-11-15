@@ -1,19 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D9DF2F85-F6BB-4BEF-AE30-C60709313EEF}</ProjectGuid>
+    <ProjectGuid>{A4B1C128-3A32-4760-9321-D5E65CD519B4}</ProjectGuid>
+    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lotus.Foundation.Assets</RootNamespace>
-    <AssemblyName>Lotus.Foundation.Assets</AssemblyName>
+    <RootNamespace>Lotus.Foundation.Extensions</RootNamespace>
+    <AssemblyName>Lotus.Foundation.Extensions</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -31,51 +33,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\..\..\lib\Sitecore-7.2-rev-140526\Sitecore.Kernel.dll</HintPath>
+    <Reference Include="Sitecore.Kernel, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\lib\Sitecore-7.2-rev-140526\Sitecore.Kernel.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.Logging">
-      <HintPath>..\..\..\..\lib\Sitecore-7.2-rev-140526\Sitecore.Logging.dll</HintPath>
+    <Reference Include="Sitecore.Logging, Version=1.2.0.30715, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\lib\Sitecore-7.2-rev-140526\Sitecore.Logging.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\AssetsLogger.cs" />
-    <Compile Include="Configuration\AssetsSettings.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="Handlers\AssetsRequestHandler.cs" />
-    <Compile Include="Paths\Extension\CSS.cs" />
-    <Compile Include="Paths\Extension\ExtensionPath.cs" />
-    <Compile Include="Paths\Extension\JS.cs" />
-    <Compile Include="Paths\Folder\FolderPath.cs" />
-    <Compile Include="Paths\Folder\JS.cs" />
-    <Compile Include="Paths\IAssetPath.cs" />
-    <Compile Include="Paths\Results\CSSResult.cs" />
-    <Compile Include="Paths\Results\ExtensionResult.cs" />
-    <Compile Include="Paths\Results\JSResult.cs" />
-    <Compile Include="Pipelines\Initialize\AssetHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resolvers\DefaultResolver.cs" />
-    <Compile Include="Resolvers\IAssetResolver.cs" />
-    <Compile Include="Structures\Repository.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Paths\Extension\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Extensions\code\Lotus.Foundation.Extensions.csproj">
-      <Project>{A4B1C128-3A32-4760-9321-D5E65CD519B4}</Project>
-      <Name>Lotus.Foundation.Extensions</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
