@@ -23,3 +23,6 @@ Thumbs.db
 *.nupkg
 # The packages folder can be ignored because of Package Restore
 packages/
+
+# Rider
+.idea/
