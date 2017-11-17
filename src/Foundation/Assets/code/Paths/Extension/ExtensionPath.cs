@@ -1,76 +1,50 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web;
-using Lotus.Foundation.Assets.Paths.Results;
+using Lotus.Foundation.Assets.Configuration;
+using Lotus.Foundation.Extensions.Regex;
 
 namespace Lotus.Foundation.Assets.Paths.Extension
 {
-    public class ExtensionPath : IAssetPath
+    public class ExtensionPath : BasePath
     {
-        public string Key { get; set; }
-        public string Targets { get; set; }
         public string FileNames { get; set; }
         public string Ignore { get; set; }
 
-        public int _expireHours;
-        public string ExpireCache
-        {
-            get { return _expireHours.ToString(); }
-            set
-            {
-                if (!string.IsNullOrEmpty(value))
-                {
-                    var time = int.Parse(value.Substring(0, value.Length - 1));
-                    var format = value.Substring(value.Length - 1);
-                    switch (format.ToLower())
-                    {
-                        default:
-                            _expireHours = time;
-                            break;
-                           
-                        case "d":
-                            _expireHours = 24 * time;
-                            break;
-                        
-                        case "m":
-                            _expireHours = (30 * 24) * time;
-                            break;
-                    }
-                }
-                else
-                {
-                    _expireHours = 0;
-                }
-            }
-        }
-        
-        public virtual string GetKey()
-        {
-            return Key;
-        }
-
-        public virtual int GetExpireCache()
-        {
-            return _expireHours;
-        }
-
-        public virtual IEnumerable<string> GetTargets()
-        {
-            return Targets.Split('|');
-        }
-        
-        public virtual IEnumerable<string> GetFileNames()
+        private IEnumerable<string> GetFileNames()
         {
             return FileNames.Split('|');
         }
-
-        public virtual IEnumerable<string> GetIgnore()
+        
+        private IEnumerable<string> GetIgnore()
         {
             return Ignore.Split('|');
         }
         
-        public virtual ExtensionResult ProcessRequest(HttpContext context)
+        public override void ProcessRequest(HttpContext context, string relativePath, string extension, int timestamp)
         {
-            return new JSResult();
+            var fileName = relativePath.ExtractPattern(AssetsSettings.Regex.FileName);
+            var fileNames = GetFileNames();
+            foreach (var allowed in fileNames)
+            {
+                if (!string.IsNullOrEmpty(allowed) && !fileName.IsMatch(allowed))
+                {
+                    context.RedirectTimeout("~/" + relativePath);
+                }
+            }
+            var ignore = GetIgnore();
+            foreach (var ignored in ignore)
+            {
+                if (!string.IsNullOrEmpty(ignored) && fileName.IsMatch(ignored))
+                {
+                    context.RedirectIgnored("~/" + relativePath);
+                }
+            }
+            if (!GetTargets().Any(x => CheckTarget(extension, x)))
+            {
+                context.RedirectTimeout("~/" + relativePath);
+            }
+            base.ProcessRequest(context, relativePath, extension, timestamp);
         }
     }
 }

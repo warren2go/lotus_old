@@ -53,20 +53,18 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Handlers\AssetsRequestHandler.cs" />
-    <Compile Include="Paths\Extension\CSS.cs" />
+    <Compile Include="Helpers\AssetsRequestHelper.cs" />
+    <Compile Include="Paths\BasePath.cs" />
     <Compile Include="Paths\Extension\ExtensionPath.cs" />
-    <Compile Include="Paths\Extension\JS.cs" />
+    <Compile Include="Paths\File\FilePath.cs" />
     <Compile Include="Paths\Folder\FolderPath.cs" />
-    <Compile Include="Paths\Folder\JS.cs" />
     <Compile Include="Paths\IAssetPath.cs" />
-    <Compile Include="Paths\Results\CSSResult.cs" />
-    <Compile Include="Paths\Results\ExtensionResult.cs" />
-    <Compile Include="Paths\Results\JSResult.cs" />
-    <Compile Include="Pipelines\Initialize\AssetHandler.cs" />
+    <Compile Include="Pipelines\Initialize\Initialize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\IAssetRepository.cs" />
     <Compile Include="Resolvers\DefaultResolver.cs" />
     <Compile Include="Resolvers\IAssetResolver.cs" />
-    <Compile Include="Structures\Repository.cs" />
+    <Compile Include="Repository\Repository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Paths\Extension\" />

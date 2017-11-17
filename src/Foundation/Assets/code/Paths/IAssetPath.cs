@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Web;
-using Lotus.Foundation.Assets.Paths.Extension;
-using Lotus.Foundation.Assets.Paths.Results;
 
 namespace Lotus.Foundation.Assets.Paths
 {
     public interface IAssetPath
     {
         string GetKey();
-        int GetExpireCache();
         IEnumerable<string> GetTargets();
-        IEnumerable<string> GetFileNames();
-        IEnumerable<string> GetIgnore();
+        int GetCacheExpiryHours();
         
-        ExtensionResult ProcessRequest(HttpContext context);
+        void ProcessRequest(HttpContext context, string relativePath, string extension, int timestamp);
+        void ProcessCache(HttpContext context);
+        void ProcessRedirects(HttpContext context);
+        void ProcessTimestamp(HttpContext context, string relativePath, string extension, int timestamp);
     }
 }

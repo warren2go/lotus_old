@@ -25,7 +25,7 @@
             <encoding value="utf-8" />
         </appender>
         <logger name="Lotus.Foundation.Assets.Logger" additivity="false">
-            <level value="INFO"/>
+            <level value="ANY"/>
             <appender-ref ref="Lotus.Foundation.Assets.Appender"/>
         </logger>
     </log4net>

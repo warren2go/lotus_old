@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Lotus.Foundation.Assets.Configuration
+﻿namespace Lotus.Foundation.Assets.Configuration
 {
     internal static class AssetsSettings
     {
@@ -26,9 +20,9 @@ namespace Lotus.Foundation.Assets.Configuration
 
         internal static class CDN
         {
-            internal static string Prefix
+            internal static string Redirect
             {
-                get { return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.CDN.Prefix", string.Empty); }
+                get { return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.CDN.Redirect", string.Empty); }
             }   
         }
 

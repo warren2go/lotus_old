@@ -4,21 +4,21 @@
 -->
 <rules>
 	<rule name="Redirect Assets Ignored JS" stopProcessing="true">
-        <match url="^-/assets/(.+)-\d{10}.js$" />
+        <match url="^-/assets/(.+?)-0000000000.js$" />
 		<conditions>
             <add input="{QUERY_STRING}" pattern="([?&amp;]{0,1}ignore=true)" negate="true" />
 		</conditions>
         <action type="Rewrite" url="{R:1}.js?ignore=true" appendQueryString="true" />
     </rule>
 	<rule name="Rewrite JS" stopProcessing="true">
-        <match url="^(js/[\w/\._-]+.js)$" />
+        <match url="^(js/[\w/\._\-]+.js)$" />
 		<conditions>
             <add input="{QUERY_STRING}" pattern="([?&amp;]{0,1}ignore=true)" negate="true" />
 		</conditions>
         <action type="Rewrite" url="-/assets/{R:1}" appendQueryString="true" />
     </rule>
 	<rule name="Redirect Assets Ignored CSS" stopProcessing="true">
-        <match url="^-/assets/(.+)-\d{10}.css$" />
+        <match url="^-/assets/(.+?)-0000000000.css$" />
 		<conditions>
             <add input="{QUERY_STRING}" pattern="([?&amp;]{0,1}ignore=true)" negate="true" />
 		</conditions>

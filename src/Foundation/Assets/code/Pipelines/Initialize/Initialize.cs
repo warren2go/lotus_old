@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sitecore.Pipelines;
+﻿using Sitecore.Pipelines;
 
 namespace Lotus.Foundation.Assets.Pipelines.Initialize
 {
-    public class AssetHandler
+    public class Initialize
     {
         public virtual void Process(PipelineArgs args)
         {

@@ -1,13 +1,13 @@
 ﻿using System;
 using log4net;
 
-namespace Lotus.Foundation.Assets.Configuration
+namespace Lotus.Foundation.Extensions.Configuration
 {
-    internal static class AssetsLogger
+    public class ExtensionsLogger
     {
-        private static string AssetsLoggerName = "Lotus.Foundation.Assets.Logger";
+        private static string ExtensionsLoggerName = "Lotus.Foundation.Extensions.Logger";
 
-        private static readonly ILog _logger = LogManager.GetLogger(AssetsLoggerName);
+        private static readonly ILog _logger = LogManager.GetLogger(ExtensionsLoggerName);
         
         public static void Debug(string message)
         {
