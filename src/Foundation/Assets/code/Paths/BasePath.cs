@@ -129,7 +129,7 @@ namespace Lotus.Foundation.Assets.Paths
             }
         }
 
-        public bool CheckTarget(string target, string pattern)
+        public virtual bool CheckTarget(string target, string pattern)
         {
             return !string.IsNullOrEmpty(pattern) && target.IsMatch(pattern);
         }
