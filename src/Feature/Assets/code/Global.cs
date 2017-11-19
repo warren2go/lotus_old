@@ -8,7 +8,7 @@
 
 using System;
 
-namespace Lotus.Foundation.Logging
+namespace Lotus.Feature.Assets
 {
     public static class Global
     {

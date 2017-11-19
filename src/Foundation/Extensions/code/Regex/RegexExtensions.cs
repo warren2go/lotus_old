@@ -12,9 +12,9 @@ namespace Lotus.Foundation.Extensions.Regex
             return RegularExpression.Match(@string, pattern).Success;
         }
         
-        public static string ReplacePattern(this string @string, string pattern, string replacement = "")
+        public static string ReplacePattern(this string @string, string pattern, object replacement = null)
         {
-            return RegularExpression.Replace(@string, pattern, replacement);
+            return RegularExpression.Replace(@string, pattern, replacement != null ? replacement.ToString() : string.Empty);
         }
         
         public static string ExtractPattern(this string @string, string pattern, int index = 1, string @default = "")

@@ -49,6 +49,23 @@ ProjectSection(SolutionItems) = preProject
 	src\Foundation\Logging\config\App_Config\Include\Lotus.Foundation.Logging.config = src\Foundation\Logging\config\App_Config\Include\Lotus.Foundation.Logging.config
 EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Feature", "Feature", "{4B40C97C-950F-42FE-B8D0-B2B1EC5D9231}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{C96AA482-B4B1-4C5D-AB96-E6239FE116F3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "code", "code", "{4EC66CAB-DB30-4A24-8176-B3385173611E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{BE709F3A-3ABD-42EC-830F-320C7B974223}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App_Config", "App_Config", "{6452DD4A-CA24-4ABB-A7C8-5D4E79EA4A50}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{779B5C80-5E2F-467C-9F73-C233921CEF92}"
+ProjectSection(SolutionItems) = preProject
+	src\Feature\Assets\config\App_Config\Include\Lotus.Feature.Assets.config = src\Feature\Assets\config\App_Config\Include\Lotus.Feature.Assets.config
+EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lotus.Feature.Assets", "src\Feature\Assets\code\Lotus.Feature.Assets.csproj", "{C73E48D0-B2A3-42F9-AF23-3A2CBD46BF6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +84,10 @@ Global
 		{65F23213-3B77-4DC2-A824-BE988400BBAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65F23213-3B77-4DC2-A824-BE988400BBAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65F23213-3B77-4DC2-A824-BE988400BBAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C73E48D0-B2A3-42F9-AF23-3A2CBD46BF6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C73E48D0-B2A3-42F9-AF23-3A2CBD46BF6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C73E48D0-B2A3-42F9-AF23-3A2CBD46BF6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C73E48D0-B2A3-42F9-AF23-3A2CBD46BF6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,5 +109,12 @@ Global
 		{1229D5B1-FC45-437D-90FB-17FE36CFF50B} = {BC7D1C22-4950-436E-BBAE-27CA816DFDF7}
 		{704C0FAE-B67C-4BA8-A19E-F95C12CBA03C} = {1229D5B1-FC45-437D-90FB-17FE36CFF50B}
 		{681B3AA1-9B62-4BE2-9D11-08807D9D6AAB} = {704C0FAE-B67C-4BA8-A19E-F95C12CBA03C}
+		{4B40C97C-950F-42FE-B8D0-B2B1EC5D9231} = {79DCF263-7F06-4AEA-BEFA-3DE4DD3D4D44}
+		{C96AA482-B4B1-4C5D-AB96-E6239FE116F3} = {4B40C97C-950F-42FE-B8D0-B2B1EC5D9231}
+		{4EC66CAB-DB30-4A24-8176-B3385173611E} = {C96AA482-B4B1-4C5D-AB96-E6239FE116F3}
+		{BE709F3A-3ABD-42EC-830F-320C7B974223} = {C96AA482-B4B1-4C5D-AB96-E6239FE116F3}
+		{6452DD4A-CA24-4ABB-A7C8-5D4E79EA4A50} = {BE709F3A-3ABD-42EC-830F-320C7B974223}
+		{779B5C80-5E2F-467C-9F73-C233921CEF92} = {6452DD4A-CA24-4ABB-A7C8-5D4E79EA4A50}
+		{C73E48D0-B2A3-42F9-AF23-3A2CBD46BF6C} = {4EC66CAB-DB30-4A24-8176-B3385173611E}
 	EndGlobalSection
 EndGlobal
