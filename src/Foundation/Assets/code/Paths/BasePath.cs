@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Web;
-using Lotus.Foundation.Assets.Configuration;
 using Lotus.Foundation.Assets.Helpers;
-using Lotus.Foundation.Extensions.Date;
+using Lotus.Foundation.Assets.Pipelines;
 using Lotus.Foundation.Extensions.Regex;
-using Lotus.Foundation.Extensions.String;
 using Lotus.Foundation.Extensions.Web;
 
 namespace Lotus.Foundation.Assets.Paths
@@ -66,49 +62,16 @@ namespace Lotus.Foundation.Assets.Paths
         public virtual void ProcessRequest(HttpContext context, string relativePath, string extension, int timestamp)
         {
             ProcessTimestamp(context, relativePath, extension, timestamp);
-            ProcessRedirects(context);
-            ProcessCache(context);
-            
-            context.WriteFile(relativePath);
-            context.End();
-        }
 
-        public virtual void ProcessCache(HttpContext context)
-        {
-            try
+            var pipelineArgs = new AssetPipelineArgs(context, this, relativePath, extension, timestamp);
+            foreach (var pipeline in Global.Pipelines)
             {
-                context.Response.Cache.SetExpires(DateTime.Now.AddHours(GetCacheExpiryHours()));
-                context.Response.Cache.SetCacheability(HttpCacheability.Public);
+                pipeline.Process(pipelineArgs);
             }
-            catch (Exception exception)
-            {
-                AssetsLogger.Error("Error handling assets caching request", exception);
-            }
-        }
 
-        public virtual void ProcessRedirects(HttpContext context)
-        {
-            var cdnRedirect = AssetsSettings.CDN.Redirect;
-            try
+            if (!context.WriteFile(relativePath))
             {
-                if (!string.IsNullOrEmpty(cdnRedirect))
-                {
-                    cdnRedirect = cdnRedirect.ReplacePattern("$scheme", context.Request.IsSecureConnection ? "https" : "http");
-
-                    var domain = context.Request.Url.Host.ExtractPattern(@"^(?:\w\.+)?((?:?<=\.)\w\.com.*)$");
-                    if (!string.IsNullOrEmpty(domain))
-                    {
-                        cdnRedirect.ReplacePattern("$domain", domain);
-                    }
-                }
-            }
-            catch (Exception exception)
-            {
-                AssetsLogger.Error("Error handling assets path request", exception);
-            }
-            if (!string.IsNullOrEmpty(cdnRedirect))
-            {
-                context.Redirect(cdnRedirect);
+                context.NotFound();
             }
         }
 
@@ -116,6 +79,11 @@ namespace Lotus.Foundation.Assets.Paths
         {
             var modified = AssetsRequestHelper.ExtractTimestampFromFile(context, relativePath);
 
+            if (timestamp <= 0)
+            {
+                context.RedirectIgnored("~/" + relativePath);
+            }
+            
             if (timestamp != modified)
             {
                 context.RedirectWithUpdate(modified, relativePath, extension);

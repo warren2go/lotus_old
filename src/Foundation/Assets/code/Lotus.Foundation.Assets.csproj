@@ -59,7 +59,13 @@
     <Compile Include="Paths\File\FilePath.cs" />
     <Compile Include="Paths\Folder\FolderPath.cs" />
     <Compile Include="Paths\IAssetPath.cs" />
+    <Compile Include="Pipelines\AssetPipelineArgs.cs" />
+    <Compile Include="Pipelines\IAssetPipeline.cs" />
     <Compile Include="Pipelines\Initialize\Initialize.cs" />
+    <Compile Include="Pipelines\Request\CachePipeline.cs" />
+    <Compile Include="Pipelines\Request\CompressPipeline.cs" />
+    <Compile Include="Pipelines\Request\HeadersPipeline.cs" />
+    <Compile Include="Pipelines\Request\RedirectPipeline.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IAssetRepository.cs" />
     <Compile Include="Resolvers\DefaultResolver.cs" />
@@ -73,6 +79,10 @@
     <ProjectReference Include="..\..\Extensions\code\Lotus.Foundation.Extensions.csproj">
       <Project>{A4B1C128-3A32-4760-9321-D5E65CD519B4}</Project>
       <Name>Lotus.Foundation.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logging\code\Lotus.Foundation.Logging.csproj">
+      <Project>{65F23213-3B77-4DC2-A824-BE988400BBAF}</Project>
+      <Name>Lotus.Foundation.Logging</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

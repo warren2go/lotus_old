@@ -22,7 +22,10 @@
         {
             internal static string Redirect
             {
-                get { return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.CDN.Redirect", string.Empty); }
+                get
+                {
+                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.CDN.Redirect", string.Empty);
+                }
             }   
         }
 
@@ -30,7 +33,10 @@
         {
             internal static int DefaultExpireHours
             {
-                get { return Sitecore.Configuration.Settings.GetIntSetting("Lotus.Foundation.Assets.Caching.DefaultExpireHours", 0); }
+                get
+                {
+                    return Sitecore.Configuration.Settings.GetIntSetting("Lotus.Foundation.Assets.Caching.DefaultExpireHours", 0);
+                }
             }
         }
         
@@ -38,23 +44,55 @@
         {
             internal static string Extension
             {
-                get { return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Regex.Extension", @"^.*?[\w._-]+(\..+)$"); }
+                get
+                {
+                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Regex.Extension", @"^.*?[\w._-]+(\..+)$");
+                }
             }
 
             internal static string FileName
             {
-                get { return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Regex.FileName", @"^.*?([\w._-]+\..+)$"); }   
+                get
+                {
+                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Regex.FileName", @"^.*?([\w._-]+\..+)$");
+                }   
             }
         
             internal static string RelativePath
             {
-                get { return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Regex.RelativePath", @"^/-/assets/(.+(?:$extension)?)$"); }   
+                get
+                {
+                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Regex.RelativePath", @"^/-/assets/(.+(?:$extension)?)$");
+                }   
             }
         
             internal static string Timestamp
             {
-                get { return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Regex.Timestamp", @"^.+-(\d{10})?(?:$extension)?$"); }
-            }   
+                get
+                {
+                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Regex.Timestamp", @"^.+-(\d{10})?(?:$extension)?$");
+                }
+            }
+
+            internal static string ParentPath
+            {
+                get
+                {
+                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Regex.ParentPath", ".*");
+                    
+                }
+            }
+        }
+
+        internal static class Compression
+        {
+            internal static string Supported
+            {
+                get
+                {
+                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Compression.Supported", string.Empty);
+                }
+            }
         }
     }
 }

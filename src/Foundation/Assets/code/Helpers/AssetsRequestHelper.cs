@@ -10,6 +10,12 @@ namespace Lotus.Foundation.Assets.Helpers
 {
     public static class AssetsRequestHelper
     {
+        public static int ExtractTimeoutFromQuerystring(HttpContext context)
+        {
+            var querystring = context.Request.Url.Query;
+            return querystring.ExtractPattern<int>(@"\btimeout=(\d+)");
+        }
+        
         public static int ExtractTimestampFromFile(HttpContext context, string path, bool relative = true)
         {
             var resolvedPath = relative ? context.Server.MapPath("~") + path : path;

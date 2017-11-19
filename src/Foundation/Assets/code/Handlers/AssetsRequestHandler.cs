@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Web;
 using Lotus.Foundation.Assets.Configuration;
 using Lotus.Foundation.Extensions.Regex;
 using Lotus.Foundation.Extensions.String;
 using Lotus.Foundation.Extensions.Web;
+using Sitecore.Diagnostics;
 
 namespace Lotus.Foundation.Assets.Handlers
 {
@@ -24,7 +26,7 @@ namespace Lotus.Foundation.Assets.Handlers
                 if (!Global.Initialized)
                 {
                     #if DEBUG
-                    AssetsLogger.Error("Error processing asset [{0}] - handler not initialized".FormatWith(context.Request.Url.AbsolutePath));
+                    Log.Debug("Error processing asset [{0}] - handler not initialized".FormatWith(context.Request.Url.AbsolutePath));
                     #endif
                     context.RedirectIgnored("~/" + relativePath);
                 }
@@ -32,7 +34,15 @@ namespace Lotus.Foundation.Assets.Handlers
                 if (!AssetsSettings.Enabled)
                 {
                     #if DEBUG
-                    AssetsLogger.Error("Error processing asset [{0}] - handler disabled".FormatWith(context.Request.Url.AbsolutePath));
+                    Global.Logger.Debug("Error processing asset [{0}] - handler disabled".FormatWith(context.Request.Url.AbsolutePath));
+                    #endif
+                    context.RedirectIgnored("~/" + relativePath);
+                }
+
+                if (!Global.Repository.Hosts.Any(x => context.Request.Url.Host.IsMatch(x)))
+                {
+                    #if DEBUG
+                    Global.Logger.Debug("Error processing asset [{0}{1}] - no matching host found".FormatWith(context.Request.Url.Host, context.Request.Url.AbsolutePath));
                     #endif
                     context.RedirectIgnored("~/" + relativePath);
                 }
@@ -41,7 +51,7 @@ namespace Lotus.Foundation.Assets.Handlers
             }
             catch (Exception exception)
             {
-                AssetsLogger.Error("Error processing asset", exception);
+                Global.Logger.Error("Error processing asset", exception);
             }
             context.NotFound();
         }

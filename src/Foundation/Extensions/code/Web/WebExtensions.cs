@@ -93,6 +93,11 @@ namespace Lotus.Foundation.Extensions.Web
         public static void Redirect(this HttpContext context, string url)
         {
             context.Response.Redirect(url);
-        }  
+        }
+
+        public static void RedirectPermanent(this HttpContext context, string url)
+        {
+            context.Response.RedirectPermanent(url);
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace Lotus.Foundation.Assets.Paths.Folder
             {
                 if (!string.IsNullOrEmpty(allowed) && !fileName.IsMatch(allowed))
                 {
-                    context.RedirectTimeout("~/" + relativePath);
+                    context.RedirectBad("~/" + relativePath);
                 }
             }
             var ignore = GetIgnore();
@@ -42,7 +42,7 @@ namespace Lotus.Foundation.Assets.Paths.Folder
             }
             if (!GetTargets().Any(x => CheckTarget(relativePath, x)))
             {
-                context.RedirectTimeout("~/" + relativePath);
+                context.RedirectBad("~/" + relativePath);
             }
             base.ProcessRequest(context, relativePath, extension, timestamp);
         }
