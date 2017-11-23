@@ -18,6 +18,14 @@
             }
         }
 
+        internal static string NotFoundUrl
+        {
+            get
+            {
+                return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.NotFoundUrl", string.Empty);
+            }
+        }
+
         internal static class CDN
         {
             internal static string Redirect
@@ -80,6 +88,14 @@
                 {
                     return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Regex.ParentPath", ".*");
                     
+                }
+            }
+
+            internal static string IgnoreQuery
+            {
+                get
+                {
+                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Regex.IgnoreQuery", "([?&amp;]?ignore=true)");
                 }
             }
         }

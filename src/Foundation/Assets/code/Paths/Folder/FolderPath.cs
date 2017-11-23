@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Lotus.Foundation.Assets.Configuration;
-using Lotus.Foundation.Extensions.Regex;
+using Lotus.Foundation.Extensions.RegularExpression;
 
 namespace Lotus.Foundation.Assets.Paths.Folder
 {
@@ -21,15 +20,15 @@ namespace Lotus.Foundation.Assets.Paths.Folder
             return Ignore.Split('|');
         }
         
-        public override void ProcessRequest(HttpContext context, string relativePath, string extension, int timestamp)
+        public override void ProcessRequest(AssetRequest request)
         {
-            var fileName = relativePath.ExtractPattern(AssetsSettings.Regex.FileName);
+            var fileName = request.RelativePath.ExtractPattern(AssetsSettings.Regex.FileName);
             var fileNames = GetFileNames();
             foreach (var allowed in fileNames)
             {
                 if (!string.IsNullOrEmpty(allowed) && !fileName.IsMatch(allowed))
                 {
-                    context.RedirectBad("~/" + relativePath);
+                    request.Context.RedirectBad("~/" + request.RelativePath);
                 }
             }
             var ignore = GetIgnore();
@@ -37,14 +36,14 @@ namespace Lotus.Foundation.Assets.Paths.Folder
             {
                 if (!string.IsNullOrEmpty(ignored) && fileName.IsMatch(ignored))
                 {
-                    context.RedirectIgnored("~/" + relativePath);
+                    request.Context.RedirectIgnored("~/" + request.RelativePath);
                 }
             }
-            if (!GetTargets().Any(x => CheckTarget(relativePath, x)))
+            if (!GetTargets().Any(x => CheckTarget(request.RelativePath, x)))
             {
-                context.RedirectBad("~/" + relativePath);
+                request.Context.RedirectBad("~/" + request.RelativePath);
             }
-            base.ProcessRequest(context, relativePath, extension, timestamp);
+            base.ProcessRequest(request);
         }
     }
 }

@@ -4,8 +4,8 @@ using System.Linq;
 using System.Xml;
 using Lotus.Foundation.Assets.Paths;
 using Lotus.Foundation.Extensions.Collections;
+using Lotus.Foundation.Extensions.Primitives;
 using Lotus.Foundation.Extensions.Serialization;
-using Lotus.Foundation.Extensions.String;
 
 namespace Lotus.Foundation.Assets.Repository
 {

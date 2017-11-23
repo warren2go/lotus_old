@@ -24,9 +24,6 @@ ProjectSection(SolutionItems) = preProject
 EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{4AEF624B-C06F-428F-8EB6-A72DD6D8F22A}"
-	ProjectSection(SolutionItems) = preProject
-		src\Foundation\Assets\config\App_Config\Include\Lotus.Foundation.Assets.config = src\Foundation\Assets\config\App_Config\Include\Lotus.Foundation.Assets.config
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{03ADD3DD-E6DE-4A67-9BF6-4FC32BA408D9}"
 EndProject
@@ -45,9 +42,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App_Config", "App_Config", "{704C0FAE-B67C-4BA8-A19E-F95C12CBA03C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{681B3AA1-9B62-4BE2-9D11-08807D9D6AAB}"
-ProjectSection(SolutionItems) = preProject
-	src\Foundation\Logging\config\App_Config\Include\Lotus.Foundation.Logging.config = src\Foundation\Logging\config\App_Config\Include\Lotus.Foundation.Logging.config
-EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Feature", "Feature", "{4B40C97C-950F-42FE-B8D0-B2B1EC5D9231}"
 EndProject
@@ -60,11 +54,62 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App_Config", "App_Config", "{6452DD4A-CA24-4ABB-A7C8-5D4E79EA4A50}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{779B5C80-5E2F-467C-9F73-C233921CEF92}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{09B27215-3579-4314-A3C7-761AF2C6A419}"
 ProjectSection(SolutionItems) = preProject
-	src\Feature\Assets\config\App_Config\Include\Lotus.Feature.Assets.config = src\Feature\Assets\config\App_Config\Include\Lotus.Feature.Assets.config
+	src\Foundation\Assets\config\App_Config\Include\Foundation\Foundation.Assets.config = src\Foundation\Assets\config\App_Config\Include\Foundation\Foundation.Assets.config
 EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lotus.Feature.Assets", "src\Feature\Assets\code\Lotus.Feature.Assets.csproj", "{C73E48D0-B2A3-42F9-AF23-3A2CBD46BF6C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{6D614AA9-7AC6-4347-BD21-CC18F3690986}"
+ProjectSection(SolutionItems) = preProject
+	src\Foundation\Logging\config\App_Config\Include\Foundation\Foundation.Logging.config = src\Foundation\Logging\config\App_Config\Include\Foundation\Foundation.Logging.config
+EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lotus.Feature.Assets", "src\Feature\Assets\code\Lotus.Feature.Assets.csproj", "{9CF8449C-1F0A-443C-B801-7D191ED18B9E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Feature", "Feature", "{0A452F94-4E51-40D9-BE00-FBE63BFE862B}"
+ProjectSection(SolutionItems) = preProject
+	src\Feature\Assets\config\App_Config\Include\Feature\Feature.Assets.config = src\Feature\Assets\config\App_Config\Include\Feature\Feature.Assets.config
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebControls", "WebControls", "{1F69FEDF-36C6-4101-B04A-FB7E297127DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "code", "code", "{DF9596AF-C7DB-4033-932E-99CDF4556DEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lotus.Foundation.WebControls", "src\Foundation\WebControls\code\Lotus.Foundation.WebControls.csproj", "{F5C3FCBC-AFD8-490E-823E-0AD7B084381D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{85F342B8-03AD-45D7-8B4E-2AEE4E99957E}"
+ProjectSection(SolutionItems) = preProject
+	src\Foundation\WebControls\config\Web.config.example = src\Foundation\WebControls\config\Web.config.example
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Caching", "Caching", "{72955615-3797-4061-AABE-8AA77658C611}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "code", "code", "{DC502596-4F3B-4AA2-AAC9-61B02AFF64EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lotus.Foundation.Caching", "src\Foundation\Caching\code\Lotus.Foundation.Caching.csproj", "{3AE78E13-5DEA-4303-8D88-FC06D9268AA0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{F9E04DDF-E136-40CE-B51D-A0263B0F4CD4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App_Config", "App_Config", "{50FBD98F-D28D-41C8-864D-CF5E9AA4E160}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{695F0371-B955-467A-B6AD-270B68A4E7D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{D26FC6C3-80D7-43A2-BE0D-321FAFFC3BC5}"
+ProjectSection(SolutionItems) = preProject
+	src\Foundation\Caching\config\App_Config\Include\Foundation\Foundation.Cache.config = src\Foundation\Caching\config\App_Config\Include\Foundation\Foundation.Cache.config
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{6EB3A6D9-2DC8-4B29-98B9-735C6B5E3CE5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App_Config", "App_Config", "{B7C7DD5C-AC34-4280-B10A-7217D70671C9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{0A4BD712-15F2-4F22-925F-F99704B00078}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{905BFDA7-7B8F-48F1-96CE-46B75359E3BA}"
+ProjectSection(SolutionItems) = preProject
+	src\Foundation\Extensions\config\App_Config\Include\Foundation\Foundation.Extensions.config = src\Foundation\Extensions\config\App_Config\Include\Foundation\Foundation.Extensions.config
+EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,10 +129,18 @@ Global
 		{65F23213-3B77-4DC2-A824-BE988400BBAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65F23213-3B77-4DC2-A824-BE988400BBAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65F23213-3B77-4DC2-A824-BE988400BBAF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C73E48D0-B2A3-42F9-AF23-3A2CBD46BF6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C73E48D0-B2A3-42F9-AF23-3A2CBD46BF6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C73E48D0-B2A3-42F9-AF23-3A2CBD46BF6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C73E48D0-B2A3-42F9-AF23-3A2CBD46BF6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CF8449C-1F0A-443C-B801-7D191ED18B9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CF8449C-1F0A-443C-B801-7D191ED18B9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CF8449C-1F0A-443C-B801-7D191ED18B9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CF8449C-1F0A-443C-B801-7D191ED18B9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5C3FCBC-AFD8-490E-823E-0AD7B084381D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5C3FCBC-AFD8-490E-823E-0AD7B084381D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5C3FCBC-AFD8-490E-823E-0AD7B084381D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5C3FCBC-AFD8-490E-823E-0AD7B084381D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AE78E13-5DEA-4303-8D88-FC06D9268AA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AE78E13-5DEA-4303-8D88-FC06D9268AA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AE78E13-5DEA-4303-8D88-FC06D9268AA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AE78E13-5DEA-4303-8D88-FC06D9268AA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -115,6 +168,24 @@ Global
 		{BE709F3A-3ABD-42EC-830F-320C7B974223} = {C96AA482-B4B1-4C5D-AB96-E6239FE116F3}
 		{6452DD4A-CA24-4ABB-A7C8-5D4E79EA4A50} = {BE709F3A-3ABD-42EC-830F-320C7B974223}
 		{779B5C80-5E2F-467C-9F73-C233921CEF92} = {6452DD4A-CA24-4ABB-A7C8-5D4E79EA4A50}
-		{C73E48D0-B2A3-42F9-AF23-3A2CBD46BF6C} = {4EC66CAB-DB30-4A24-8176-B3385173611E}
+		{09B27215-3579-4314-A3C7-761AF2C6A419} = {4AEF624B-C06F-428F-8EB6-A72DD6D8F22A}
+		{6D614AA9-7AC6-4347-BD21-CC18F3690986} = {681B3AA1-9B62-4BE2-9D11-08807D9D6AAB}
+		{9CF8449C-1F0A-443C-B801-7D191ED18B9E} = {4EC66CAB-DB30-4A24-8176-B3385173611E}
+		{0A452F94-4E51-40D9-BE00-FBE63BFE862B} = {779B5C80-5E2F-467C-9F73-C233921CEF92}
+		{1F69FEDF-36C6-4101-B04A-FB7E297127DE} = {E73999C9-1D21-43AD-ABEA-34781105EB4B}
+		{DF9596AF-C7DB-4033-932E-99CDF4556DEE} = {1F69FEDF-36C6-4101-B04A-FB7E297127DE}
+		{F5C3FCBC-AFD8-490E-823E-0AD7B084381D} = {DF9596AF-C7DB-4033-932E-99CDF4556DEE}
+		{85F342B8-03AD-45D7-8B4E-2AEE4E99957E} = {1F69FEDF-36C6-4101-B04A-FB7E297127DE}
+		{72955615-3797-4061-AABE-8AA77658C611} = {E73999C9-1D21-43AD-ABEA-34781105EB4B}
+		{DC502596-4F3B-4AA2-AAC9-61B02AFF64EF} = {72955615-3797-4061-AABE-8AA77658C611}
+		{3AE78E13-5DEA-4303-8D88-FC06D9268AA0} = {DC502596-4F3B-4AA2-AAC9-61B02AFF64EF}
+		{F9E04DDF-E136-40CE-B51D-A0263B0F4CD4} = {72955615-3797-4061-AABE-8AA77658C611}
+		{50FBD98F-D28D-41C8-864D-CF5E9AA4E160} = {F9E04DDF-E136-40CE-B51D-A0263B0F4CD4}
+		{695F0371-B955-467A-B6AD-270B68A4E7D1} = {50FBD98F-D28D-41C8-864D-CF5E9AA4E160}
+		{D26FC6C3-80D7-43A2-BE0D-321FAFFC3BC5} = {695F0371-B955-467A-B6AD-270B68A4E7D1}
+		{6EB3A6D9-2DC8-4B29-98B9-735C6B5E3CE5} = {03ADD3DD-E6DE-4A67-9BF6-4FC32BA408D9}
+		{B7C7DD5C-AC34-4280-B10A-7217D70671C9} = {6EB3A6D9-2DC8-4B29-98B9-735C6B5E3CE5}
+		{0A4BD712-15F2-4F22-925F-F99704B00078} = {B7C7DD5C-AC34-4280-B10A-7217D70671C9}
+		{905BFDA7-7B8F-48F1-96CE-46B75359E3BA} = {0A4BD712-15F2-4F22-925F-F99704B00078}
 	EndGlobalSection
 EndGlobal

@@ -12,6 +12,15 @@
         </handlers>
     </system.webServer>
     
+    <!-- SYSTEM.WEB
+        This section is a ASP.NET configuration section.
+    -->
+    <system.web>
+        <httpHandlers>
+            <add verb="*" path="lotus_assets.ashx" type="Lotus.Foundation.Assets.Handlers.AssetsRequestHandler, Lotus.Foundation.Assets" name="Lotus.Foundation.AssetsRequestHandler" />
+        </httpHandlers>
+    </system.web>
+    
     <!-- LOG4NET
         This section is for the added loggers.
     -->
@@ -25,7 +34,7 @@
             <encoding value="utf-8" />
         </appender>
         <logger name="Lotus.Foundation.Assets.Logger" additivity="false">
-            <level value="ANY"/>
+            <level value="ALL"/>
             <appender-ref ref="Lotus.Foundation.Assets.Appender"/>
         </logger>
     </log4net>

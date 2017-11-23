@@ -1,6 +1,6 @@
 ﻿using System;
 using Lotus.Foundation.Assets.Configuration;
-using Lotus.Foundation.Extensions.Regex;
+using Lotus.Foundation.Extensions.RegularExpression;
 using Lotus.Foundation.Extensions.Web;
 
 namespace Lotus.Foundation.Assets.Pipelines.Request

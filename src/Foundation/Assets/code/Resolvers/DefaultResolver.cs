@@ -1,10 +1,9 @@
-﻿using System;
-using System.Web;
+﻿using System.Web;
 using Lotus.Foundation.Assets.Helpers;
-using Lotus.Foundation.Extensions.Date;
-using Lotus.Foundation.Extensions.Regex;
-using Lotus.Foundation.Extensions.String;
+using Lotus.Foundation.Extensions.Primitives;
+using Lotus.Foundation.Extensions.RegularExpression;
 using Lotus.Foundation.Extensions.Web;
+using Sitecore.Events;
 
 namespace Lotus.Foundation.Assets.Resolvers
 {
@@ -20,11 +19,20 @@ namespace Lotus.Foundation.Assets.Resolvers
 
             if (path != null)
             {
-                path.ProcessRequest(context, relativePath, extension, timestamp);
-//                        if (!context.WriteFile(relativePath))
-//                        {
-//                            Global.Logger.Error("Error writing file to http context [{0}]".FormatWith(relativePath));
-//                        }
+                var assetRequest = AssetsRequestHelper.CreateAssetRequest(context, path, relativePath, extension, timestamp);
+                
+                Event.RaiseEvent("assets:request", new object[1]
+                {
+                    (object) assetRequest
+                });
+                
+                path.ProcessRequest(assetRequest);
+                
+                Event.RaiseEvent("assets:request:end", new object[1]
+                {
+                    (object) assetRequest
+                });
+                
                 context.End();
             }
             else

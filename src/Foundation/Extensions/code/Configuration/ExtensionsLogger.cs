@@ -1,52 +1,44 @@
 ﻿using System;
 using log4net;
+using log4net.Appender;
+using Lotus.Foundation.Logging;
 
 namespace Lotus.Foundation.Extensions.Configuration
 {
-    public class ExtensionsLogger
+    internal class ExtensionsLogger : ILotusLogger
     {
-        private static string ExtensionsLoggerName = "Lotus.Foundation.Extensions.Logger";
+        private static string LoggerName = "Lotus.Foundation.Extensions.Logger";
 
-        private static readonly ILog _logger = LogManager.GetLogger(ExtensionsLoggerName);
+        private readonly ILog _logger = LogManager.GetLogger(LoggerName);
         
-        public static void Debug(string message)
+        public ExtensionsLogger()
         {
-            _logger.Info("[Debug] " + message);
-        }
-
-        public static void Debug(string message, Exception exception)
-        {
-            _logger.Info("[Debug Exception] " + message, exception);
+            _logger.Debug("NAME: " + _logger.Logger.Name);
         }
         
-        public static void Info(string message)
+        public void Debug(string message, Exception exception = null)
         {
-            _logger.Warn("[Info] " + message);
+            _logger.Info("[Debug] " + message, exception);
         }
         
-        public static void Info(string message, Exception exception)
+        public void Info(string message, Exception exception = null)
         {
-            _logger.Info("[Info Exception] " + message, exception);
+            _logger.Info("[Info] " + message, exception);
         }
 
-        public static void Warn(string message)
+        public void Warn(string message, Exception exception = null)
         {
-            _logger.Warn("[Warn] " + message);
+            _logger.Warn("[Warn] " + message, exception);
         }
 
-        public static void Warn(string message, Exception exception)
+        public void Error(string message, Exception exception = null)
         {
-            _logger.Warn("[Warn Exception] " + message, exception);
+            _logger.Error("[Error] " + message, exception);
         }
 
-        public static void Error(string message)
+        public void Fatal(string message, Exception exception = null)
         {
-            _logger.Error("[Error] " + message);
-        }
-
-        public static void Error(string message, Exception exception)
-        {
-            _logger.Error("[Error Exception] " + message, exception);
+            _logger.Fatal("[Fatal] " + message, exception);
         }
     }
 }

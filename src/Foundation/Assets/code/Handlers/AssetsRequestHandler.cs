@@ -2,8 +2,9 @@
 using System.Linq;
 using System.Web;
 using Lotus.Foundation.Assets.Configuration;
-using Lotus.Foundation.Extensions.Regex;
-using Lotus.Foundation.Extensions.String;
+using Lotus.Foundation.Assets.Helpers;
+using Lotus.Foundation.Extensions.Primitives;
+using Lotus.Foundation.Extensions.RegularExpression;
 using Lotus.Foundation.Extensions.Web;
 using Sitecore.Diagnostics;
 
@@ -43,6 +44,18 @@ namespace Lotus.Foundation.Assets.Handlers
                 {
                     #if DEBUG
                     Global.Logger.Debug("Error processing asset [{0}{1}] - no matching host found".FormatWith(context.Request.Url.Host, context.Request.Url.AbsolutePath));
+                    #endif
+                    context.RedirectIgnored("~/" + relativePath);
+                }
+
+                var ignored = context.Request.RawUrl.ExtractPattern(AssetsSettings.Regex.IgnoreQuery);
+
+                if (!string.IsNullOrEmpty(ignored))
+                {
+                    var timestamp = AssetsRequestHelper.ExtractTimestampFromRelativePath(context, relativePath, extension);
+                    relativePath = relativePath.ReplacePattern("-{0:0000000000}".FormatWith(timestamp));
+                    #if DEBUG
+                    Global.Logger.Debug("Redirecting ignored asset {0} -> [{1}]".FormatWith(context.Request.RawUrl, relativePath));
                     #endif
                     context.RedirectIgnored("~/" + relativePath);
                 }

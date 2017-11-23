@@ -6,9 +6,14 @@ namespace Lotus.Foundation.Assets.Configuration
 {
     internal class AssetsLogger : ILotusLogger
     {
-        private static string AssetsLoggerName = "Lotus.Foundation.Assets.Logger";
+        private static string LoggerName = "Lotus.Foundation.Assets.Logger";
 
-        private readonly ILog _logger = LogManager.GetLogger(AssetsLoggerName);
+        private readonly ILog _logger = LogManager.GetLogger(LoggerName);
+
+        public AssetsLogger()
+        {
+            _logger.Debug("NAME: " + _logger.Logger.Name);
+        }
         
         public void Debug(string message, Exception exception = null)
         {

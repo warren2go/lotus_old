@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.IO;
 using System.Web;
 using Lotus.Foundation.Extensions.Configuration;
-using Lotus.Foundation.Extensions.Regex;
-using Lotus.Foundation.Extensions.String;
+using Lotus.Foundation.Extensions.Primitives;
+using Lotus.Foundation.Extensions.RegularExpression;
 
 namespace Lotus.Foundation.Extensions.Web
 {
@@ -15,13 +16,13 @@ namespace Lotus.Foundation.Extensions.Web
 
             if (relativePath.StartsWith("~"))
             {
-                ExtensionsLogger.Warn("RelativePath contains begins with webroot - stripping this {0}[{1}]".FormatWith(relativePath, contentType ?? "null"));
+                Global.Logger.Warn("RelativePath contains begins with webroot - stripping this {0}[{1}]".FormatWith(relativePath, contentType ?? "null"));
                 relativePath = relativePath.ReplacePattern(@"\~", "");
             }
             
             if (relativePath.Contains("..") || relativePath.Contains("://") || relativePath.Contains(@":\\"))
             {
-                ExtensionsLogger.Warn("RelativePath contains crawling or invalid charcters - stripping these {0}[{1}]".FormatWith(relativePath, contentType ?? "null"));
+                Global.Logger.Warn("RelativePath contains crawling or invalid charcters - stripping these {0}[{1}]".FormatWith(relativePath, contentType ?? "null"));
                 relativePath = relativePath.ReplacePattern(@"\.\.", "");
                 relativePath = relativePath.ReplacePattern("://", "");
                 relativePath = relativePath.ReplacePattern(@":\\\\", "");
@@ -62,7 +63,7 @@ namespace Lotus.Foundation.Extensions.Web
                 catch (Exception exception)
                 {
                     #if DEBUG
-                    ExtensionsLogger.Debug("Terminated request - [{0}]".FormatWith(rawUrl), exception);
+                    Global.Logger.Debug("Terminated request - [{0}]".FormatWith(rawUrl), exception);
                     #endif
                 }
             }
@@ -98,6 +99,11 @@ namespace Lotus.Foundation.Extensions.Web
         public static void RedirectPermanent(this HttpContext context, string url)
         {
             context.Response.RedirectPermanent(url);
+        }
+
+        public static void SetHeader(this NameValueCollection collection, string header, object value = null)
+        {
+            collection[header] = (value ?? string.Empty).ToString();
         }
     }
 }

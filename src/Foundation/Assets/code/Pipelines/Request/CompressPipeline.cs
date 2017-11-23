@@ -1,7 +1,7 @@
 ﻿using System.IO.Compression;
 using System.Web;
 using Lotus.Foundation.Assets.Configuration;
-using Lotus.Foundation.Extensions.Regex;
+using Lotus.Foundation.Extensions.RegularExpression;
 
 namespace Lotus.Foundation.Assets.Pipelines.Request
 {

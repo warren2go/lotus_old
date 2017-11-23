@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <!-- SYSTEM.WEB
+        This section is a ASP.NET configuration section.
+    -->
+    <system.web>
+        <pages enableEventValidation="false" validateRequest="false" controlRenderingCompatibilityVersion="3.5">
+            <controls>
+                <add tagPrefix="lo" namespace="Lotus.Foundation.WebControls.Web.UI.WebControls." assembly="Lotus.Foundation.WebControls" />
+                <add tagPrefix="lotus" namespace="Lotus.Foundation.WebControls.Web.UI.WebControls." assembly="Lotus.Foundation.WebControls" />
+            </controls>
+        </pages>
+    </system.web>
+    
+    <!-- LOG4NET
+        This section is for the added loggers.
+    -->
+    <log4net>
+        <appender name="Lotus.Foundation.WebControls.Appender" type="log4net.Appender.SitecoreLogFileAppender, Sitecore.Logging">
+            <file value="$(dataFolder)/logs/Lotus.Foundation.WebControls.{date}.txt" />
+            <appendToFile value="true" />
+            <layout type="log4net.Layout.PatternLayout">
+                <conversionPattern value="%4t %d{ABSOLUTE} %-5p %m%n" />
+            </layout>
+            <encoding value="utf-8" />
+        </appender>
+        <logger name="Lotus.Foundation.WebControls.Logger" additivity="false">
+            <level value="ALL"/>
+            <appender-ref ref="Lotus.Foundation.WebControls.Appender"/>
+        </logger>
+    </log4net>
+</<configuration>

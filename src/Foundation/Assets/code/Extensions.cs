@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Xml;
+﻿using System.Web;
 using Lotus.Foundation.Assets.Configuration;
-using Lotus.Foundation.Extensions.Casting;
-using Lotus.Foundation.Extensions.Date;
-using Lotus.Foundation.Extensions.Regex;
-using Lotus.Foundation.Extensions.String;
+using Lotus.Foundation.Extensions.Primitives;
+using Lotus.Foundation.Extensions.RegularExpression;
 using Lotus.Foundation.Extensions.Web;
-using Sitecore.Configuration;
-using Sitecore.Diagnostics;
 
 namespace Lotus.Foundation.Assets
 {

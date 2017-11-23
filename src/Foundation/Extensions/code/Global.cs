@@ -2,40 +2,51 @@
  * This file is subject to the terms and conditions defined in
  * file 'LICENSE.txt', which is part of this source code package.
  *
- * Copyright:      Warren Dawes @ RHM (warren2go.com)
+ * Copyright:      Warren Dawes (warren2go.com) @ RHM (redhotminute.com.au)
  * Date Created:   19/11/2017
  */
 
 using System;
 using System.Linq;
 using System.Xml;
+using Lotus.Foundation.Extensions.Serialization;
+using Lotus.Foundation.Logging;
+using Lotus.Foundation.Logging.Helpers;
 using Sitecore.Configuration;
 using Sitecore.Diagnostics;
 
 namespace Lotus.Foundation.Extensions
 {
-    public static class Global
+    internal static class Global
     {
-        internal static bool Initialized { get; set; }
+        internal static ILotusLogger Logger;
+        
+        internal static bool Initialized { get; private set; }
 
         internal static void Initialize()
         {
             try
             {
-                var lotusExtensions = Factory.GetConfigNode("/sitecore/lotus.extensions");
-                Sitecore.Diagnostics.Assert.IsNotNull((object) lotusExtensions,
-                    "Missing lotus.extensions config node! Missing or outdated App_Config/Include/Lotus.Foundation.Extensions.config?");
-
-//                lotusExtensions["logger"].OfType<XmlElement>()
-//                    .Select(Factory.CreateObject<ILotusLogger>)
-//                    .ToArray();
+                var nodes = Factory.GetConfigNode("/sitecore/lotus.extensions");
+                Sitecore.Diagnostics.Assert.IsNotNull((object) nodes,
+                    "Missing lotus.extensions config node! Missing or outdated App_Config/Include/Foundation/Foundation.Extensions.config?");
+                
+                Logger = LoggerHelper.CreateLoggerFromNode(nodes.ByElementName("logger"));
                 
                 Initialized = true;
             }
             catch (Exception exception)
             {
                 Log.Error("Error initializing lotus extensions", exception, typeof(Global));
+                
                 Initialized = false;
+            }
+            finally
+            {
+                if (Logger == null)
+                {
+                    Logger = new DefaultLogger();
+                }
             }
         }
     }

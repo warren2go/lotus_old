@@ -3,13 +3,19 @@ using System.Web;
 using Lotus.Foundation.Assets.Configuration;
 using Lotus.Foundation.Assets.Paths;
 using Lotus.Foundation.Extensions.Date;
-using Lotus.Foundation.Extensions.Regex;
-using Lotus.Foundation.Extensions.String;
+using Lotus.Foundation.Extensions.Primitives;
+using Lotus.Foundation.Extensions.RegularExpression;
 
 namespace Lotus.Foundation.Assets.Helpers
 {
     public static class AssetsRequestHelper
     {
+        public static bool FileExists(HttpContext context, string path, bool relative = true)
+        {
+            var resolvedPath = relative ? context.Server.MapPath("~") + path : path;
+            return File.Exists(resolvedPath);
+        }
+        
         public static int ExtractTimeoutFromQuerystring(HttpContext context)
         {
             var querystring = context.Request.Url.Query;
@@ -30,6 +36,18 @@ namespace Lotus.Foundation.Assets.Helpers
         public static IAssetPath CreatePathWithRelativePath(string relativePath)
         {
             return Global.Repository.GetFolderPathByRelativePath(relativePath) ?? Global.Repository.GetExtensionPathByExtension(Path.GetExtension(relativePath));
+        }
+
+        public static AssetRequest CreateAssetRequest(HttpContext context, IAssetPath path, string relativePath, string extension, int timestamp)
+        {
+            return new AssetRequest()
+            {
+                Context = context,
+                Path = path,
+                RelativePath = relativePath,
+                Extension =  extension,
+                Timestamp = timestamp
+            };
         }
     }
 }

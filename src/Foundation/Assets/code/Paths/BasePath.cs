@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Web;
+using Lotus.Foundation.Assets.Configuration;
 using Lotus.Foundation.Assets.Helpers;
-using Lotus.Foundation.Assets.Pipelines;
-using Lotus.Foundation.Extensions.Regex;
+using Lotus.Foundation.Extensions.RegularExpression;
 using Lotus.Foundation.Extensions.Web;
 
 namespace Lotus.Foundation.Assets.Paths
@@ -59,41 +58,44 @@ namespace Lotus.Foundation.Assets.Paths
             return _expireHours;
         }
         
-        public virtual void ProcessRequest(HttpContext context, string relativePath, string extension, int timestamp)
+        public virtual void ProcessRequest(AssetRequest request)
         {
-            ProcessTimestamp(context, relativePath, extension, timestamp);
+            ProcessTimestamp(request);
 
-            var pipelineArgs = new AssetPipelineArgs(context, this, relativePath, extension, timestamp);
             foreach (var pipeline in Global.Pipelines)
             {
-                pipeline.Process(pipelineArgs);
+                pipeline.Process(request);
             }
 
-            if (!context.WriteFile(relativePath))
+            if (!request.Context.WriteFile(request.RelativePath))
             {
-                context.NotFound();
+                if (!string.IsNullOrEmpty(AssetsSettings.NotFoundUrl))
+                {
+                    request.Context.Redirect(AssetsSettings.NotFoundUrl);
+                }
+                request.Context.NotFound();
             }
         }
 
-        public virtual void ProcessTimestamp(HttpContext context, string relativePath, string extension, int timestamp)
+        public virtual void ProcessTimestamp(AssetRequest request)
         {
-            var modified = AssetsRequestHelper.ExtractTimestampFromFile(context, relativePath);
-
-            if (timestamp <= 0)
+            if (!AssetsRequestHelper.FileExists(request.Context, request.RelativePath))
             {
-                context.RedirectIgnored("~/" + relativePath);
+                request.Context.RedirectIgnored("~/" + request.RelativePath);
             }
             
-            if (timestamp != modified)
+            var modified = AssetsRequestHelper.ExtractTimestampFromFile(request.Context, request.RelativePath);
+
+            if (request.Timestamp != modified)
             {
-                context.RedirectWithUpdate(modified, relativePath, extension);
+                request.Context.RedirectWithUpdate(modified, request.RelativePath, request.Extension);
             }
 
-            var origional = context.Request.RawUrl;
+            var origional = request.Context.Request.RawUrl;
             
             if (!string.IsNullOrEmpty(origional) && !origional.IsMatch("^/-/assets/"))
             {
-                context.RedirectWithUpdate(modified, relativePath, extension);
+                request.Context.RedirectWithUpdate(modified, request.RelativePath, request.Extension);
             }
         }
 

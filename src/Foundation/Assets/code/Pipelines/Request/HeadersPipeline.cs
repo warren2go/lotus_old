@@ -1,6 +1,4 @@
-﻿using Lotus.Foundation.Extensions.Regex;
-
-namespace Lotus.Foundation.Assets.Pipelines.Request
+﻿namespace Lotus.Foundation.Assets.Pipelines.Request
 {
     public class HeadersPipeline : IAssetPipeline
     {
@@ -14,7 +12,7 @@ namespace Lotus.Foundation.Assets.Pipelines.Request
             var headers = Global.Repository.Headers;
             foreach (var header in headers)
             {
-                args.Context.Response.Headers[header.Key] = header.Value.ReplacePattern("$timestamp", args.Timestamp);
+                args.Context.Response.Headers[header.Key] = header.Value.Replace("$timestamp", args.Timestamp.ToString("0000000000"));
             }
         }
     }

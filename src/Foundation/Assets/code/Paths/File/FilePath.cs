@@ -1,7 +1,6 @@
 ﻿using System.Linq;
-using System.Web;
 using Lotus.Foundation.Assets.Configuration;
-using Lotus.Foundation.Extensions.Regex;
+using Lotus.Foundation.Extensions.RegularExpression;
 
 namespace Lotus.Foundation.Assets.Paths.File
 {
@@ -9,14 +8,14 @@ namespace Lotus.Foundation.Assets.Paths.File
     {
         public string ParentPath { get; set; }
 
-        public override void ProcessRequest(HttpContext context, string relativePath, string extension, int timestamp)
+        public override void ProcessRequest(AssetRequest request)
         {
-            var fileName = relativePath.ExtractPattern(AssetsSettings.Regex.FileName);
+            var fileName = request.RelativePath.ExtractPattern(AssetsSettings.Regex.FileName);
             if (!GetTargets().Any(x => CheckTarget(fileName, x)))
             {
-                context.RedirectBad("~/" + relativePath);
+                request.Context.RedirectBad("~/" + request.RelativePath);
             }
-            base.ProcessRequest(context, relativePath, extension, timestamp);
+            base.ProcessRequest(request);
         }
     }
 }

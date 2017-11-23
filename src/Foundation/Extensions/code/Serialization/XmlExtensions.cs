@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using Lotus.Foundation.Extensions.Casting;
-using Lotus.Foundation.Extensions.String;
+using Lotus.Foundation.Extensions.Primitives;
 using Sitecore.Configuration;
 using Sitecore.Diagnostics;
 
