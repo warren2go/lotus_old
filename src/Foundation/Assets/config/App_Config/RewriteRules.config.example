@@ -3,29 +3,15 @@
     Definition of the redirections to force utilization of the handler.    
 -->
 <rules>
-	<rule name="Redirect Assets Ignored JS" stopProcessing="true">
-        <match url="^-/assets/(.+?)-0000000000.js$" />
+  	<rule name="Redirect Assets Ignored" stopProcessing="true">
+        <match url="^-/assets/(.+?)-0000000000.(\w+)$" />
 		<conditions>
             <add input="{QUERY_STRING}" pattern="([?&amp;]?ignore=true)" negate="true" />
 		</conditions>
-        <action type="Rewrite" url="{R:1}.js?ignore=true" appendQueryString="true" />
+        <action type="Rewrite" url="{R:1}.{R:2}?ignore=true" appendQueryString="true" />
     </rule>
-	<rule name="Rewrite JS" stopProcessing="true">
-        <match url="^(js/[\w/\._\-]+.js)$" />
-		<conditions>
-            <add input="{QUERY_STRING}" pattern="([?&amp;]?ignore=true)" negate="true" />
-		</conditions>
-        <action type="Rewrite" url="-/assets/{R:1}" appendQueryString="true" />
-    </rule>
-	<rule name="Redirect Assets Ignored CSS" stopProcessing="true">
-        <match url="^-/assets/(.+?)-0000000000.css$" />
-		<conditions>
-            <add input="{QUERY_STRING}" pattern="([?&amp;]?ignore=true)" negate="true" />
-		</conditions>
-        <action type="Rewrite" url="{R:1}.css?ignore=true" appendQueryString="true" />
-    </rule>
-	<rule name="Redirect CSS" stopProcessing="true">
-        <match url="^(css/[\w/\._-]+.css)$" />
+	<rule name="Rewrite Assets To Handler - Folder" stopProcessing="true">
+        <match url="^(resources/[\w/\._\-]+.\w+)$" />
 		<conditions>
             <add input="{QUERY_STRING}" pattern="([?&amp;]?ignore=true)" negate="true" />
 		</conditions>

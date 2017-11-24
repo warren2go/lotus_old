@@ -5,13 +5,16 @@ using System.Web;
 using Lotus.Foundation.Extensions.Configuration;
 using Lotus.Foundation.Extensions.Primitives;
 using Lotus.Foundation.Extensions.RegularExpression;
+using Sitecore.Diagnostics;
 
 namespace Lotus.Foundation.Extensions.Web
 {
     public static class WebExtensions
     {
-      public static bool WriteFile(this HttpContext context, string relativePath, string contentType = null)
+        public static bool WriteFile(this HttpContextBase context, string relativePath, string contentType = null)
         {
+            Assert.ArgumentNotNull((object) relativePath, nameof (relativePath));
+            
             var webRoot = context.Server.MapPath("~");
 
             if (relativePath.StartsWith("~"))
@@ -27,18 +30,13 @@ namespace Lotus.Foundation.Extensions.Web
                 relativePath = relativePath.ReplacePattern("://", "");
                 relativePath = relativePath.ReplacePattern(@":\\\\", "");
             }
-            
-            if (File.Exists(webRoot + relativePath))
-            {
-                using (var fileStream = File.Open(webRoot + relativePath, FileMode.Open))
-                {
-                    fileStream.CopyTo(context.Response.OutputStream);
-                }
 
-                if (!string.IsNullOrEmpty(relativePath))
-                {
-                    context.Response.ContentType = contentType ?? MimeMapping.GetMimeMapping(relativePath);   
-                }
+            var path = webRoot + relativePath;
+            
+            if (File.Exists(path))
+            {
+                context.Response.ContentType = contentType ?? MimeMapping.GetMimeMapping(path);
+                context.Response.TransmitFile(path);
                 return true;
             }
             else
@@ -47,7 +45,7 @@ namespace Lotus.Foundation.Extensions.Web
             }
         }
         
-        public static void End(this HttpContext context, bool abortThread = true)
+        public static void End(this HttpContextBase context, bool abortThread = true)
         {
             if (abortThread)
             {
@@ -69,7 +67,7 @@ namespace Lotus.Foundation.Extensions.Web
             }
         }
         
-        public static void NotFound(this HttpContext context, string status = "404 Not Found", bool endResponse = true)
+        public static void NotFound(this HttpContextBase context, string status = "404 Not Found", bool endResponse = true)
         {
             context.Response.StatusCode = 404;
             context.Response.Status = status;
@@ -80,7 +78,7 @@ namespace Lotus.Foundation.Extensions.Web
             }
         }
 
-        public static void InternalServerError(this HttpContext context, string status = "500 Internal Server Error", bool endResponse = true)
+        public static void InternalServerError(this HttpContextBase context, string status = "500 Internal Server Error", bool endResponse = true)
         {
             context.Response.StatusCode = 500;
             context.Response.Status = status;
@@ -91,18 +89,19 @@ namespace Lotus.Foundation.Extensions.Web
             }
         }
 
-        public static void Redirect(this HttpContext context, string url)
+        public static void Redirect(this HttpContextBase context, string url)
         {
             context.Response.Redirect(url);
         }
 
-        public static void RedirectPermanent(this HttpContext context, string url)
+        public static void RedirectPermanent(this HttpContextBase context, string url)
         {
             context.Response.RedirectPermanent(url);
         }
 
         public static void SetHeader(this NameValueCollection collection, string header, object value = null)
         {
+            Assert.ArgumentNotNull((object) header, nameof (header));
             collection[header] = (value ?? string.Empty).ToString();
         }
     }

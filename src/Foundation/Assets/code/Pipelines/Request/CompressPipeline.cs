@@ -30,7 +30,7 @@ namespace Lotus.Foundation.Assets.Pipelines.Request
             }
         }
 
-        private void SetCompressionFilter(HttpContext context, string compression)
+        private void SetCompressionFilter(HttpContextBase context, string compression)
         {
             context.Response.Headers["Vary"] = "Accept-Encoding";
             

@@ -8,22 +8,31 @@ namespace Lotus.Foundation.Assets
 {
     public static class Extensions
     {
-        public static void RedirectBad(this HttpContext context, string url)
+        public static void RedirectBad(this HttpContextBase context, string url)
         {
             context.RedirectIgnored(url);
         }
 
-        public static void RedirectIgnored(this HttpContext context, string url)
+        public static void RedirectIgnored(this HttpContextBase context, string url)
         {
+            var existingQuery = context.Request.Url.Query;
             if (AssetsSettings.IgnoreType.IsMatch("^querystring$"))
             {
-                if (!url.Contains("?"))
+                if (string.IsNullOrEmpty(existingQuery))
                 {
-                    url += "?ignore=true";
+                    existingQuery += "?ignore=true";
                 }
                 else
                 {
-                    url += "&ignore=true";
+                    var ignore = existingQuery.ExtractPattern(AssetsSettings.Regex.IgnoreQuery);
+                    if (string.IsNullOrEmpty(ignore))
+                    {
+                        existingQuery += "&ignore=true";
+                    }
+                    else
+                    {
+                        existingQuery.Replace(ignore, "&ignore=true");
+                    }
                 }
             }
             if (AssetsSettings.IgnoreType.IsMatch("^timestamp$"))
@@ -38,12 +47,15 @@ namespace Lotus.Foundation.Assets
                     url = url.ReplacePattern(extension.Escape(), "-{0}{1}".FormatWith("0000000000", extension));
                 }
             }
-            context.RedirectPermanent(url);
+            context.RedirectPermanent(url + existingQuery);
         }
         
-        public static void RedirectWithUpdate(this HttpContext context, int timestamp, string relativePath, string extension)
+        public static void RedirectWithUpdate(this HttpContextBase context, int timestamp, string relativePath, string extension)
         {
-            context.RedirectPermanent("~/-/assets/{0}".FormatWith(relativePath.ReplacePattern(extension.Escape(), "-{0:0000000000}{1}".FormatWith(timestamp, extension))));
+            var url = "~/-/assets/{0}".FormatWith(relativePath.ReplacePattern(extension.Escape(),
+                "-{0:0000000000}{1}".FormatWith(timestamp, extension)));
+            var query = context.Request.Url.Query;
+            context.RedirectPermanent(url + query);
         }
     }
 }

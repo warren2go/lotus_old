@@ -10,25 +10,25 @@ namespace Lotus.Foundation.Assets.Helpers
 {
     public static class AssetsRequestHelper
     {
-        public static bool FileExists(HttpContext context, string path, bool relative = true)
+        public static bool FileExists(HttpContextBase context, string path, bool relative = true)
         {
             var resolvedPath = relative ? context.Server.MapPath("~") + path : path;
             return File.Exists(resolvedPath);
         }
         
-        public static int ExtractTimeoutFromQuerystring(HttpContext context)
+        public static int ExtractTimeoutFromQuerystring(HttpContextBase context)
         {
             var querystring = context.Request.Url.Query;
             return querystring.ExtractPattern<int>(@"\btimeout=(\d+)");
         }
         
-        public static int ExtractTimestampFromFile(HttpContext context, string path, bool relative = true)
+        public static int ExtractTimestampFromFile(HttpContextBase context, string path, bool relative = true)
         {
             var resolvedPath = relative ? context.Server.MapPath("~") + path : path;
             return File.Exists(resolvedPath) ? new FileInfo(resolvedPath).LastAccessTimeUtc.ToUnixTimestamp() : 0;
         }
         
-        public static int ExtractTimestampFromRelativePath(HttpContext context, string relativePath, string extension)
+        public static int ExtractTimestampFromRelativePath(HttpContextBase context, string relativePath, string extension)
         {
             return relativePath.ExtractPattern<int>(AssetsSettings.Regex.Timestamp.Replace("$extension", extension.Escape()));
         }
@@ -38,7 +38,7 @@ namespace Lotus.Foundation.Assets.Helpers
             return Global.Repository.GetFolderPathByRelativePath(relativePath) ?? Global.Repository.GetExtensionPathByExtension(Path.GetExtension(relativePath));
         }
 
-        public static AssetRequest CreateAssetRequest(HttpContext context, IAssetPath path, string relativePath, string extension, int timestamp)
+        public static AssetRequest CreateAssetRequest(HttpContextBase context, IAssetPath path, string relativePath, string extension, int timestamp)
         {
             return new AssetRequest()
             {

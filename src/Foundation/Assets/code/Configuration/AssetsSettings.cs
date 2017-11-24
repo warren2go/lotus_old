@@ -10,6 +10,14 @@
             }
         }
 
+        internal static bool Strict
+        {
+            get
+            {
+                return Sitecore.Configuration.Settings.GetBoolSetting("Lotus.Foundation.Assets.Strict", false);
+            }
+        }
+
         internal static string IgnoreType
         {
             get
@@ -95,7 +103,17 @@
             {
                 get
                 {
-                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Regex.IgnoreQuery", "([?&amp;]?ignore=true)");
+                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Regex.IgnoreQuery", @"([?&amp;]?ignore=\w+)");
+                }
+            }
+
+            internal static string BlockedQuery
+            {
+                get
+                {
+                    //built from: https://www.iis.net/downloads/community/2011/05/dynamic-image-resizing-module-v3
+                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Regex.BlockedQuery",
+                        @"[?&amp;]?((?:w|width|h|height|mw|maxwidth|mh|maxheight|rotate|crop|bgcolor|stretch|scale|flip|sourceflip|paddingwidth|borderwidth|format|colors|frame|page)=\w+)");
                 }
             }
         }

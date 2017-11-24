@@ -60,6 +60,7 @@ namespace Lotus.Foundation.Assets.Paths
         
         public virtual void ProcessRequest(AssetRequest request)
         {
+            ProcessFile(request);
             ProcessTimestamp(request);
 
             foreach (var pipeline in Global.Pipelines)
@@ -77,26 +78,35 @@ namespace Lotus.Foundation.Assets.Paths
             }
         }
 
-        public virtual void ProcessTimestamp(AssetRequest request)
+        public virtual bool ProcessFile(AssetRequest request)
         {
             if (!AssetsRequestHelper.FileExists(request.Context, request.RelativePath))
             {
                 request.Context.RedirectIgnored("~/" + request.RelativePath);
             }
-            
+            return true;
+        }
+        
+        public virtual void ProcessTimestamp(AssetRequest request)
+        {
             var modified = AssetsRequestHelper.ExtractTimestampFromFile(request.Context, request.RelativePath);
-
-            if (request.Timestamp != modified)
-            {
-                request.Context.RedirectWithUpdate(modified, request.RelativePath, request.Extension);
-            }
-
-            var origional = request.Context.Request.RawUrl;
             
-            if (!string.IsNullOrEmpty(origional) && !origional.IsMatch("^/-/assets/"))
+            if (AssetsSettings.Strict)
             {
-                request.Context.RedirectWithUpdate(modified, request.RelativePath, request.Extension);
+                if (request.Timestamp != modified)
+                {
+                    request.Context.RedirectWithUpdate(modified, request.RelativePath, request.Extension);
+                }
+                
+                var origional = request.Context.Request.RawUrl;
+            
+                if (!string.IsNullOrEmpty(origional) && !origional.IsMatch("^/-/assets/"))
+                {
+                    request.Context.RedirectWithUpdate(modified, request.RelativePath, request.Extension);
+                }
             }
+
+            request.Timestamp = modified;
         }
 
         public virtual bool CheckTarget(string target, string pattern)

@@ -7,8 +7,9 @@ namespace Lotus.Foundation.Assets.Paths
         string GetKey();
         IEnumerable<string> GetTargets();
         int GetCacheExpiryHours();
-        
+
         void ProcessRequest(AssetRequest request);
+        bool ProcessFile(AssetRequest request);
         void ProcessTimestamp(AssetRequest request);
     }
 }

@@ -19,6 +19,13 @@ namespace Lotus.Foundation.Assets.Handlers
 
         public void ProcessRequest(HttpContext context)
         {
+            Assert.IsNotNull((object)context, nameof(context));
+            ProcessRequest((HttpContextBase) new HttpContextWrapper(context));
+        }
+
+        private void ProcessRequest(HttpContextBase context)
+        {
+            Assert.ArgumentNotNull((object) context, nameof (context));
             try
             {
                 var extension = context.Request.Url.AbsolutePath.ExtractPattern(AssetsSettings.Regex.Extension);

@@ -1,8 +1,10 @@
-﻿namespace Lotus.Foundation.Extensions.Primitives
+﻿using System.Linq;
+
+namespace Lotus.Foundation.Extensions.Primitives
 {
     public static class StringExtensions
     {
-        private static readonly string[] Escapable = { @".", @"+", @"*", @"^", @"?",  @"$" };
+        private static readonly string[] Escapable = { @".|\.", @"+|\+", @"*|\*", @"^|\^", @"?|\?",  @"$|\$", @"&|&amp;" };
         
         public static string SurroundsWith(this string @string, string with)
         {
@@ -18,7 +20,12 @@
         {
             foreach (var escape in Escapable)
             {
-                @string = @string.Replace(escape, @"\{0}".FormatWith(escape));
+                var seek = escape.Split('|').FirstOrDefault();
+                var replace = escape.Split('|').LastOrDefault();
+                if (!string.IsNullOrEmpty(seek) && !string.IsNullOrEmpty(replace))
+                {
+                    @string = @string.Replace(seek, replace);   
+                }
             }
             return @string;
         }

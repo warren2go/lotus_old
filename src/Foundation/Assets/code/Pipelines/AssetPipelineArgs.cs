@@ -5,7 +5,7 @@ namespace Lotus.Foundation.Assets.Pipelines
 {
     public class AssetPipelineArgs
     {
-        public HttpContext Context { get; set; }
+        public HttpContextBase Context { get; set; }
         public IAssetPath Path { get; set; }
         public string RelativePath { get; set; }
         public string Extension { get; set; }
