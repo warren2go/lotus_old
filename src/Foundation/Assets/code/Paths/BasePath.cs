@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Web;
 using Lotus.Foundation.Assets.Configuration;
 using Lotus.Foundation.Assets.Helpers;
+using Lotus.Foundation.Extensions.Collections;
 using Lotus.Foundation.Extensions.RegularExpression;
 using Lotus.Foundation.Extensions.Web;
 
@@ -50,7 +52,7 @@ namespace Lotus.Foundation.Assets.Paths
 
         public virtual IEnumerable<string> GetTargets()
         {
-            return Targets.Split(':');
+            return Targets.Split('|');
         }
 
         public virtual int GetCacheExpiryHours()
@@ -68,7 +70,9 @@ namespace Lotus.Foundation.Assets.Paths
                 pipeline.Process(request);
             }
 
-            if (!request.Context.WriteFile(request.RelativePath))
+            var mime = Global.Repository.MimeMapping.TryGetValueOrDefault(request.Extension);
+
+            if (!request.Context.WriteFile(request.RelativePath, mime))
             {
                 if (!string.IsNullOrEmpty(AssetsSettings.NotFoundUrl))
                 {

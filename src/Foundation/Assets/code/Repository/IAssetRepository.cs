@@ -8,12 +8,14 @@ namespace Lotus.Foundation.Assets.Repository
     {
         IList<string> Hosts { get; set; }
         IDictionary<string, string> Headers { get; set; }
+        IDictionary<string, string> MimeMapping { get; set; }
         IList<IAssetPath> Paths { get; set; }
         IDictionary<string, IAssetPath> PathByExtension { get; set; }
         IDictionary<string, IAssetPath> PathByFolder { get; set; }
         IDictionary<string, IAssetPath> PathByFileName { get; set; }
         
         void MapHost(XmlNode hostNode);
+        void MapMime(XmlNode mimeNode);
         void MapHeader(XmlNode headerNode);
         void MapPath(XmlNode pathNode);
 

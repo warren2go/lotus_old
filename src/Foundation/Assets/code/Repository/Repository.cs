@@ -14,6 +14,7 @@ namespace Lotus.Foundation.Assets.Repository
         public IList<string> Hosts { get; set; }
         public IDictionary<string, string> Headers { get; set; }
         public IList<IAssetPath> Paths { get; set; }
+        public IDictionary<string, string> MimeMapping { get; set; }
         public IDictionary<string, IAssetPath> PathByExtension { get; set; }
         public IDictionary<string, IAssetPath> PathByFolder { get; set; }
         public IDictionary<string, IAssetPath> PathByFileName { get; set; }
@@ -22,6 +23,7 @@ namespace Lotus.Foundation.Assets.Repository
         {
             Hosts = new List<string>();
             Headers = new Dictionary<string, string>();
+            MimeMapping = new Dictionary<string, string>();
             Paths = new List<IAssetPath>();
             PathByExtension = new Dictionary<string, IAssetPath>();
             PathByFolder = new Dictionary<string, IAssetPath>();
@@ -33,11 +35,27 @@ namespace Lotus.Foundation.Assets.Repository
             Sitecore.Diagnostics.Assert.IsNotNull((object) hostNode,
                 "Bad host node detected in lotus.assets.repository! Check your App_Config/Include/Lotus.Foundation.Assets.config?");
 
-            var value = hostNode.ByElementName("value").CastFromInnerText<string>();
-            
-            Hosts.Add(value);
+            var host = hostNode.CastFromInnerText<string>();
+            if (!string.IsNullOrEmpty(host))
+            {
+                Hosts.Add(host);
+            }
         }
 
+        public void MapMime(XmlNode mimeNode)
+        {
+            Sitecore.Diagnostics.Assert.IsNotNull((object) mimeNode,
+                "Bad host node detected in lotus.assets.repository! Check your App_Config/Include/Lotus.Foundation.Assets.config?");
+
+            var extension = mimeNode.ByAttributeName<string>("extension");
+            var type = mimeNode.ByAttributeName<string>("type");
+
+            if (!string.IsNullOrEmpty(extension) && !string.IsNullOrEmpty(type))
+            {
+                MimeMapping.Add(extension, type);
+            }
+        }
+        
         public void MapHeader(XmlNode headerNode)
         {
             Sitecore.Diagnostics.Assert.IsNotNull((object) headerNode,
@@ -55,7 +73,6 @@ namespace Lotus.Foundation.Assets.Repository
                 "Bad path node detected in lotus.assets.repository! Check your App_Config/Include/Lotus.Foundation.Assets.config?");
             
             var path = pathNode.ToObject<IAssetPath>();
-            
             var key = path.GetKey();
             
             if (string.IsNullOrEmpty(key))
@@ -111,20 +128,14 @@ namespace Lotus.Foundation.Assets.Repository
         {
             foreach (var path in Paths.Where(x => x.GetKey().StartsWith("folder.")))
             {
-                foreach (var folderPath in path.GetTargets().Where(x => x.StartsWith("~/")))
+                if (path.GetTargets().Where(x => x.StartsWith("~/")).Any(folderPath => relativePath.StartsWith(folderPath.Replace("~/", ""))))
                 {
-                    if (relativePath.StartsWith(folderPath.Replace("~/", "")))
-                    {
-                        return path;
-                    }
+                    return path;
                 }
-                
-                foreach (var folderPath in path.GetTargets().Where(x => !x.StartsWith("~/")))
+
+                if (path.GetTargets().Where(x => !x.StartsWith("~/")).Any(folderPath => relativePath.Contains(folderPath)))
                 {
-                    if (relativePath.Contains(folderPath))
-                    {
-                        return path;
-                    }
+                    return path;
                 }
             }
             return null;

@@ -15,7 +15,7 @@ namespace Lotus.Foundation.Assets.Resolvers
             return AssetsRequestHelper.CreatePathWithRelativePath(relativePath);
         }
         
-        public AssetRequest GetAssetRequest(HttpContextBase context, IAssetPath path, string relativePath, string extension, int timestamp)
+        public AssetRequest GenerateAssetRequest(HttpContextBase context, IAssetPath path, string relativePath, string extension, int timestamp)
         {
             return AssetsRequestHelper.CreateAssetRequest(context, path, relativePath, extension, timestamp);
         }
@@ -30,7 +30,7 @@ namespace Lotus.Foundation.Assets.Resolvers
 
             if (path != null)
             {
-                var assetRequest = GetAssetRequest(context, path, relativePath, extension, timestamp);
+                var assetRequest = GenerateAssetRequest(context, path, relativePath, extension, timestamp);
                 
                 Event.RaiseEvent("assets:request", new object[1]
                 {

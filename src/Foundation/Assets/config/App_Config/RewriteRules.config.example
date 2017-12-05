@@ -3,16 +3,18 @@
     Definition of the redirections to force utilization of the handler.    
 -->
 <rules>
-  	<rule name="Redirect Assets Ignored" stopProcessing="true">
-        <match url="^-/assets/(.+?)-0000000000.(\w+)$" />
+	<rule name="Rewrite Assets To Handler - Resources Folder" stopProcessing="true">
+        <match url="^(resources/[\w/\._\-]+\.\w+)$" />
 		<conditions>
+		    <add input="{HTTP_HOST}" pattern=".*" />
             <add input="{QUERY_STRING}" pattern="([?&amp;]?ignore=true)" negate="true" />
 		</conditions>
-        <action type="Rewrite" url="{R:1}.{R:2}?ignore=true" appendQueryString="true" />
+        <action type="Rewrite" url="-/assets/{R:1}" appendQueryString="true" />
     </rule>
-	<rule name="Rewrite Assets To Handler - Folder" stopProcessing="true">
-        <match url="^(resources/[\w/\._\-]+.\w+)$" />
+	<rule name="Rewrite Assets To Handler - Images Folder" stopProcessing="true">
+        <match url="^(images/[\w/\._\-]+\.\w+)$" />
 		<conditions>
+		    <add input="{HTTP_HOST}" pattern=".*" />
             <add input="{QUERY_STRING}" pattern="([?&amp;]?ignore=true)" negate="true" />
 		</conditions>
         <action type="Rewrite" url="-/assets/{R:1}" appendQueryString="true" />

@@ -6,6 +6,7 @@ using Lotus.Foundation.Extensions.Casting;
 using Lotus.Foundation.Extensions.Primitives;
 using Sitecore.Configuration;
 using Sitecore.Diagnostics;
+using Sitecore.Xml;
 
 namespace Lotus.Foundation.Extensions.Serialization
 {
@@ -43,6 +44,37 @@ namespace Lotus.Foundation.Extensions.Serialization
             {
                 Log.Error("Error getting element by name [{0}]".FormatWith(elementName), exception, typeof(XmlExtensions));
                 return null;
+            }
+        }
+
+        public static string ByAttributeName(this XmlNode node, string attributeName, string defaultValue = null)
+        {
+            try
+            {
+                if (node.Attributes == null)
+                    return defaultValue;
+                return XmlUtil.GetAttribute(attributeName, node, defaultValue ?? string.Empty);
+            }
+            catch (Exception exception)
+            {
+                Log.Error("Error getting attribute by name [{0}]".FormatWith(attributeName), exception, typeof(XmlExtensions));
+                return defaultValue;
+            }
+        }
+        
+        public static T ByAttributeName<T>(this XmlNode node, string attributeName, T defaultValue = default(T))
+        {
+            try
+            {
+                if (node.Attributes == null)
+                    return defaultValue;
+                var value = XmlUtil.GetAttribute(attributeName, node, string.Empty);;
+                return !string.IsNullOrEmpty(value) ? value.CastTo<T>() : defaultValue;
+            }
+            catch (Exception exception)
+            {
+                Log.Error("Error getting attribute by name and casting [{0} as {1}]".FormatWith(attributeName, typeof(T)), exception, typeof(XmlExtensions));
+                return defaultValue;
             }
         }
         
