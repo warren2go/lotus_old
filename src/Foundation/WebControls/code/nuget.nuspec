@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <version>1.0.0</version>
+    <authors>Warren Dawes (contact@warren2go.com)</authors>
+    <owners>Warren Dawes (contact@warren2go.com)</owners>
+    <id>Lotus.Foundation.WebControls</id>
+    <title>Lotus.Foundation.WebControls</title>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>WebControls that are used within the Lotus framework for Sitecore. Wiki: https://lotus.warren2go.com/</description>
+    <copyright>Copyright Warren Dawes 2018</copyright>
+    <dependencies>
+		<dependency id="Lotus.Foundation.Logging" version="1.0.0" />
+		<dependency id="Newtonsoft.Json" version="6.0.4" />
+      </dependencies>
+  </metadata>
+  <files>
+    <file src="src\Foundation\Assets\code\bin\Release\Lotus.Foundation.WebControls.dll" target="lib\net45\Lotus.Foundation.WebControls.dll" />
+  </files>
+</package>

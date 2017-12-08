@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <version>1.0.0</version>
+    <authors>Warren Dawes (contact@warren2go.com)</authors>
+    <owners>Warren Dawes (contact@warren2go.com)</owners>
+    <id>Lotus.Foundation.Extensions</id>
+    <title>Lotus.Foundation.Extensions</title>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Various extensions used throughout the Lotus framework for Sitecore. Wiki: https://lotus.warren2go.com/</description>
+    <copyright>Copyright Warren Dawes 2018</copyright>
+    <dependencies>
+		<dependency id="Lotus.Foundation.Logging" version="1.0.0" />
+		<dependency id="Newtonsoft.Json" version="6.0.4" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="src\Foundation\Assets\code\bin\Release\Lotus.Foundation.Extensions.dll" target="lib\net45\Lotus.Foundation.Extensions.dll" />
+  </files>
+</package>
