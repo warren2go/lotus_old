@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
@@ -19,6 +20,16 @@ namespace Lotus.Foundation.Extensions.RegularExpression
         public static string ExtractPattern(this string @string, string pattern, int index = 1, string @default = "")
         {
             return Regex.Match(@string, pattern).GetValueFromMatch(index, @default);
+        }
+        
+        public static IEnumerable<string> ExtractPatterns(this string @string, string pattern)
+        {
+            return Regex.Match(@string, pattern).GetValuesFromMatch();
+        }
+        
+        public static IDictionary<int, string> ExtractPatternsWithIndexes(this string @string, string pattern)
+        {
+            return Regex.Match(@string, pattern).GetValuesFromMatchWithIndexes();
         }
         
         public static T ExtractPattern<T>(this string @string, string pattern, int index = 1, string @default = "")
@@ -46,6 +57,40 @@ namespace Lotus.Foundation.Extensions.RegularExpression
                 index = match.Groups.Count - index;
             }
             return match.Success && index < match.Groups.Count ? match.Groups[index].Value : @default;
+        }
+        
+        public static IEnumerable<string> GetValuesFromMatch(this Match match)
+        {
+            var values = new List<string>();
+            if (match.Success)
+            {
+                for (int i = 1; i < match.Groups.Count; i++)
+                {
+                    var value = match.Groups[i].Value;
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        values.Add(value);   
+                    }
+                }
+            }
+            return values;
+        }
+        
+        public static IDictionary<int, string> GetValuesFromMatchWithIndexes(this Match match)
+        {
+            var values = new Dictionary<int, string>();
+            if (match.Success)
+            {
+                for (int i = 1; i < match.Groups.Count; i++)
+                {
+                    var value = match.Groups[i].Value;
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        values.Add(i, value);   
+                    }
+                }
+            }
+            return values;
         }
     }
 }

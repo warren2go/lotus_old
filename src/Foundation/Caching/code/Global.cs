@@ -22,7 +22,7 @@ namespace Lotus.Foundation.Caching
                 Sitecore.Diagnostics.Assert.IsNotNull((object) nodes,
                     "Missing lotus.caching config node! Missing or outdated App_Config/Include/Foundation/Foundation.Caching.config?");
                 
-                Logger = LoggerHelper.CreateLoggerFromNode(nodes.ByElementName("logger"));
+                Logger = LoggerHelper.CreateLoggerFromNode(nodes.GetChildElement("logger"));
 
                 Initialized = true;
             }
@@ -31,13 +31,6 @@ namespace Lotus.Foundation.Caching
                 Log.Error("Error initializing lotus caching", exception, typeof(Global));
 
                 Initialized = false;
-            }
-            finally
-            {
-                if (Logger == null)
-                {
-                    Logger = new DefaultLogger();
-                }
             }
         }
     }

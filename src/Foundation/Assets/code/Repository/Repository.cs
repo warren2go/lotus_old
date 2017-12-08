@@ -47,8 +47,8 @@ namespace Lotus.Foundation.Assets.Repository
             Sitecore.Diagnostics.Assert.IsNotNull((object) mimeNode,
                 "Bad host node detected in lotus.assets.repository! Check your App_Config/Include/Lotus.Foundation.Assets.config?");
 
-            var extension = mimeNode.ByAttributeName<string>("extension");
-            var type = mimeNode.ByAttributeName<string>("type");
+            var extension = mimeNode.GetAttributeAndCast<string>("extension");
+            var type = mimeNode.GetAttributeAndCast<string>("type");
 
             if (!string.IsNullOrEmpty(extension) && !string.IsNullOrEmpty(type))
             {
@@ -61,8 +61,8 @@ namespace Lotus.Foundation.Assets.Repository
             Sitecore.Diagnostics.Assert.IsNotNull((object) headerNode,
                 "Bad header node detected in lotus.assets.repository! Check your App_Config/Include/Lotus.Foundation.Assets.config?");
             
-            var name = headerNode.ByElementName("name").CastFromInnerText<string>();
-            var value = headerNode.ByElementName("value").CastFromInnerText<string>();
+            var name = headerNode.GetAttribute("name");
+            var value = headerNode.GetAttribute("value");
             
             Headers.Add(name, value);
         }

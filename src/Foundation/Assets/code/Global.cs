@@ -25,10 +25,10 @@ namespace Lotus.Foundation.Assets
 {
     internal static class Global
     {
-        internal static IAssetResolver Resolver;
-        internal static IAssetRepository Repository;
-        internal static IEnumerable<IAssetPipeline> Pipelines;
-        internal static ILotusLogger Logger;
+        internal static IAssetResolver Resolver { get; set; }
+        internal static IAssetRepository Repository { get; set; }
+        internal static IEnumerable<IAssetPipeline> Pipelines { get; set; }
+        internal static ILotusLogger Logger { get; set; }
 
         internal static bool Initialized { get; private set; }
 
@@ -48,11 +48,11 @@ namespace Lotus.Foundation.Assets
                 
                 //DOMConfigurator.Configure(nodes.ByElementName("log4net") as XmlElement);
                 
-                Logger = LoggerHelper.CreateLoggerFromNode(nodes.ByElementName("logger"));
+                Logger = LoggerHelper.CreateLoggerFromNode(nodes.GetChildElement("logger"));
                 
-                LoadResolver(nodes.ByElementName("resolver"));
-                LoadRepository(nodes.ByElementName("repository"));
-                LoadPipelines(nodes.ByElementName("pipelines"));
+                LoadResolver(nodes.GetChildElement("resolver"));
+                LoadRepository(nodes.GetChildElement("repository"));
+                LoadPipelines(nodes.GetChildElement("pipelines"));
 
                 Initialized = true;
             }
@@ -63,14 +63,6 @@ namespace Lotus.Foundation.Assets
                 Resolver = null;
                 Repository = null;
                 Pipelines = null;
-                Logger = null;
-            }
-            finally
-            {
-                if (Logger == null)
-                {
-                    Logger = new DefaultLogger();
-                }
             }
         }
         
@@ -101,7 +93,7 @@ namespace Lotus.Foundation.Assets
         {
             Sitecore.Diagnostics.Assert.IsNotNull((object) pipelinesNode,
                 "Missing lotus.assets.pipelines config node! Missing or outdated App_Config/Include/Foundation/Foundation.Assets.config?");
-            var requestPipelines = pipelinesNode.ByElementName("request");
+            var requestPipelines = pipelinesNode.GetChildElement("request");
             if (requestPipelines.HasChildNodes)
             {
                 Pipelines = requestPipelines.ChildNodes.OfType<XmlElement>().ToObject<IAssetPipeline>();   

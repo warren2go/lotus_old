@@ -31,7 +31,7 @@ namespace Lotus.Foundation.Extensions
                 Sitecore.Diagnostics.Assert.IsNotNull((object) nodes,
                     "Missing lotus.extensions config node! Missing or outdated App_Config/Include/Foundation/Foundation.Extensions.config?");
                 
-                Logger = LoggerHelper.CreateLoggerFromNode(nodes.ByElementName("logger"));
+                Logger = LoggerHelper.CreateLoggerFromNode(nodes.GetChildElement("logger"));
                 
                 Initialized = true;
             }
@@ -40,13 +40,6 @@ namespace Lotus.Foundation.Extensions
                 Log.Error("Error initializing lotus extensions", exception, typeof(Global));
                 
                 Initialized = false;
-            }
-            finally
-            {
-                if (Logger == null)
-                {
-                    Logger = new DefaultLogger();
-                }
             }
         }
     }

@@ -16,7 +16,7 @@ namespace Lotus.Foundation.Logging.Helpers
         
         public static ILotusLogger CreateLoggerFromNode(XmlNode node)
         {
-            return node != null ? Sitecore.Configuration.Factory.CreateObject<ILotusLogger>(node) : null;
+            return node != null ? Sitecore.Configuration.Factory.CreateObject<ILotusLogger>(node) : new DefaultLogger();
         }
     }
 }

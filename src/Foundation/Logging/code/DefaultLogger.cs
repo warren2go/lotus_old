@@ -5,7 +5,15 @@ namespace Lotus.Foundation.Logging
 {
     public class DefaultLogger : ILotusLogger
     {
-        public void Debug(string message, Exception exception = null)
+        public string Prefix { get; set; }
+        public string Postfix { get; set; }
+
+        protected virtual string FormatMessage(string message)
+        {
+            return (Prefix ?? string.Empty) + message + (Postfix ?? string.Empty);
+        }
+        
+        public virtual void Debug(string message, Exception exception = null)
         {
             if (exception != null)
             {
@@ -13,11 +21,11 @@ namespace Lotus.Foundation.Logging
             }
             else
             {
-                Log.Debug(message, typeof(DefaultLogger));   
+                Log.Debug(FormatMessage(message), typeof(DefaultLogger));   
             }
         }
 
-        public void Info(string message, Exception exception = null)
+        public virtual void Info(string message, Exception exception = null)
         {
             if (exception != null)
             {
@@ -25,23 +33,23 @@ namespace Lotus.Foundation.Logging
             }
             else
             {
-                Log.Info(message, typeof(DefaultLogger));   
+                Log.Info(FormatMessage(message), typeof(DefaultLogger));   
             }
         }
 
-        public void Warn(string message, Exception exception = null)
+        public virtual void Warn(string message, Exception exception = null)
         {
-            Log.Warn(message, exception, typeof(DefaultLogger));
+            Log.Warn(FormatMessage(message), exception, typeof(DefaultLogger));
         }
 
-        public void Error(string message, Exception exception = null)
+        public virtual void Error(string message, Exception exception = null)
         {
-            Log.Error(message, exception, typeof(DefaultLogger));
+            Log.Error(FormatMessage(message), exception, typeof(DefaultLogger));
         }
 
-        public void Fatal(string message, Exception exception = null)
+        public virtual void Fatal(string message, Exception exception = null)
         {
-            Log.Fatal(message, exception, typeof(DefaultLogger));
+            Log.Fatal(FormatMessage(message), exception, typeof(DefaultLogger));
         }
     }
 }

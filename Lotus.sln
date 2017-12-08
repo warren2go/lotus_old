@@ -111,6 +111,23 @@ ProjectSection(SolutionItems) = preProject
 	src\Foundation\Extensions\config\App_Config\Include\Foundation\Foundation.Extensions.config = src\Foundation\Extensions\config\App_Config\Include\Foundation\Foundation.Extensions.config
 EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MailChimp", "MailChimp", "{0E697866-9138-4CC5-8894-763AF24453D3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "code", "code", "{F99158D9-C39A-4145-90EE-8EF394D06AB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lotus.Feature.MailChimp", "src\Feature\MailChimp\code\Lotus.Feature.MailChimp.csproj", "{5DB1C586-6876-4982-AB6C-A28D48B257B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{B2181DAA-C7DA-4C2A-9B83-98C005278AAB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App_Config", "App_Config", "{0F1DA1CF-F079-4094-89BE-CB0E216FEE06}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{9A9B2968-8AB2-49AD-B38A-AC681273D9E3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Feature", "Feature", "{DEA891A5-C985-4BF4-B33E-CADC44B7E361}"
+ProjectSection(SolutionItems) = preProject
+	src\Feature\MailChimp\config\App_Config\Include\Feature\Feature.MailChimp.config = src\Feature\MailChimp\config\App_Config\Include\Feature\Feature.MailChimp.config
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +158,10 @@ Global
 		{3AE78E13-5DEA-4303-8D88-FC06D9268AA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AE78E13-5DEA-4303-8D88-FC06D9268AA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AE78E13-5DEA-4303-8D88-FC06D9268AA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DB1C586-6876-4982-AB6C-A28D48B257B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DB1C586-6876-4982-AB6C-A28D48B257B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DB1C586-6876-4982-AB6C-A28D48B257B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DB1C586-6876-4982-AB6C-A28D48B257B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -187,5 +208,12 @@ Global
 		{B7C7DD5C-AC34-4280-B10A-7217D70671C9} = {6EB3A6D9-2DC8-4B29-98B9-735C6B5E3CE5}
 		{0A4BD712-15F2-4F22-925F-F99704B00078} = {B7C7DD5C-AC34-4280-B10A-7217D70671C9}
 		{905BFDA7-7B8F-48F1-96CE-46B75359E3BA} = {0A4BD712-15F2-4F22-925F-F99704B00078}
+		{0E697866-9138-4CC5-8894-763AF24453D3} = {4B40C97C-950F-42FE-B8D0-B2B1EC5D9231}
+		{F99158D9-C39A-4145-90EE-8EF394D06AB9} = {0E697866-9138-4CC5-8894-763AF24453D3}
+		{5DB1C586-6876-4982-AB6C-A28D48B257B1} = {F99158D9-C39A-4145-90EE-8EF394D06AB9}
+		{B2181DAA-C7DA-4C2A-9B83-98C005278AAB} = {0E697866-9138-4CC5-8894-763AF24453D3}
+		{0F1DA1CF-F079-4094-89BE-CB0E216FEE06} = {B2181DAA-C7DA-4C2A-9B83-98C005278AAB}
+		{9A9B2968-8AB2-49AD-B38A-AC681273D9E3} = {0F1DA1CF-F079-4094-89BE-CB0E216FEE06}
+		{DEA891A5-C985-4BF4-B33E-CADC44B7E361} = {9A9B2968-8AB2-49AD-B38A-AC681273D9E3}
 	EndGlobalSection
 EndGlobal

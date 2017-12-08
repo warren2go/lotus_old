@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A4B1C128-3A32-4760-9321-D5E65CD519B4}</ProjectGuid>
+    <ProjectGuid>{5DB1C586-6876-4982-AB6C-A28D48B257B1}</ProjectGuid>
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lotus.Foundation.Extensions</RootNamespace>
-    <AssemblyName>Lotus.Foundation.Extensions</AssemblyName>
+    <RootNamespace>Lotus.Feature.MailChimp</RootNamespace>
+    <AssemblyName>Lotus.Feature.MailChimp</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,8 +33,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
-      <HintPath>..\..\..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="MailChimp, Version=1.1.84.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\packages\MailChimp.NET.1.1.84.0\lib\net35\MailChimp.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=3.9.71.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\packages\ServiceStack.Text.3.9.71\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\..\..\lib\referenced\Sitecore.Kernel.dll</HintPath>
@@ -49,32 +52,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Casting\CastingExtensions.cs" />
-    <Compile Include="Collections\CollectionExtensions.cs" />
-    <Compile Include="Collections\DictionaryExtensions.cs" />
-    <Compile Include="Configuration\ExtensionsLogger.cs" />
-    <Compile Include="Crypto\CryptoExtensions.cs" />
-    <Compile Include="Date\DateExtensions.cs" />
+    <Compile Include="Configuration\MailChimpLogger.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="IMailChimpManager.cs" />
+    <Compile Include="Lists\GenericList.cs" />
+    <Compile Include="Lists\GenericMergeVar.cs" />
+    <Compile Include="Lists\GenericSubscriber.cs" />
+    <Compile Include="Lists\IMailChimpList.cs" />
+    <Compile Include="Lists\IMailChimpMergeVar.cs" />
+    <Compile Include="Lists\IMailChimpSubscriber.cs" />
+    <Compile Include="MailChimpManager.cs" />
     <Compile Include="Pipelines\Initialize\Initialize.cs" />
-    <Compile Include="Primitives\IntegerExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegularExpression\RegexExtensions.cs" />
-    <Compile Include="Serialization\XmlExtensions.cs" />
-    <Compile Include="Primitives\StringExtensions.cs" />
-    <Compile Include="Web\WebExtensions.cs" />
+    <Compile Include="Services\MailChimpService.cs" />
+    <Compile Include="Validators\IMailChimpValidator.cs" />
+    <Compile Include="Validators\Regex.cs" />
+    <Compile Include="Validators\Required.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Pipelines" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Logging\code\Lotus.Foundation.Logging.csproj">
+    <ProjectReference Include="..\..\..\Foundation\Extensions\code\Lotus.Foundation.Extensions.csproj">
+      <Project>{a4b1c128-3a32-4760-9321-d5e65cd519b4}</Project>
+      <Name>Lotus.Foundation.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Foundation\Logging\code\Lotus.Foundation.Logging.csproj">
       <Project>{65f23213-3b77-4dc2-a824-be988400bbaf}</Project>
       <Name>Lotus.Foundation.Logging</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
