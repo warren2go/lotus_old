@@ -60,12 +60,6 @@
     <Content Include="packages.config" />
     <None Include="Web.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Foundation\Assets\code\Lotus.Foundation.Assets.csproj">
-      <Project>{d9df2f85-f6bb-4bef-ae30-c60709313eef}</Project>
-      <Name>Lotus.Foundation.Assets</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

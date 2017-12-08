@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Lotus.Foundation.Extensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\packages\Lotus.Foundation.Extensions.1.0.0\lib\net45\Lotus.Foundation.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Lotus.Foundation.Logging, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\packages\Lotus.Foundation.Logging.1.0.0\lib\net45\Lotus.Foundation.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
       <HintPath>..\..\..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -79,16 +85,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Paths\Extension\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Extensions\code\Lotus.Foundation.Extensions.csproj">
-      <Project>{A4B1C128-3A32-4760-9321-D5E65CD519B4}</Project>
-      <Name>Lotus.Foundation.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Logging\code\Lotus.Foundation.Logging.csproj">
-      <Project>{65F23213-3B77-4DC2-A824-BE988400BBAF}</Project>
-      <Name>Lotus.Foundation.Logging</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

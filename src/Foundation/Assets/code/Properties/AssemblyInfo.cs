@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Lotus Assets")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Lotus.Foundation.Assets")]
+[assembly: AssemblyDescription("An Asset Handler that mimics functionalty observed from the Media Handler provided by Sitecore. Wiki: https://lotus.euphoracle.com/")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Lotus Assets")]
-[assembly: AssemblyCopyright("Copyright © Warren Dawes 2017")]
+[assembly: AssemblyCompany("Warren Dawes")]
+[assembly: AssemblyProduct("Lotus.Foundation.Assets")]
+[assembly: AssemblyCopyright("Copyright © Warren Dawes 2018")]
 [assembly: AssemblyTrademark("Euphoracle")]
 [assembly: AssemblyCulture("")]
 
