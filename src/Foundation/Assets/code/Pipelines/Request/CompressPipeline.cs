@@ -1,6 +1,9 @@
 ﻿using System.IO.Compression;
+using System.Linq;
 using System.Web;
 using Lotus.Foundation.Assets.Configuration;
+using Lotus.Foundation.Assets.Helpers;
+using Lotus.Foundation.Extensions.Primitives;
 using Lotus.Foundation.Extensions.RegularExpression;
 
 namespace Lotus.Foundation.Assets.Pipelines.Request
@@ -18,14 +21,17 @@ namespace Lotus.Foundation.Assets.Pipelines.Request
             var acceptEncoding = context.Request.Headers.Get("Accept-Encoding");
             if (string.IsNullOrEmpty(acceptEncoding))
                 return;
-            
-            var supported = AssetsSettings.Compression.Supported.ToLower();
-            foreach (var compression in supported.Split('|'))
+
+            var mimeType = AssetsRequestHelper.MimeMapper(args.Extension, false);
+
+            if (AssetsSettings.Compression.MimeTypes.ToLower().Split('|').Any(x => x.IsMatch(mimeType.Escape())))
             {
-                if (acceptEncoding.IsMatch(compression))
+                var compression = AssetsSettings.Compression.AcceptEncoding.ToLower().Split('|')
+                    .FirstOrDefault(x => acceptEncoding.IsMatch(x));
+                
+                if (!string.IsNullOrEmpty(compression))
                 {
                     SetCompressionFilter(context, compression);
-                    return;
                 }
             }
         }

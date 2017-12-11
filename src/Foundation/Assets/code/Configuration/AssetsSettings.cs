@@ -120,11 +120,19 @@
 
         internal static class Compression
         {
-            internal static string Supported
+            internal static string AcceptEncoding
             {
                 get
                 {
-                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Compression.Supported", string.Empty);
+                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Compression.AcceptEncoding", string.Empty);
+                }
+            }
+            
+            internal static string MimeTypes
+            {
+                get
+                {
+                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Compression.MimeTypes", string.Empty);
                 }
             }
         }

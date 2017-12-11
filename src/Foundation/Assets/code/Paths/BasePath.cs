@@ -70,9 +70,9 @@ namespace Lotus.Foundation.Assets.Paths
                 pipeline.Process(request);
             }
 
-            var mime = Global.Repository.MimeMapping.TryGetValueOrDefault(request.Extension);
+            var mimeType = AssetsRequestHelper.MimeMapper(request.Extension);
 
-            if (!request.Context.WriteFile(request.RelativePath, mime))
+            if (!request.Context.WriteFile(request.RelativePath, mimeType))
             {
                 if (!string.IsNullOrEmpty(AssetsSettings.NotFoundUrl))
                 {
