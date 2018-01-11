@@ -11,10 +11,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
+using Lotus.Foundation.Assets.Configuration;
 using Lotus.Foundation.Assets.Handlers;
 using Lotus.Foundation.Assets.Pipelines;
 using Lotus.Foundation.Assets.Resolvers;
 using Lotus.Foundation.Assets.Repository;
+using Lotus.Foundation.Extensions.Collections;
 using Lotus.Foundation.Extensions.Serialization;
 using Lotus.Foundation.Logging;
 using Lotus.Foundation.Logging.Helpers;
@@ -29,6 +31,7 @@ namespace Lotus.Foundation.Assets
         internal static IAssetRepository Repository { get; set; }
         internal static IEnumerable<IAssetPipeline> Pipelines { get; set; }
         internal static ILotusLogger Logger { get; set; }
+        internal static Dictionary<string, ILotusLogger> Loggers { get; set; }
 
         internal static bool Initialized { get; private set; }
 
@@ -40,16 +43,7 @@ namespace Lotus.Foundation.Assets
                 Sitecore.Diagnostics.Assert.IsNotNull((object) nodes,
                     "Missing lotus.assets config node! Missing or outdated App_Config/Include/Foundation/Foundation.Assets.config?");
 
-//                var sitecore = ConfigurationManager.GetSection("sitecore");
-//                if (sitecore != null)
-//                {
-//                    var variableNodes = GetNodes(".//sc.variable", sitecore);
-//                }
-                
-                //DOMConfigurator.Configure(nodes.ByElementName("log4net") as XmlElement);
-                
-                Logger = LoggerHelper.CreateLoggerFromNode(nodes.GetChildElement("logger"));
-                
+                LoadLoggers(nodes.GetChildElement("logging"));
                 LoadResolver(nodes.GetChildElement("resolver"));
                 LoadRepository(nodes.GetChildElement("repository"));
                 LoadPipelines(nodes.GetChildElement("pipelines"));
@@ -66,13 +60,15 @@ namespace Lotus.Foundation.Assets
             }
         }
         
-        private static XmlNodeList GetNodes(string xpath, object reader)
+        public static ILotusLogger GetLogger(string friendlyName = "default", Type type = null)
         {
-            BindingFlags invokeAttr = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField;
-            XmlNode xmlNode = reader.GetType().InvokeMember("_section", invokeAttr, (Binder) null, reader, (object[]) null) as XmlNode;
-            if (xmlNode != null)
-                return xmlNode.SelectNodes(xpath);
-            return (XmlNodeList) null;
+            return Loggers.TryGetValueOrDefault(LoggerHelper.GenerateLoggerName(friendlyName, type ?? typeof(AssetsLogger)));
+        }
+
+        private static void LoadLoggers(XmlNode loggingNode)
+        {
+            Loggers = LoggerHelper.LoadLoggersFromXml(loggingNode);
+            Logger = Loggers.Values.FirstOrDefault(x => string.IsNullOrEmpty(x.FriendlyName) || x.FriendlyName == "default") ?? LoggerHelper.DefaultLogger();
         }
 
         private static void LoadResolver(XmlNode resolverNode)

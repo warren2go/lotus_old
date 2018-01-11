@@ -8,6 +8,6 @@ namespace Lotus.Feature.MailChimp.Lists
         void Add<T>(string key, T value);
         object Get(string key);
         T GetAndCast<T>(string key);
-        bool Validate(IMailChimpMergeVar mergeVar);
+        IEnumerable<string> Validate(IMailChimpMergeVar mergeVar);
     }
 }

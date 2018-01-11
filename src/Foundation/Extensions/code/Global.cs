@@ -7,8 +7,11 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using Lotus.Foundation.Extensions.Collections;
+using Lotus.Foundation.Extensions.Configuration;
 using Lotus.Foundation.Extensions.Serialization;
 using Lotus.Foundation.Logging;
 using Lotus.Foundation.Logging.Helpers;
@@ -19,7 +22,8 @@ namespace Lotus.Foundation.Extensions
 {
     internal static class Global
     {
-        internal static ILotusLogger Logger;
+        internal static ILotusLogger Logger { get; set; }
+        internal static Dictionary<string, ILotusLogger> Loggers { get; set; }
         
         internal static bool Initialized { get; private set; }
 
@@ -31,7 +35,7 @@ namespace Lotus.Foundation.Extensions
                 Sitecore.Diagnostics.Assert.IsNotNull((object) nodes,
                     "Missing lotus.extensions config node! Missing or outdated App_Config/Include/Foundation/Foundation.Extensions.config?");
                 
-                Logger = LoggerHelper.CreateLoggerFromNode(nodes.GetChildElement("logger"));
+                LoadLoggers(nodes.GetChildElement("logging"));
                 
                 Initialized = true;
             }
@@ -41,6 +45,17 @@ namespace Lotus.Foundation.Extensions
                 
                 Initialized = false;
             }
+        }
+        
+        public static ILotusLogger GetLogger(string friendlyName = null, Type type = null)
+        {
+            return Loggers.TryGetValueOrDefault(LoggerHelper.GenerateLoggerName(friendlyName, type ?? typeof(ExtensionsLogger)));
+        }
+
+        private static void LoadLoggers(XmlNode loggingNode)
+        {
+            Loggers = LoggerHelper.LoadLoggersFromXml(loggingNode);
+            Logger = Loggers.Values.FirstOrDefault(x => string.IsNullOrEmpty(x.FriendlyName) || x.FriendlyName == "default") ?? LoggerHelper.DefaultLogger();
         }
     }
 }

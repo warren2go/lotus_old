@@ -33,7 +33,7 @@ namespace Lotus.Feature.MailChimp.Lists
             {
                 ValidatorsByFieldName.Add(variableNode.LocalName, new List<IMailChimpValidator>());
             }
-            var validators = variableNode.GetAttribute("validator");
+            var validators = variableNode.GetAttribute("validation");
             if (string.IsNullOrEmpty(validators))
             {
                 ValidatorsByFieldName[variableNode.LocalName].Add(MailChimpService.GetValidatorByKey("*"));
@@ -42,21 +42,26 @@ namespace Lotus.Feature.MailChimp.Lists
             {
                 foreach (var validatorKey in validators.Split('|'))
                 {
-                    if (validatorKey.IsMatch(@"\w="))
+                    IMailChimpValidator validator;
+                    if (validatorKey.IsMatch(@"\w+="))
                     {
-                        var values = validatorKey.ExtractPatterns(@"(\w)=(.*)") as string[];
-                        if (values == null || values.Length != 2)
+                        var values = validatorKey.ExtractPatterns(@"(\w+)=(.*)").ToArray();
+                        if (values.Length != 2)
                         {
-                            Global.Logger.Warn("Validation incorrectly defined on node = {0} [{1}]".FormatWith(values.Dump(), variableNode.BaseURI));
+                            Global.Logger.Warn("Validation incorrectly defined on node = {0} [{1}]".FormatWith(values.Dump(), variableNode.InnerXml));
                             continue;
                         }
-                        MailChimpService.AddValidatorByKey(values.FirstOrDefault(), new Regex(values.LastOrDefault()));
+                        Global.Logger.Info("Generic validator detected - {0}:{1} for {2}".FormatWith(values.FirstOrDefault(), values.LastOrDefault(), variableNode.LocalName));
+                        validator = new Regex(values.LastOrDefault());
                     }
-                    var validator = MailChimpService.GetValidatorByKey(validatorKey);
-                    if (validator == null)
+                    else
                     {
-                        Global.Logger.Warn("Validator not found with key supplied [{0}]".FormatWith(validatorKey));
-                        continue;
+                        validator = MailChimpService.GetValidatorByKey(validatorKey);
+                        if (validator == null)
+                        {
+                            Global.Logger.Warn("Validator not found with key supplied [{0}]".FormatWith(validatorKey));
+                            continue;
+                        }   
                     }
                     ValidatorsByFieldName[variableNode.LocalName].Add(validator);
                 }   

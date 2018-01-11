@@ -4,7 +4,7 @@ namespace Lotus.Foundation.Extensions.Primitives
 {
     public static class StringExtensions
     {
-        private static readonly string[] Escapable = { @".|\.", @"+|\+", @"*|\*", @"^|\^", @"?|\?",  @"$|\$", @"&|&amp;" };
+        private static readonly string[] Escapable = { @".|\.", @"+|\+", @"*|\*", @"^|\^", @"?|\?",  @"$|\$", @"&|&amp;", @"-|\-" };
         
         public static string SurroundsWith(this string @string, string with)
         {

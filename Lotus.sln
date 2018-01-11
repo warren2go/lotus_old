@@ -128,6 +128,15 @@ ProjectSection(SolutionItems) = preProject
 	src\Feature\MailChimp\config\App_Config\Include\Feature\Feature.MailChimp.config = src\Feature\MailChimp\config\App_Config\Include\Feature\Feature.MailChimp.config
 EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App_Config", "App_Config", "{E617E10C-976E-41CA-932D-0F12BB3275D5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{FD7313B6-3B98-4360-9969-D45E49A1C091}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{4A207183-C2F5-45DB-BE4E-788C2266DF01}"
+ProjectSection(SolutionItems) = preProject
+	src\Foundation\WebControls\config\App_Config\Include\Foundation\Foundation.WebControls.config = src\Foundation\WebControls\config\App_Config\Include\Foundation\Foundation.WebControls.config
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -215,5 +224,8 @@ Global
 		{0F1DA1CF-F079-4094-89BE-CB0E216FEE06} = {B2181DAA-C7DA-4C2A-9B83-98C005278AAB}
 		{9A9B2968-8AB2-49AD-B38A-AC681273D9E3} = {0F1DA1CF-F079-4094-89BE-CB0E216FEE06}
 		{DEA891A5-C985-4BF4-B33E-CADC44B7E361} = {9A9B2968-8AB2-49AD-B38A-AC681273D9E3}
+		{E617E10C-976E-41CA-932D-0F12BB3275D5} = {85F342B8-03AD-45D7-8B4E-2AEE4E99957E}
+		{FD7313B6-3B98-4360-9969-D45E49A1C091} = {E617E10C-976E-41CA-932D-0F12BB3275D5}
+		{4A207183-C2F5-45DB-BE4E-788C2266DF01} = {FD7313B6-3B98-4360-9969-D45E49A1C091}
 	EndGlobalSection
 EndGlobal

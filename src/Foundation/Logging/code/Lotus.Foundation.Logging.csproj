@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Appenders\LotusLogFileAppender.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Helpers\LoggerHelper.cs" />
     <Compile Include="ILotusLogger.cs" />

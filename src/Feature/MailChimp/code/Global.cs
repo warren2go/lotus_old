@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Web;
 using System.Xml;
+using log4net;
+using log4net.Config;
+using Lotus.Feature.MailChimp.Configuration;
 using Lotus.Feature.MailChimp.Lists;
 using Lotus.Feature.MailChimp.Services;
 using Lotus.Feature.MailChimp.Validators;
 using Lotus.Foundation.Extensions.Casting;
+using Lotus.Foundation.Extensions.Collections;
 using Lotus.Foundation.Extensions.Primitives;
 using Lotus.Foundation.Extensions.Serialization;
 using Lotus.Foundation.Logging;
@@ -23,6 +29,7 @@ namespace Lotus.Feature.MailChimp
     internal static class Global
     {
         internal static ILotusLogger Logger { get; set; }
+        internal static Dictionary<string, ILotusLogger> Loggers { get; set; }
         
         internal static bool Initialized { get; private set; }
 
@@ -33,9 +40,8 @@ namespace Lotus.Feature.MailChimp
                 var nodes = Sitecore.Configuration.Factory.GetConfigNode("/sitecore/lotus.mailchimp");
                 Sitecore.Diagnostics.Assert.IsNotNull(nodes,
                     "Missing lotus.mailchimp config node! Missing or outdated App_Config/Include/Feature/Feature.MailChimp.config?");
-                
-                Logger = LoggerHelper.CreateLoggerFromNode(nodes.GetChildElement("logger"));
-                
+
+                LoadLoggers(nodes.GetChildElement("logging"));
                 LoadValidators(nodes.GetChildElement("validators"));
                 LoadLists(nodes.GetChildElements("lists"));
 
@@ -45,6 +51,17 @@ namespace Lotus.Feature.MailChimp
             {
                 Log.Error("Error initializing lotus mailchimp", exception, typeof(string));
             }
+        }
+
+        public static ILotusLogger GetLogger(string friendlyName = "default", Type type = null)
+        {
+            return Loggers.TryGetValueOrDefault(LoggerHelper.GenerateLoggerName(friendlyName, type ?? typeof(MailChimpLogger)));
+        }
+
+        private static void LoadLoggers(XmlNode loggingNode)
+        {
+            Loggers = LoggerHelper.LoadLoggersFromXml(loggingNode);
+            Logger = Loggers.Values.FirstOrDefault(x => string.IsNullOrEmpty(x.FriendlyName) || x.FriendlyName == "default") ?? LoggerHelper.DefaultLogger();
         }
 
         private static void LoadValidators(XmlNode validatorsNode)

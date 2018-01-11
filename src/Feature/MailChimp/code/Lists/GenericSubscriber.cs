@@ -47,8 +47,9 @@ namespace Lotus.Feature.MailChimp.Lists
             return value != null ? value.CastTo<T>() : default(T);
         }
         
-        public bool Validate(IMailChimpMergeVar mergeVar)
+        public IEnumerable<string> Validate(IMailChimpMergeVar mergeVar)
         {
+            var errors = new List<string>();
             foreach (var validatorsForField in mergeVar.ValidatorsByFieldName)
             {
                 var fieldName = validatorsForField.Key;
@@ -57,17 +58,25 @@ namespace Lotus.Feature.MailChimp.Lists
                 if (subscribeField == null && validators.Any(x => x.Key == "required"))
                 {
                     Global.Logger.Error("GenericSubscriber is missing a field during validation = {0}".FormatWith(fieldName));
-                    return false;
+                    errors.Add("'{0}' is a required field but is empty or missing.".FormatWith(fieldName));
                 }
                 if (subscribeField != null)
                 {
                     foreach (var validator in validators)
                     {
-                        validator.Validate(subscribeField.ToString());
+                        if (!validator.Validate(subscribeField.ToString()))
+                        {
+                            errors.Add("Validation for '{0}' failed using {1} with {2} validation".FormatWith(fieldName, subscribeField.ToString(), validator.Raw));
+                        }
                     }
                 }
             }
-            return true;
+            return errors;
+        }
+
+        public override string ToString()
+        {
+            return Fields.Dump();
         }
     }
 }

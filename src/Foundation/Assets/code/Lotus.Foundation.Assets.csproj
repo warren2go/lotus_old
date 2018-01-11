@@ -31,12 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Lotus.Foundation.Extensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\packages\Lotus.Foundation.Extensions.1.0.0\lib\net45\Lotus.Foundation.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Lotus.Foundation.Logging, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\packages\Lotus.Foundation.Logging.1.0.0\lib\net45\Lotus.Foundation.Logging.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
       <HintPath>..\..\..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -88,6 +82,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Extensions\code\Lotus.Foundation.Extensions.csproj">
+      <Project>{a4b1c128-3a32-4760-9321-d5e65cd519b4}</Project>
+      <Name>Lotus.Foundation.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logging\code\Lotus.Foundation.Logging.csproj">
+      <Project>{65f23213-3b77-4dc2-a824-be988400bbaf}</Project>
+      <Name>Lotus.Foundation.Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

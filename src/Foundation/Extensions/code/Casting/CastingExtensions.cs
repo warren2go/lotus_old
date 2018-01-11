@@ -23,7 +23,7 @@ namespace Lotus.Foundation.Extensions.Casting
 
         public static T CastTo<T>(this object instance)
         {
-            T casted = default(T);
+            T casted;
 
             try
             {

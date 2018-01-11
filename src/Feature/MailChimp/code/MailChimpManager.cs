@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Lotus.Feature.MailChimp.Lists;
 using Lotus.Foundation.Extensions.Collections;
 using Lotus.Foundation.Extensions.Primitives;
@@ -33,10 +35,18 @@ namespace Lotus.Feature.MailChimp
         {
             try
             {
-                if (!skipValidate && !subscriber.Validate(MergeVar))
+                if (!skipValidate)
                 {
-                    Global.Logger.Warn("MailChimpManager failed to validate subscriber = {0} [{1} dump({2})]".FormatWith(List.ListId, List.APIKey, subscriber.Fields.Dump()));
-                    return false;
+                    var errors = subscriber.Validate(MergeVar).ToArray();
+                    if (errors.Length > 0)
+                    {
+                        Global.Logger.Warn("MailChimpManager failed to validate subscriber = {0} [{1} dump({2})]".FormatWith(List.ListId, List.APIKey, subscriber.Fields.Dump()));
+                        foreach (var error in errors)
+                        {
+                            Global.Logger.Warn("Error: {0}".FormatWith(error));
+                        }
+                        return false;   
+                    }
                 }
                 var email = subscriber.GetAndCast<string>(emailField);
                 if (string.IsNullOrEmpty(email))
@@ -44,11 +54,11 @@ namespace Lotus.Feature.MailChimp
                     Global.Logger.Warn("MailChimpManager failed to generate manager - email undefined = {0} [{1} dump({2})]".FormatWith(List.ListId, List.APIKey, subscriber.Fields.Dump()));
                     return false;
                 }
-                var emailParameter = new global::MailChimp.Helper.EmailParameter()
+                var emailParameter = new EmailParameter()
                 {
                     Email = email.ToString()
                 };
-                var mergeVar = new global::MailChimp.Lists.MergeVar();
+                var mergeVar = new MergeVar();
                 foreach (var mergeVarField in MergeVar.Fields)
                 {
                     var targetField = mergeVarField.Key;

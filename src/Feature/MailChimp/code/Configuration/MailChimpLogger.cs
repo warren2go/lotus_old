@@ -1,12 +1,16 @@
-﻿using Lotus.Foundation.Logging;
+﻿using System.Reflection;
+using Lotus.Foundation.Extensions.Primitives;
+using Lotus.Foundation.Logging;
+using Sitecore;
 
 namespace Lotus.Feature.MailChimp.Configuration
 {
-    public class MailChimpLogger : DefaultLogger
-    {
+    public sealed class MailChimpLogger : DefaultLogger
+    {        
         public MailChimpLogger()
+            : base("Lotus.Feature.MailChimp.Logger")
         {
-            Prefix = "[MailChimpLogger]";
+            Prefix = "[MailChimpLogger] ";
         }
     }
 }
