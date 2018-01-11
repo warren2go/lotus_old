@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Xml;
 using log4net;
 using log4net.Appender;
@@ -37,8 +38,25 @@ namespace Lotus.Foundation.Logging.Helpers
         
         public static string DetermineCallsite(MethodBase mb = null)
         {
-            var methodBase = mb ?? new StackFrame(1).GetMethod();
-            return "[{0}:{1}] ".FormatWith(methodBase.DeclaringType == null ? "global:" : methodBase.DeclaringType.Name, methodBase.Name);
+            try
+            {
+                var methodBase = mb ?? new StackFrame(1).GetMethod();
+                var sb = new StringBuilder("[{0}{1}(".FormatWith(methodBase.DeclaringType == null ? "global::" : "{0}.".FormatWith(methodBase.DeclaringType.FullName), methodBase.Name));
+                var parameters = methodBase.GetParameters();
+                foreach (var param in parameters)
+                {
+                    sb.Append(param.ParameterType.Name + " " + param.Name);
+                    sb.Append(", ");
+                }
+                if (parameters.Length > 0)
+                    return sb.ToString(0, sb.Length - 2) + ")] ";
+                return sb.ToString(0, sb.Length - 2) + ")] ";
+            }
+            catch (Exception exception)
+            {
+                InternalLogger.LogToDebugConsole("LoggerHelper->DetermineCallsite : Error determining callsite = " + exception.Message);
+                return "[undefined] ";
+            }
         }
         
         public static string GenerateLoggerName(string friendlyName, Type type = null)

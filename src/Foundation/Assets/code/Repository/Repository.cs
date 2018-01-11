@@ -77,7 +77,7 @@ namespace Lotus.Foundation.Assets.Repository
             
             if (string.IsNullOrEmpty(key))
             {
-                Global.Logger.Error("Key not specified on path:\n{0}".FormatWith(pathNode.ToString()));
+                Global.Logger.Error("Key not specified on path:{0}{1}".FormatWith(Environment.NewLine, pathNode.ToString()));
                 return;
             }
             
@@ -133,7 +133,7 @@ namespace Lotus.Foundation.Assets.Repository
                     return path;
                 }
 
-                if (path.GetTargets().Where(x => !x.StartsWith("~/")).Any(folderPath => relativePath.Contains(folderPath)))
+                if (path.GetTargets().Where(x => !x.StartsWith("~/")).Any(relativePath.Contains))
                 {
                     return path;
                 }

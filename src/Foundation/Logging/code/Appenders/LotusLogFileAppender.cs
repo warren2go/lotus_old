@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Web;
 using log4net.Appender;
 using log4net.spi;
 using Sitecore.Configuration;
@@ -112,7 +113,7 @@ public class LotusLogFileAppender : FileAppender
 
     private string MapPath(string fileName)
     {
-      if (fileName == "" || fileName.IndexOf(":/") >= 0 || fileName.IndexOf("://") >= 0)
+      if (fileName == "" || fileName.IndexOf(":/", StringComparison.Ordinal) >= 0 || fileName.IndexOf("://", StringComparison.Ordinal) >= 0)
         return fileName;
       int index = fileName.IndexOfAny(new char[2]
       {
@@ -122,8 +123,10 @@ public class LotusLogFileAppender : FileAppender
       if (index >= 0 && (int) fileName[index] == 92)
         return fileName.Replace('/', '\\');
       fileName = fileName.Replace('\\', '/');
-      if (fileName[0] == 47)
-        return LotusLogFileAppender.MakePath(State.HttpRuntime.AppDomainAppPath, fileName.Replace('/', '\\'), '\\');
+      if (HttpContext.Current != null)
+        return HttpContext.Current.Server.MapPath(fileName);
+      if (fileName[0] == '/')
+        return MakePath(State.HttpRuntime.AppDomainAppPath, fileName.Replace('/', '\\'), '\\');
       return fileName;
     }
 

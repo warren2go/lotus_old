@@ -45,6 +45,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +55,7 @@
     <Compile Include="Helpers\LoggerHelper.cs" />
     <Compile Include="ILotusLogger.cs" />
     <Compile Include="DefaultLogger.cs" />
+    <Compile Include="InternalLogger.cs" />
     <Compile Include="Pipelines\Initialize\Initialize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
