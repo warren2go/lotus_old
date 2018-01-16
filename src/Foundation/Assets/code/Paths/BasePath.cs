@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using Lotus.Foundation.Assets.Configuration;
 using Lotus.Foundation.Assets.Helpers;
@@ -21,21 +22,24 @@ namespace Lotus.Foundation.Assets.Paths
             {
                 if (!string.IsNullOrEmpty(value))
                 {
-                    var time = int.Parse(value.Substring(0, value.Length - 1));
-                    var format = value.Substring(value.Length - 1);
-                    switch (format.ToLower())
+                    foreach (var element in value.Split(' ').Where(x => !string.IsNullOrEmpty(x)))
                     {
-                        default:
-                            _expireHours = time;
-                            break;
+                        var time = int.Parse(element.Substring(0, element.Length - 1));
+                        var format = element.Substring(element.Length - 1);
+                        switch (format.ToLower())
+                        {
+                            default:
+                                _expireHours += time;
+                                break;
                            
-                        case "d":
-                            _expireHours = 24 * time;
-                            break;
+                            case "d":
+                                _expireHours += (24 * time);
+                                break;
                         
-                        case "m":
-                            _expireHours = (30 * 24) * time;
-                            break;
+                            case "m":
+                                _expireHours += ((30 * 24) * time);
+                                break;
+                        }   
                     }
                 }
                 else

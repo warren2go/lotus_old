@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Xml;
 using log4net;
@@ -43,17 +44,18 @@ namespace Lotus.Foundation.Logging
             return _logger;
         }
         
-        public virtual string FormatMessage(string message)
+        public virtual string FormatMessage(string message, string callerMemberName = "", string callerFilePath = "", int callerLineNumber = -1)
         {
             var sb = new StringBuilder();
+            sb.Append(string.Format("[{0}:{1}]->{2}{3}", callerFilePath, callerLineNumber, callerMemberName, Environment.NewLine));
             sb.Append(LoggerHelper.DetermineCallsite(new StackFrame(2).GetMethod()) + Environment.NewLine);
             sb.Append(Prefix ?? string.Empty);
             sb.Append(message);
             sb.Append(Postfix ?? string.Empty);
-
+            sb.Append(Environment.NewLine);
+            
             if (IncludeStacktrace)
             {
-                sb.Append(Environment.NewLine);
                 sb.Append(Environment.NewLine + "Stack:" + Environment.NewLine);
                 sb.Append(Environment.StackTrace);
                 sb.Append(Environment.NewLine);
@@ -62,73 +64,92 @@ namespace Lotus.Foundation.Logging
             return sb.ToString();
         }
         
-        public virtual void Debug(string message, Exception exception = null)
+        public virtual void Debug(string message, Exception exception = null,
+            [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
             if (exception != null)
             {
-                Warn("[Escalated] " + message, exception);
+                if (_logger != null)
+                {
+                    _logger.Warn(FormatMessage("[Escalated from Debug] " + message, callerMemberName, callerFilePath, callerLineNumber));
+                }
+                else
+                {
+                    Log.Warn(FormatMessage("[Escalated from Debug] " + message, callerMemberName, callerFilePath, callerLineNumber), typeof(DefaultLogger));   
+                }
             }
             else
             {
                 if (_logger != null)
                 {
-                    _logger.Debug(FormatMessage(message));
+                    _logger.Debug(FormatMessage(message, callerMemberName, callerFilePath, callerLineNumber));
                 }
                 else
                 {
-                    Log.Debug(FormatMessage(message), typeof(DefaultLogger));   
+                    Log.Debug(FormatMessage(message, callerMemberName, callerFilePath, callerLineNumber), typeof(DefaultLogger));   
                 }
             }
         }
 
-        public virtual void Info(string message, Exception exception = null)
+        public virtual void Info(string message, Exception exception = null,
+            [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
             if (exception != null)
             {
-                Warn("[Escalated] " + message, exception);
+                if (_logger != null)
+                {
+                    _logger.Warn(FormatMessage("[Escalated from Info] " + message, callerMemberName, callerFilePath, callerLineNumber));
+                }
+                else
+                {
+                    Log.Warn(FormatMessage("[Escalated from Info] " + message, callerMemberName, callerFilePath, callerLineNumber), typeof(DefaultLogger));   
+                }
             }
             else
             {
                 if (_logger != null)
                 {
-                    _logger.Info(FormatMessage(message));
+                    _logger.Info(FormatMessage(message, callerMemberName, callerFilePath, callerLineNumber));
                 }
                 else
                 {
-                    Log.Info(FormatMessage(message), typeof(DefaultLogger));   
+                    Log.Info(FormatMessage(message, callerMemberName, callerFilePath, callerLineNumber), typeof(DefaultLogger));   
                 }
             }
         }
 
-        public virtual void Warn(string message, Exception exception = null)
+        public virtual void Warn(string message, Exception exception = null,
+            [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
             if (_logger != null)
             {
-                _logger.Warn(FormatMessage(message), exception);
+                _logger.Warn(FormatMessage(message, callerMemberName, callerFilePath, callerLineNumber), exception);
             }
             else
             {
-                Log.Warn(FormatMessage(message), exception, typeof(DefaultLogger));   
+                Log.Warn(FormatMessage(message, callerMemberName, callerFilePath, callerLineNumber), exception, typeof(DefaultLogger));   
             }
         }
 
-        public virtual void Error(string message, Exception exception = null)
+        public virtual void Error(string message, Exception exception = null,
+            [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
             if (_logger != null)
             {
-                _logger.Error(FormatMessage(message), exception);
+                _logger.Error(FormatMessage(message, callerMemberName, callerFilePath, callerLineNumber), exception);
             }
             else
             {
-                Log.Error(FormatMessage(message), exception, typeof(DefaultLogger));   
+                Log.Error(FormatMessage(message, callerMemberName, callerFilePath, callerLineNumber), exception, typeof(DefaultLogger));   
             }
         }
 
-        public virtual void Fatal(string message, Exception exception = null)
+        public virtual void Fatal(string message, Exception exception = null,
+            [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
             if (_logger != null)
             {
-                _logger.Fatal(FormatMessage(message), exception);
+                _logger.Fatal(FormatMessage(message, callerMemberName, callerFilePath, callerLineNumber), exception);
             }
             else
             {
