@@ -7,12 +7,12 @@ using Sitecore;
 
 namespace Lotus.Foundation.Assets.Configuration
 {
-    public sealed class AssetsLogger : DefaultLogger
+    public sealed class AssetsLogger : LotusLogger
     {
-        public AssetsLogger() 
-            : base("Lotus.Foundation.Assets.Logger")
+        public AssetsLogger(string id, string includeStacktrace = "false") 
+            : base(id, includeStacktrace)
         {
-            Prefix = "[AssetsLogger] ";
+            
         }
     }
 }

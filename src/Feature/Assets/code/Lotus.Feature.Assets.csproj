@@ -56,7 +56,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\Feature\Feature.Assets.config" />
+    <Content Include="..\config\App_Config\Include\Feature\Feature.Assets.config">
+      <Link>App_Config\Include\Feature\Feature.Assets.config</Link>
+    </Content>
     <Content Include="packages.config" />
     <None Include="Web.config" />
   </ItemGroup>

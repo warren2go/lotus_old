@@ -20,12 +20,12 @@ namespace Lotus.Foundation.Assets.Pipelines.Request
             {
                 if (!string.IsNullOrEmpty(redirect))
                 {
-                    redirect = redirect.ReplacePattern("$scheme", context.Request.IsSecureConnection ? "https" : "http");
+                    redirect = redirect.ReplacePattern("$(scheme)", context.Request.IsSecureConnection ? "https" : "http");
 
                     var domain = context.Request.Url.Host.ExtractPattern(@"^(?:\w\.+)?((?:?<=\.)\w\.com.*)$");
                     if (!string.IsNullOrEmpty(domain))
                     {
-                        redirect.ReplacePattern("$domain", domain);
+                        redirect.ReplacePattern("$(domain)", domain);
                     }
                 }
             }

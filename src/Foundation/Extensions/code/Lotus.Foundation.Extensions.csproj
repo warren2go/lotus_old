@@ -42,6 +42,9 @@
     <Reference Include="Sitecore.Logging, Version=1.2.0.30715, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\..\..\lib\referenced\Sitecore.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="Sitecore.Mvc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\lib\referenced\Sitecore.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -62,6 +65,12 @@
     <Compile Include="RegularExpression\RegexExtensions.cs" />
     <Compile Include="Serialization\XmlExtensions.cs" />
     <Compile Include="Primitives\StringExtensions.cs" />
+    <Compile Include="SitecoreExtensions\ImageFieldExtensions.cs" />
+    <Compile Include="SitecoreExtensions\ItemExtensions.cs" />
+    <Compile Include="SitecoreExtensions\LinkFieldExtensions.cs" />
+    <Compile Include="SitecoreExtensions\MediaItemExtensions.cs" />
+    <Compile Include="SitecoreExtensions\NameValueListFieldExtensions.cs" />
+    <Compile Include="SitecoreExtensions\Rendering\RenderingExtensions.cs" />
     <Compile Include="Web\WebExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,12 +7,12 @@ using Sitecore;
 
 namespace Lotus.Foundation.Caching.Configuration
 {
-    public sealed class CachingLogger : DefaultLogger
+    public sealed class CachingLogger : LotusLogger
     {
-        public CachingLogger()
-            : base("Lotus.Foundation.Caching.Logger")
+        public CachingLogger(string id, string includeStacktrace = "false")
+            : base(id, includeStacktrace)
         {
-            Prefix = "[CachingLogger] ";
+            
         }
     }
 }

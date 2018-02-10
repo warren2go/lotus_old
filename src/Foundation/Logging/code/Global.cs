@@ -15,6 +15,7 @@ using log4net;
 using log4net.Config;
 using log4net.Repository;
 using log4net.Repository.Hierarchy;
+using Lotus.Foundation.Logging.Factories;
 using Lotus.Foundation.Logging.Helpers;
 using Sitecore.Configuration;
 using Sitecore.Diagnostics;
@@ -24,8 +25,19 @@ namespace Lotus.Foundation.Logging
 {
     internal static class Global
     {
-        internal static ILotusLogger Logger { get; set; }
-        internal static Dictionary<string, ILotusLogger> Loggers { get; set; }
+        private static ILotusLogger _logger;
+        internal static ILotusLogger Logger
+        {
+            get
+            {
+                if (_logger == null)
+                {
+                    _logger = LotusLogManager.GetLogger("Logger");
+                }
+                return _logger;
+            }
+            private set { _logger = value; }
+        }
         
         internal static bool Initialized { get; private set; }
 
@@ -37,6 +49,8 @@ namespace Lotus.Foundation.Logging
                 Sitecore.Diagnostics.Assert.IsNotNull((object) nodes,
                     "Missing lotus.logging config node! Missing or outdated App_Config/Include/Foundation/Foundation.Logging.config?");
 
+                LotusLoggerFactory.Initialize(XmlUtil.GetChildElement("logfactory", nodes));
+                
                 LoadLoggers(XmlUtil.GetChildElement("logging", nodes));
                 
                 Initialized = true;
@@ -47,15 +61,9 @@ namespace Lotus.Foundation.Logging
             }
         }
         
-        public static ILotusLogger GetLogger(string friendlyName = null, Type type = null)
-        {
-            return Loggers.TryGetValueOrDefault(LoggerHelper.GenerateLoggerName(friendlyName, type ?? typeof(DefaultLogger)));
-        }
-
         private static void LoadLoggers(XmlNode loggingNode)
         {
-            Loggers = LoggerHelper.LoadLoggersFromXml(loggingNode);
-            Logger = Loggers.Values.FirstOrDefault(x => string.IsNullOrEmpty(x.FriendlyName) || x.FriendlyName == "default") ?? LoggerHelper.DefaultLogger();
+            LoggerHelper.CreateLoggersFromXml(loggingNode);
         }
     }
 }

@@ -27,11 +27,23 @@ namespace Lotus.Foundation.Assets
 {
     internal static class Global
     {
+        private static ILotusLogger _logger;
+        internal static ILotusLogger Logger
+        {
+            get
+            {
+                if (_logger == null)
+                {
+                    _logger = LotusLogManager.GetLogger("Logger");
+                }
+                return _logger;
+            }
+            private set { _logger = value; }
+        }
+        
         internal static IAssetResolver Resolver { get; set; }
         internal static IAssetRepository Repository { get; set; }
         internal static IEnumerable<IAssetPipeline> Pipelines { get; set; }
-        internal static ILotusLogger Logger { get; set; }
-        internal static Dictionary<string, ILotusLogger> Loggers { get; set; }
 
         internal static bool Initialized { get; private set; }
 
@@ -47,7 +59,7 @@ namespace Lotus.Foundation.Assets
                 LoadResolver(nodes.GetChildElement("resolver"));
                 LoadRepository(nodes.GetChildElement("repository"));
                 LoadPipelines(nodes.GetChildElement("pipelines"));
-
+                
                 Initialized = true;
             }
             catch (Exception exception)
@@ -59,16 +71,10 @@ namespace Lotus.Foundation.Assets
                 Pipelines = null;
             }
         }
-        
-        public static ILotusLogger GetLogger(string friendlyName = "default", Type type = null)
-        {
-            return Loggers.TryGetValueOrDefault(LoggerHelper.GenerateLoggerName(friendlyName, type ?? typeof(AssetsLogger)));
-        }
 
         private static void LoadLoggers(XmlNode loggingNode)
         {
-            Loggers = LoggerHelper.LoadLoggersFromXml(loggingNode);
-            Logger = Loggers.Values.FirstOrDefault(x => string.IsNullOrEmpty(x.FriendlyName) || x.FriendlyName == "default") ?? LoggerHelper.DefaultLogger();
+            LoggerHelper.CreateLoggersFromXml(loggingNode);
         }
 
         private static void LoadResolver(XmlNode resolverNode)

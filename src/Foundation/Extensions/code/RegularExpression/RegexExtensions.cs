@@ -33,13 +33,13 @@ namespace Lotus.Foundation.Extensions.RegularExpression
             return Regex.Match(@string, pattern).GetValuesFromMatchWithIndexes();
         }
         
-        public static T ExtractPattern<T>(this string @string, string pattern, int index = 1, string @default = "")
+        public static T ExtractPattern<T>(this string @string, string pattern, int index = 1, T @default = default(T))
         {
             try
             {
-                var value = Regex.Match(@string, pattern).GetValueFromMatch(index, @default);
+                var value = Regex.Match(@string, pattern).GetValueFromMatch(index);
                 if (string.IsNullOrEmpty(value))
-                    return default(T);
+                    return @default;
                 return (T) Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
             }
             catch (Exception exception)
@@ -48,7 +48,7 @@ namespace Lotus.Foundation.Extensions.RegularExpression
                 #if DEBUG
                 throw;
                 #endif
-                return default(T);
+                return @default;
             }
         }
         

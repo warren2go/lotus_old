@@ -66,7 +66,7 @@ namespace Lotus.Foundation.Extensions.Serialization
             catch (Exception exception)
             {
                 Log.Error("Error getting elements by name [{0}]".FormatWith(elementName), exception, typeof(XmlExtensions));
-                return allowNull ? null : new List<XmlNode>();;
+                return allowNull ? null : new List<XmlNode>();
             }
         }
 

@@ -14,8 +14,19 @@ namespace Lotus.Foundation.Caching
 {
     internal static class Global
     {
-        internal static ILotusLogger Logger { get; set; }
-        internal static Dictionary<string, ILotusLogger> Loggers { get; set; }
+        private static ILotusLogger _logger;
+        internal static ILotusLogger Logger
+        {
+            get
+            {
+                if (_logger == null)
+                {
+                    _logger = LotusLogManager.GetLogger("Logger");
+                }
+                return _logger;
+            }
+            private set { _logger = value; }
+        }
         
         internal static bool Initialized { get; private set; }
 
@@ -39,15 +50,9 @@ namespace Lotus.Foundation.Caching
             }
         }
         
-        public static ILotusLogger GetLogger(string friendlyName = null, Type type = null)
-        {
-            return Loggers.TryGetValueOrDefault(LoggerHelper.GenerateLoggerName(friendlyName, type ?? typeof(CachingLogger)));
-        }
-        
         private static void LoadLoggers(XmlNode loggingNode)
         {
-            Loggers = LoggerHelper.LoadLoggersFromXml(loggingNode);
-            Logger = Loggers.Values.FirstOrDefault(x => string.IsNullOrEmpty(x.FriendlyName) || x.FriendlyName == "default") ?? LoggerHelper.DefaultLogger();
+            LoggerHelper.CreateLoggersFromXml(loggingNode);
         }
     }
 }

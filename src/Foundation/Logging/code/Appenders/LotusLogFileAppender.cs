@@ -5,13 +5,16 @@ using System.Runtime.InteropServices;
 using System.Web;
 using log4net.Appender;
 using log4net.spi;
+using Lotus.Foundation.Kernel.Structures.Collections;
 using Sitecore.Configuration;
 using ConfigReader = log4net.Appender.ConfigReader;
 
 namespace Lotus.Foundation.Logging.Appenders
 {
-public class LotusLogFileAppender : FileAppender
+  public class LotusLogFileAppender : FileAppender
   {
+    private StaticDictionary<string, string> AppenderVariables = new StaticDictionary<string, string>();
+    
     private DateTime m_currentDate;
     private string m_originalFileName;
 
@@ -64,6 +67,11 @@ public class LotusLogFileAppender : FileAppender
       fileName = fileName.Replace("{date}", this.m_currentDate.ToString("yyyyMMdd"));
       fileName = fileName.Replace("{time}", this.m_currentDate.ToString("HHmmss"));
       fileName = fileName.Replace("{processid}", LotusLogFileAppender.GetCurrentProcessId().ToString());
+      foreach (var key in AppenderVariables.Keys)
+      {
+        var oldValue = "$(" + key + ")";
+        fileName = fileName.Replace(oldValue, AppenderVariables[key]);
+      }
       if (System.IO.File.Exists(fileName))
         fileName = this.GetTimedFileName(fileName);
       base.OpenFile(fileName, append);
@@ -128,6 +136,12 @@ public class LotusLogFileAppender : FileAppender
       if (fileName[0] == '/')
         return MakePath(State.HttpRuntime.AppDomainAppPath, fileName.Replace('/', '\\'), '\\');
       return fileName;
+    }
+
+    public void SetVariable(string key, string value)
+    {
+      if (!string.IsNullOrEmpty(value))
+        AppenderVariables[key] = value;
     }
 
     [DllImport("kernel32.dll", SetLastError = true)]

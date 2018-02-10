@@ -2,7 +2,7 @@
 {
     public interface IMailChimpList
     {
-        string APIKey { get; set; }
+        string Key { get; set; }
         string ListId { get; set; }
         IMailChimpMergeVar MergeVar { get; set; }
         

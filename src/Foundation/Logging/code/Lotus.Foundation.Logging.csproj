@@ -45,22 +45,40 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Appenders\LotusLogFileAppender.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Factories\LotusLoggerFactory.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Helpers\LoggerHelper.cs" />
     <Compile Include="ILotusLogger.cs" />
-    <Compile Include="DefaultLogger.cs" />
+    <Compile Include="LotusLogger.cs" />
     <Compile Include="InternalLogger.cs" />
+    <Compile Include="LLog.cs" />
+    <Compile Include="LotusLogManager.cs" />
     <Compile Include="Pipelines\Initialize\Initialize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Structures\SMTP\EmailAddress.cs" />
+    <Compile Include="Structures\SMTP\IEmail.cs" />
+    <Compile Include="Structures\SMTP\IEmailAddress.cs" />
+    <Compile Include="Structures\SMTP\IMailingList.cs" />
+    <Compile Include="Structures\SMTP\ISMTPProvider.cs" />
+    <Compile Include="Structures\SMTP\MailingList.cs" />
+    <Compile Include="Structures\SMTP\SMTPProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Kernel\code\Lotus.Foundation.Kernel.csproj">
+      <Project>{ef8d739c-fdfd-40f2-934c-17af17aae61f}</Project>
+      <Name>Lotus.Foundation.Kernel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

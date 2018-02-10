@@ -78,7 +78,7 @@
             {
                 get
                 {
-                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Regex.RelativePath", @"^/-/assets/(.+(?:$extension)?)$");
+                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Regex.RelativePath", @"^/-/assets/(.+(?:$(extension))?)$");
                 }   
             }
         
@@ -86,16 +86,7 @@
             {
                 get
                 {
-                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Regex.Timestamp", @"^.+-(\d{10})?(?:$extension)?$");
-                }
-            }
-
-            internal static string ParentPath
-            {
-                get
-                {
-                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Regex.ParentPath", ".*");
-                    
+                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Assets.Regex.Timestamp", @"^.+-(\d{10})?(?:$(extension))?$");
                 }
             }
 

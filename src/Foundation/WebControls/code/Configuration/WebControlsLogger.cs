@@ -7,12 +7,12 @@ using Sitecore.StringExtensions;
 
 namespace Lotus.Foundation.WebControls.Configuration
 {
-    public sealed class WebControlsLogger : DefaultLogger
+    public sealed class WebControlsLogger : LotusLogger
     {
-        public WebControlsLogger()
-            : base("Lotus.Foundation.WebControls.Logger")
+        public WebControlsLogger(string id, string includeStacktrace = "false")
+            : base(id, includeStacktrace)
         {
-            Prefix = "[WebControlsLogger] ";
+            Pattern = "[WebControlsLogger] ";
         }
     }
 }

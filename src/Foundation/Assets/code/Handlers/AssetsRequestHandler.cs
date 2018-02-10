@@ -7,6 +7,7 @@ using Lotus.Foundation.Assets.Helpers;
 using Lotus.Foundation.Extensions.Primitives;
 using Lotus.Foundation.Extensions.RegularExpression;
 using Lotus.Foundation.Extensions.Web;
+using Lotus.Foundation.Logging;
 using Sitecore.Diagnostics;
 
 namespace Lotus.Foundation.Assets.Handlers
@@ -31,12 +32,12 @@ namespace Lotus.Foundation.Assets.Handlers
             try
             {
                 var extension = context.Request.Url.AbsolutePath.ExtractPattern(AssetsSettings.Regex.Extension);
-                var relativePath = context.Request.Url.AbsolutePath.ExtractPattern(AssetsSettings.Regex.RelativePath.Replace("$extension", extension.Escape()));
+                var relativePath = context.Request.Url.AbsolutePath.ExtractPattern(AssetsSettings.Regex.RelativePath.Replace("$(extension)", extension.Escape()));
 
                 if (!Global.Initialized)
                 {
 #if DEBUG
-                    Log.Debug("Error processing asset [{0}] - handler not initialized".FormatWith(context.Request.Url
+                    LLog.Debug("Error processing asset [{0}] - handler not initialized".FormatWith(context.Request.Url
                         .AbsolutePath));
 #endif
                     context.RedirectIgnored("~/" + relativePath);
