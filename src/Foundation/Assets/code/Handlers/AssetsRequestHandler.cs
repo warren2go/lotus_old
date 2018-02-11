@@ -76,14 +76,15 @@ namespace Lotus.Foundation.Assets.Handlers
             catch (ThreadAbortException abortException)
             {
                 #if DEBUG
-                Global.Logger.Debug("Asset processing thread aborted", abortException);
+                Global.Logger.Warn("Asset processing thread aborted", abortException);
                 #endif
             }
             catch (Exception exception)
             {
                 Global.Logger.Error("Error processing asset", exception);
+                
+                context.NotFound();
             }
-            context.NotFound();
         }
     }
 }

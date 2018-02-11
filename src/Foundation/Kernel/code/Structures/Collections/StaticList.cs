@@ -169,7 +169,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             {
                 if (index >= _count) return new StaticList<T>();
                 var list = new StaticList<T>();
-                for (int i = index; i < count; i++)
+                for (int i = index; i < index + count; i++)
                 {
                     if (i >= _count)
                     {

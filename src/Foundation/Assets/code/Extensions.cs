@@ -6,14 +6,14 @@ using Lotus.Foundation.Extensions.Web;
 
 namespace Lotus.Foundation.Assets
 {
-    public static class Extensions
+    internal static class Extensions
     {
-        public static void RedirectBad(this HttpContextBase context, string url)
+        internal static void RedirectBad(this HttpContextBase context, string url)
         {
             context.RedirectIgnored(url);
         }
 
-        public static void RedirectIgnored(this HttpContextBase context, string url)
+        internal static void RedirectIgnored(this HttpContextBase context, string url)
         {
             var existingQuery = context.Request.Url.Query;
             if (AssetsSettings.IgnoreType.IsMatch("^querystring$"))
@@ -31,7 +31,7 @@ namespace Lotus.Foundation.Assets
                     }
                     else
                     {
-                        existingQuery.Replace(ignore, "&ignore=true");
+                        existingQuery = existingQuery.Replace(ignore, "&ignore=true");
                     }
                 }
             }
@@ -50,7 +50,7 @@ namespace Lotus.Foundation.Assets
             context.RedirectPermanent(url + existingQuery);
         }
         
-        public static void RedirectWithUpdate(this HttpContextBase context, int timestamp, string relativePath, string extension)
+        internal static void RedirectWithUpdate(this HttpContextBase context, int timestamp, string relativePath, string extension)
         {
             var url = "~/-/assets/{0}".FormatWith(relativePath.ReplacePattern(extension.Escape(),
                 "-{0:0000000000}{1}".FormatWith(timestamp, extension)));

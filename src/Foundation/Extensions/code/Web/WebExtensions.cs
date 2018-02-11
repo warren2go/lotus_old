@@ -67,10 +67,10 @@ namespace Lotus.Foundation.Extensions.Web
             }
         }
         
-        public static void NotFound(this HttpContextBase context, string status = "404 Not Found", bool endResponse = true)
+        public static void NotFound(this HttpContextBase context, string statusDescription = "Not Found", bool endResponse = true)
         {
             context.Response.StatusCode = 404;
-            context.Response.Status = status;
+            context.Response.StatusDescription = statusDescription;
             
             if (endResponse)
             {
@@ -78,10 +78,10 @@ namespace Lotus.Foundation.Extensions.Web
             }
         }
 
-        public static void InternalServerError(this HttpContextBase context, string status = "500 Internal Server Error", bool endResponse = true)
+        public static void InternalServerError(this HttpContextBase context, string statusDescription = "Internal Server Error", bool endResponse = true)
         {
             context.Response.StatusCode = 500;
-            context.Response.Status = status;
+            context.Response.StatusDescription = statusDescription;
             
             if (endResponse)
             {

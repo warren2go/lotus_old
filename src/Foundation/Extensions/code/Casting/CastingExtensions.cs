@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using Lotus.Foundation.Extensions.Primitives;
 using Sitecore.Diagnostics;
 
 namespace Lotus.Foundation.Extensions.Casting
@@ -33,7 +34,7 @@ namespace Lotus.Foundation.Extensions.Casting
                     switch (typeof(T).Name.ToLower())
                     {
                         case "boolean":
-                            instance = Boolean.Parse(instance.ToString());
+                            instance = instance.ToString().ToBool();
                             break;
 
                         case "int16":

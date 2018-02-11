@@ -297,6 +297,15 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
         {
             Clear();
         }
+        
+        public StaticDictionary<TKey, TValue> Each(Action<TKey, TValue> action)
+        {
+            foreach (var pair in this)
+            {
+                action.Invoke(pair.Key, pair.Value);
+            }
+            return this;
+        }
 
         /// <summary>
         /// Supports safe-access - will replace if key exists, otherwise will set.

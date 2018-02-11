@@ -18,7 +18,7 @@ namespace Lotus.Foundation.Kernel
             return string.Format(format, @params);
         }
         
-        public static string Join<T>(this string joinWith, [NotNull] IEnumerable<T> list)
+        internal static string Join<T>(this string joinWith, [NotNull] IEnumerable<T> list)
         {
             Assert.IsNotNull(list, "{0} is required.", nameof(list));
 
