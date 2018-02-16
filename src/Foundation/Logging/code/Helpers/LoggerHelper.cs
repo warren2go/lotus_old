@@ -100,28 +100,31 @@ namespace Lotus.Foundation.Logging.Helpers
             return string.IsNullOrEmpty(name) ? "Lotus.Foundation.Logging.{0}".FormatWith(friendlyName) : "{0}.{1}".FormatWith(name, friendlyName);
         }
         
-        public static string MapLoggerToName(ILotusLogger logger)
+        private static string MapLoggerToName(ILotusLogger logger, Assembly assembly = null)
         {
-            return GenerateLoggerName(Assembly.GetAssembly(logger.GetType()), logger.FriendlyName);
+            return GenerateLoggerName(assembly ?? Assembly.GetAssembly(logger.GetType()), logger.FriendlyName);
         }
         
-        public static void CreateLoggersFromXml(XmlNode loggingNode)
+        public static void CreateLoggersFromXml(XmlNode loggingNode, Assembly assembly = null)
         {
+            if (assembly == null)
+                assembly = Assembly.GetCallingAssembly();
+            
             ConfigureLoggerFromXml(XmlUtil.GetChildElement("log4net", loggingNode));
             
             var loggersNode = XmlUtil.GetChildElement("loggers", loggingNode);
             if (loggersNode != null)
             {
-                XmlUtil.GetChildElements("logger", loggersNode).Each(CreateLoggerFromXml);
+                XmlUtil.GetChildElements("logger", loggersNode).Each(x => CreateLoggerFromXml(x, assembly));
             }
         }
 
-        public static void CreateLoggerFromXml(XmlNode node)
+        public static void CreateLoggerFromXml(XmlNode node, Assembly callingAssembly)
         {
-            CreateLoggerFromXml(node, string.Empty);
+            CreateLoggerFromXml(node, string.Empty, callingAssembly);
         }
         
-        public static void CreateLoggerFromXml(XmlNode node, string elementName)
+        public static void CreateLoggerFromXml(XmlNode node, string elementName, Assembly callingAssembly)
         {
             ILotusLogger logger;
             if (string.IsNullOrEmpty(elementName))
@@ -144,7 +147,7 @@ namespace Lotus.Foundation.Logging.Helpers
                 }
                 logger.FriendlyName = XmlUtil.GetAttribute("friendlyName", XmlUtil.GetChildElement(elementName, node));
             }
-            LotusLoggerFactory.Add(MapLoggerToName(logger), logger);
+            LotusLoggerFactory.Add(MapLoggerToName(logger, callingAssembly), logger);
         }
 
         private static ILotusLogger CreateLogger(XmlNode node, bool assert = false)

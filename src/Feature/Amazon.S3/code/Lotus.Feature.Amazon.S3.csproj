@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3AE78E13-5DEA-4303-8D88-FC06D9268AA0}</ProjectGuid>
+    <ProjectGuid>{73477AFE-689B-4084-A52A-B87F4B88DDC2}</ProjectGuid>
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lotus.Foundation.Caching</RootNamespace>
-    <AssemblyName>Lotus.Foundation.Caching</AssemblyName>
+    <RootNamespace>Lotus.Feature.Amazon.S3</RootNamespace>
+    <AssemblyName>Lotus.Feature.Amazon.S3</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,48 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
-      <HintPath>..\..\..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.Kernel, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\lib\referenced\Sitecore.Kernel.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.Kernel, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\lib\referenced\Sitecore.Kernel.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.Logging, Version=1.2.0.30715, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\lib\referenced\Sitecore.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.Logging, Version=1.2.0.30715, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\lib\referenced\Sitecore.Logging.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Settings.cs" />
-    <Compile Include="Configuration\CachingLogger.cs" />
-    <Compile Include="Events\BaseEvent.cs" />
-    <Compile Include="Events\EventsManager.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="Events\Publishing\HtmlCacheClearer.cs" />
-    <Compile Include="Pipelines\Initialize\Initialize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Extensions\code\Lotus.Foundation.Extensions.csproj">
-      <Project>{a4b1c128-3a32-4760-9321-d5e65cd519b4}</Project>
-      <Name>Lotus.Foundation.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Logging\code\Lotus.Foundation.Logging.csproj">
-      <Project>{65f23213-3b77-4dc2-a824-be988400bbaf}</Project>
-      <Name>Lotus.Foundation.Logging</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

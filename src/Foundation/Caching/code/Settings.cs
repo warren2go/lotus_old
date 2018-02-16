@@ -1,6 +1,6 @@
-﻿namespace Lotus.Foundation.Caching.Configuration
+﻿namespace Lotus.Foundation.Caching
 {
-    public static class CachingSettings
+    internal static class Settings
     {
         internal static bool Enabled
         {

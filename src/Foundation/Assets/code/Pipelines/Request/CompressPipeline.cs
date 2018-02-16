@@ -24,9 +24,9 @@ namespace Lotus.Foundation.Assets.Pipelines.Request
 
             var mimeType = AssetsRequestHelper.MimeMapper(args.Extension, false);
 
-            if (AssetsSettings.Compression.MimeTypes.ToLower().Split('|').Any(x => x.IsMatch(mimeType.Escape())))
+            if (Settings.Compression.MimeTypes.ToLower().Split('|').Any(x => x.IsMatch(mimeType.Escape())))
             {
-                var compression = AssetsSettings.Compression.AcceptEncoding.ToLower().Split('|')
+                var compression = Settings.Compression.AcceptEncoding.ToLower().Split('|')
                     .FirstOrDefault(x => acceptEncoding.IsMatch(x));
                 
                 if (!string.IsNullOrEmpty(compression))

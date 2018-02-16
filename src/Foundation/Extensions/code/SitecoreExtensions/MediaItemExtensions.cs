@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Web;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Resources.Media;
 using Sitecore.StringExtensions;
+using Sitecore.Web;
 
 namespace Lotus.Foundation.Extensions.SitecoreExtensions
 {
@@ -32,6 +34,11 @@ namespace Lotus.Foundation.Extensions.SitecoreExtensions
             }
         }
         
+        public static string GetSafeMediaUrl(this Item item, string mediaFieldName, MediaUrlOptions mediaUrlOptions = null)
+        {
+            return WebUtil.SafeEncode(item.GetMediaUrl(mediaFieldName, mediaUrlOptions).Replace(" ", "-"));
+        }
+        
         public static string GetMediaUrl(this Item item, string mediaFieldName, MediaUrlOptions mediaUrlOptions = null)
         {
             if (item.Fields[mediaFieldName] == null)
@@ -40,6 +47,11 @@ namespace Lotus.Foundation.Extensions.SitecoreExtensions
                 return string.Empty;
             }
             return item.Fields[mediaFieldName].GetMediaUrl(mediaUrlOptions);
+        }
+        
+        public static string GetSafeMediaUrl(this Field field, MediaUrlOptions mediaUrlOptions = null)
+        {
+            return HttpUtility.UrlEncode(field.GetMediaUrl(mediaUrlOptions).Replace(" ", "-"));
         }
 
         public static string GetMediaUrl(this Field field, MediaUrlOptions mediaUrlOptions = null)
@@ -52,7 +64,16 @@ namespace Lotus.Foundation.Extensions.SitecoreExtensions
             }
             return GetMediaUrl(mediaItem, mediaUrlOptions);
         }
-
+        
+        public static string GetSafeMediaUrl(this MediaItem mediaItem, MediaUrlOptions mediaUrlOptions = null, Func<string, string> customReplacer = null)
+        {
+            if (customReplacer != null)
+            {
+                return customReplacer.Invoke(mediaItem.GetMediaUrl(mediaUrlOptions));
+            }
+            return HttpUtility.UrlEncode(mediaItem.GetMediaUrl(mediaUrlOptions).Replace(" ", "-"));
+        }
+        
         public static string GetMediaUrl(this MediaItem mediaItem, MediaUrlOptions mediaUrlOptions = null)
         {
             try

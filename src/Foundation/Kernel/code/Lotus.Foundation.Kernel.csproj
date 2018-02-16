@@ -49,6 +49,7 @@
     <Compile Include="Structures\Collections\StaticDictionary.cs" />
     <Compile Include="Structures\Collections\StaticList.cs" />
     <Compile Include="Structures\Collections\StaticQueue.cs" />
+    <Compile Include="Utils\SitecoreUtils\MainUtil.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -14,7 +14,7 @@ namespace Lotus.Foundation.Assets.Pipelines.Request
         
         private void ProcessRedirect(AssetPipelineArgs args)
         {
-            var redirect = AssetsSettings.CDN.Redirect;
+            var redirect = Settings.CDN.Redirect;
             var context = args.Context;
             try
             {

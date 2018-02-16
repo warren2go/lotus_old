@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using Lotus.Foundation.Extensions.Casting;
 using Lotus.Foundation.Extensions.Primitives;
 using Sitecore;
@@ -10,6 +11,7 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Links;
+using Sitecore.Web;
 
 namespace Lotus.Foundation.Extensions.SitecoreExtensions
 {
@@ -126,6 +128,15 @@ namespace Lotus.Foundation.Extensions.SitecoreExtensions
             {
                 return item.Children;
             }
+        }
+        
+        public static string GetSafeItemUrl(this Item item, UrlOptions urlOptions = null, Func<string, string> customReplacer = null)
+        {
+            if (customReplacer != null)
+            {
+                return customReplacer.Invoke(item.GetItemUrl(urlOptions));
+            }
+            return WebUtil.SafeEncode(item.GetItemUrl(urlOptions).Replace(" ", "-"));
         }
         
         public static string GetItemUrl(this Item item, UrlOptions urlOptions = null)

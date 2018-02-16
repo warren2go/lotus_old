@@ -31,8 +31,8 @@ namespace Lotus.Foundation.Assets.Handlers
             
             try
             {
-                var extension = context.Request.Url.AbsolutePath.ExtractPattern(AssetsSettings.Regex.Extension);
-                var relativePath = context.Request.Url.AbsolutePath.ExtractPattern(AssetsSettings.Regex.RelativePath.Replace("$(extension)", extension.Escape()));
+                var extension = context.Request.Url.AbsolutePath.ExtractPattern(Settings.Regex.Extension);
+                var relativePath = context.Request.Url.AbsolutePath.ExtractPattern(Settings.Regex.RelativePath.Replace("$(extension)", extension.Escape()));
 
                 if (!Global.Initialized)
                 {
@@ -43,7 +43,7 @@ namespace Lotus.Foundation.Assets.Handlers
                     context.RedirectIgnored("~/" + relativePath);
                 }
 
-                if (!AssetsSettings.Enabled)
+                if (!Settings.Enabled)
                 {
 #if DEBUG
                     Global.Logger.Debug("Error processing asset [{0}] - handler disabled".FormatWith(context.Request.Url.AbsolutePath));
@@ -59,7 +59,7 @@ namespace Lotus.Foundation.Assets.Handlers
                     context.RedirectIgnored("~/" + relativePath);
                 }
 
-                var ignored = context.Request.RawUrl.ExtractPattern(AssetsSettings.Regex.IgnoreQuery);
+                var ignored = context.Request.RawUrl.ExtractPattern(Settings.Regex.IgnoreQuery);
 
                 if (!string.IsNullOrEmpty(ignored))
                 {

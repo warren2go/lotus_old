@@ -6,7 +6,7 @@ namespace Lotus.Foundation.Caching.Events
     {
         internal static bool CanProceed(BaseEvent @event)
         {
-            return CachingSettings.Enabled;
+            return Settings.Enabled;
         }
     }
 }

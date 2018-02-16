@@ -1,6 +1,6 @@
-﻿namespace Lotus.Foundation.Assets.Configuration
+﻿namespace Lotus.Foundation.Assets
 {
-    internal static class AssetsSettings
+    internal static class Settings
     {
         internal static bool Enabled
         {

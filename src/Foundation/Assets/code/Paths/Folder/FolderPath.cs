@@ -22,7 +22,7 @@ namespace Lotus.Foundation.Assets.Paths.Folder
         
         public override void ProcessRequest(AssetRequest request)
         {
-            var fileName = request.RelativePath.ExtractPattern(AssetsSettings.Regex.FileName);
+            var fileName = request.RelativePath.ExtractPattern(Settings.Regex.FileName);
             var fileNames = GetFileNames();
             foreach (var allowed in fileNames)
             {

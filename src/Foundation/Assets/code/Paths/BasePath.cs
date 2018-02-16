@@ -78,9 +78,9 @@ namespace Lotus.Foundation.Assets.Paths
 
             if (!request.Context.WriteFile(request.RelativePath, mimeType))
             {
-                if (!string.IsNullOrEmpty(AssetsSettings.NotFoundUrl))
+                if (!string.IsNullOrEmpty(Settings.NotFoundUrl))
                 {
-                    request.Context.Redirect(AssetsSettings.NotFoundUrl);
+                    request.Context.Redirect(Settings.NotFoundUrl);
                 }
                 request.Context.NotFound();
             }
@@ -99,7 +99,7 @@ namespace Lotus.Foundation.Assets.Paths
         {
             var modified = AssetsRequestHelper.ExtractTimestampFromFile(request.Context, request.RelativePath);
             
-            if (AssetsSettings.Strict)
+            if (Settings.Strict)
             {
                 if (request.Timestamp != modified)
                 {
