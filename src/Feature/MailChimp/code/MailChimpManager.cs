@@ -4,6 +4,7 @@ using System.Linq;
 using Lotus.Feature.MailChimp.Lists;
 using Lotus.Foundation.Extensions.Collections;
 using Lotus.Foundation.Extensions.Primitives;
+using MailChimp.Errors;
 using MailChimp.Helper;
 using MailChimp.Lists;
 
@@ -40,24 +41,27 @@ namespace Lotus.Feature.MailChimp
                     var errors = subscriber.Validate(MergeVar).ToArray();
                     if (errors.Length > 0)
                     {
-                        Global.Logger.Warn("MailChimpManager failed to validate subscriber = {0} [{1} dump({2})]".FormatWith(List.ListId, List.APIKey, subscriber.Fields.Dump()));
+                        Global.Logger.Warn("MailChimpManager failed to validate subscriber = {0} [{1} dump({2})]".FormatWith(List.ListId, List.Key, subscriber.Fields.Dump()));
                         foreach (var error in errors)
                         {
                             Global.Logger.Warn("Error: {0}".FormatWith(error));
                         }
-                        return false;   
+                        return false;
                     }
                 }
+
                 var email = subscriber.GetAndCast<string>(emailField);
                 if (string.IsNullOrEmpty(email))
                 {
-                    Global.Logger.Warn("MailChimpManager failed to generate manager - email undefined = {0} [{1} dump({2})]".FormatWith(List.ListId, List.APIKey, subscriber.Fields.Dump()));
+                    Global.Logger.Warn("MailChimpManager failed to generate manager - email undefined = {0} [{1} dump({2})]".FormatWith(List.ListId, List.Key, subscriber.Fields.Dump()));
                     return false;
                 }
+
                 var emailParameter = new EmailParameter()
                 {
                     Email = email.ToString()
                 };
+
                 var mergeVar = new MergeVar();
                 foreach (var mergeVarField in MergeVar.Fields)
                 {
@@ -68,12 +72,18 @@ namespace Lotus.Feature.MailChimp
                         mergeVar.Add(mergeVarField.Value, targetValue);
                     }
                 }
+
                 Manager.Subscribe(List.ListId, emailParameter, mergeVar, EmailType, DoubleOptin, UpdateExisting, ReplaceInterests, SendWelcome);
                 return true;
             }
+            catch (MailChimpAPIException apiException)
+            {
+                Global.Logger.Error("Error with response from mailchimp API = dump({0}) [apiKey = {1}]".FormatWith(MergeVar != null ? MergeVar.Fields.Dump() : string.Empty, List != null ? List.Key : "null"), apiException);
+                return false;                
+            }
             catch (Exception exception)
             {
-                Global.Logger.Error("Error sending subscriber to mailchimp = dump({0}) [apiKey = {1}]".FormatWith(MergeVar != null ? MergeVar.Fields.Dump() : string.Empty, List != null ? List.APIKey : "null"), exception);
+                Global.Logger.Error("Error sending subscriber to mailchimp = dump({0}) [apiKey = {1}]".FormatWith(MergeVar != null ? MergeVar.Fields.Dump() : string.Empty, List != null ? List.Key : "null"), exception);
                 return false;
             }
         }

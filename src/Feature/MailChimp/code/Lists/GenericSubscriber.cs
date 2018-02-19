@@ -1,44 +1,34 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using Lotus.Foundation.Extensions.Casting;
 using Lotus.Foundation.Extensions.Collections;
+using Lotus.Foundation.Kernel.Structures.Collections;
 using Sitecore.StringExtensions;
 
 namespace Lotus.Feature.MailChimp.Lists
 {
     public class GenericSubscriber : IMailChimpSubscriber
     {
-        public IDictionary<string, object> Fields { get; set; }
+        public IDictionary<string, string> Fields { get; set; }
 
-        public GenericSubscriber(params object[] parameters)
+        public GenericSubscriber(NameValueCollection parameters)
         {
-            Fields = new Dictionary<string, object>();
-            if (parameters.Length % 2 != 0)
+            Fields = new StaticDictionary<string, string>();
+            foreach (var key in parameters.AllKeys)
             {
-                Global.Logger.Warn("GenericSubscriber created with incorrect number of parameters = {0}".FormatWith(parameters.Dump()));
-            }
-            else
-            {
-                for (var i = 0; i < parameters.Length; i+=2)
-                {
-                    Fields.Add(parameters[i].ToString(), parameters[i+1]);
-                }
+                Fields.Add(key, parameters.Get(key));
             }
         }
 
-        public void Add<T>(string key, T value)
+        public void Add(string key, string value)
         {
-            Fields.Add(key, (object)value);
+            Fields.Add(key, value);
         }
 
-        public object Get(string key)
+        public string Get(string key)
         {
-            var value = default(object);
-            if (!Fields.TryGetValue(key, out value))
-            {
-                Global.Logger.Warn("GenericSubscriber does not contain a field with the key supplied = {0} [dump({1})]".FormatWith(key, Fields.Dump()));
-            }
-            return value;
+            return Fields.TryGetValueOrDefault(key);
         }
 
         public T GetAndCast<T>(string key)

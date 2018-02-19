@@ -13,17 +13,30 @@ using System.Xml;
 using Lotus.Foundation.Extensions.Collections;
 using Lotus.Foundation.Extensions.Configuration;
 using Lotus.Foundation.Extensions.Serialization;
+using Lotus.Foundation.Extensions.SitecoreExtensions;
 using Lotus.Foundation.Logging;
 using Lotus.Foundation.Logging.Helpers;
 using Sitecore.Configuration;
+using Sitecore.Data;
 using Sitecore.Diagnostics;
 
 namespace Lotus.Foundation.Extensions
 {
     internal static class Global
     {
-        internal static ILotusLogger Logger { get; set; }
-        internal static Dictionary<string, ILotusLogger> Loggers { get; set; }
+        private static ILotusLogger _logger;
+        internal static ILotusLogger Logger
+        {
+            get
+            {
+                if (_logger == null)
+                {
+                    _logger = LotusLogManager.GetLogger("Logger");
+                }
+                return _logger;
+            }
+            private set { _logger = value; }
+        }
         
         internal static bool Initialized { get; private set; }
 
@@ -46,16 +59,10 @@ namespace Lotus.Foundation.Extensions
                 Initialized = false;
             }
         }
-        
-        public static ILotusLogger GetLogger(string friendlyName = null, Type type = null)
-        {
-            return Loggers.TryGetValueOrDefault(LoggerHelper.GenerateLoggerName(friendlyName, type ?? typeof(ExtensionsLogger)));
-        }
 
         private static void LoadLoggers(XmlNode loggingNode)
         {
-            Loggers = LoggerHelper.LoadLoggersFromXml(loggingNode);
-            Logger = Loggers.Values.FirstOrDefault(x => string.IsNullOrEmpty(x.FriendlyName) || x.FriendlyName == "default") ?? LoggerHelper.DefaultLogger();
+            LoggerHelper.CreateLoggersFromXml(loggingNode);
         }
     }
 }

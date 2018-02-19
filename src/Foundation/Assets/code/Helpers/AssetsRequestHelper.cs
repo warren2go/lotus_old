@@ -37,7 +37,7 @@ namespace Lotus.Foundation.Assets.Helpers
         
         public static int ExtractTimestampFromRelativePath(HttpContextBase context, string relativePath, string extension)
         {
-            return relativePath.ExtractPattern<int>(AssetsSettings.Regex.Timestamp.Replace("$extension", extension.Escape()));
+            return relativePath.ExtractPattern<int>(Settings.Regex.Timestamp.Replace("$(extension)", extension.Escape()));
         }
         
         public static IAssetPath CreatePathWithRelativePath(string relativePath)

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Xml;
-using log4net;
 using log4net.Config;
 using Lotus.Feature.MailChimp.Configuration;
 using Lotus.Feature.MailChimp.Lists;
@@ -28,9 +27,20 @@ namespace Lotus.Feature.MailChimp
 {
     internal static class Global
     {
-        internal static ILotusLogger Logger { get; set; }
-        internal static Dictionary<string, ILotusLogger> Loggers { get; set; }
-        
+        private static ILotusLogger _logger;
+        internal static ILotusLogger Logger
+        {
+            get
+            {
+                if (_logger == null)
+                {
+                    _logger = LotusLogManager.GetLogger("Logger");
+                }
+                return _logger;
+            }
+            private set { _logger = value; }
+        }
+
         internal static bool Initialized { get; private set; }
 
         internal static void Initialize()
@@ -43,8 +53,8 @@ namespace Lotus.Feature.MailChimp
 
                 LoadLoggers(nodes.GetChildElement("logging"));
                 LoadValidators(nodes.GetChildElement("validators"));
-                LoadLists(nodes.GetChildElements("lists"));
-
+                LoadAPIs(nodes.GetChildElements("api"));
+                
                 Initialized = true;
             }
             catch (Exception exception)
@@ -53,15 +63,9 @@ namespace Lotus.Feature.MailChimp
             }
         }
 
-        public static ILotusLogger GetLogger(string friendlyName = "default", Type type = null)
-        {
-            return Loggers.TryGetValueOrDefault(LoggerHelper.GenerateLoggerName(friendlyName, type ?? typeof(MailChimpLogger)));
-        }
-
         private static void LoadLoggers(XmlNode loggingNode)
         {
-            Loggers = LoggerHelper.LoadLoggersFromXml(loggingNode);
-            Logger = Loggers.Values.FirstOrDefault(x => string.IsNullOrEmpty(x.FriendlyName) || x.FriendlyName == "default") ?? LoggerHelper.DefaultLogger();
+            LoggerHelper.CreateLoggersFromXml(loggingNode);
         }
 
         private static void LoadValidators(XmlNode validatorsNode)
@@ -86,18 +90,21 @@ namespace Lotus.Feature.MailChimp
             MailChimpService.CheckValidators();
         }
 
-        private static void LoadLists(IEnumerable<XmlNode> listsNodes)
+        private static void LoadAPIs(IEnumerable<XmlNode> apiNodes)
         {
-            Assert.IsNotNull(listsNodes, "Lists node is not defined! Missing or outdated App_Config/Include/Feature/Feature.MailChimp.config?");
+            Assert.IsNotNull(apiNodes, "Lists node is not defined! Missing or outdated App_Config/Include/Feature/Feature.MailChimp.config?");
 
-            foreach (var listNodes in listsNodes)
+            foreach (var apiNode in apiNodes)
             {
-                foreach (var listNode in listNodes.GetChildElements("list"))
+                var key = apiNode.GetAttribute("key");
+                foreach (var listNode in apiNode.GetChildElements("list"))
                 {
                     var list = listNode.ToObject<IMailChimpList>();
                     if (list != null)
                     {
-                        list.APIKey = listNodes.GetAttribute("apiKey");
+                        list.Key = key;
+                        if (string.IsNullOrEmpty(list.ListId))
+                            list.ListId = listNode.GetAttribute("listid");
                         MailChimpService.AddListByID(list);   
                     }
                 }

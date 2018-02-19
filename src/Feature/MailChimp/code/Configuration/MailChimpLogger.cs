@@ -5,12 +5,12 @@ using Sitecore;
 
 namespace Lotus.Feature.MailChimp.Configuration
 {
-    public sealed class MailChimpLogger : DefaultLogger
+    public sealed class MailChimpLogger : LotusLogger
     {        
-        public MailChimpLogger()
-            : base("Lotus.Feature.MailChimp.Logger")
+        public MailChimpLogger(string id, string includeStacktrace = "false")
+            : base(id, includeStacktrace)
         {
-            Prefix = "[MailChimpLogger] ";
+            
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Lotus.Foundation.Assets.Paths.File
 
         public override void ProcessRequest(AssetRequest request)
         {
-            var fileName = request.RelativePath.ExtractPattern(AssetsSettings.Regex.FileName);
+            var fileName = request.RelativePath.ExtractPattern(Settings.Regex.FileName);
             if (!GetTargets().Any(x => CheckTarget(fileName, x)))
             {
                 request.Context.RedirectBad("~/" + request.RelativePath);

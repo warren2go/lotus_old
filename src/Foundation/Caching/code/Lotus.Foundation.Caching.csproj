@@ -54,8 +54,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Settings.cs" />
     <Compile Include="Configuration\CachingLogger.cs" />
-    <Compile Include="Configuration\CachingSettings.cs" />
     <Compile Include="Events\BaseEvent.cs" />
     <Compile Include="Events\EventsManager.cs" />
     <Compile Include="Global.cs" />

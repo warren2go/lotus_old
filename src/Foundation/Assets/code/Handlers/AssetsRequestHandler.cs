@@ -7,6 +7,7 @@ using Lotus.Foundation.Assets.Helpers;
 using Lotus.Foundation.Extensions.Primitives;
 using Lotus.Foundation.Extensions.RegularExpression;
 using Lotus.Foundation.Extensions.Web;
+using Lotus.Foundation.Logging;
 using Sitecore.Diagnostics;
 
 namespace Lotus.Foundation.Assets.Handlers
@@ -30,19 +31,19 @@ namespace Lotus.Foundation.Assets.Handlers
             
             try
             {
-                var extension = context.Request.Url.AbsolutePath.ExtractPattern(AssetsSettings.Regex.Extension);
-                var relativePath = context.Request.Url.AbsolutePath.ExtractPattern(AssetsSettings.Regex.RelativePath.Replace("$extension", extension.Escape()));
+                var extension = context.Request.Url.AbsolutePath.ExtractPattern(Settings.Regex.Extension);
+                var relativePath = context.Request.Url.AbsolutePath.ExtractPattern(Settings.Regex.RelativePath.Replace("$(extension)", extension.Escape()));
 
                 if (!Global.Initialized)
                 {
 #if DEBUG
-                    Log.Debug("Error processing asset [{0}] - handler not initialized".FormatWith(context.Request.Url
+                    LLog.Debug("Error processing asset [{0}] - handler not initialized".FormatWith(context.Request.Url
                         .AbsolutePath));
 #endif
                     context.RedirectIgnored("~/" + relativePath);
                 }
 
-                if (!AssetsSettings.Enabled)
+                if (!Settings.Enabled)
                 {
 #if DEBUG
                     Global.Logger.Debug("Error processing asset [{0}] - handler disabled".FormatWith(context.Request.Url.AbsolutePath));
@@ -58,7 +59,7 @@ namespace Lotus.Foundation.Assets.Handlers
                     context.RedirectIgnored("~/" + relativePath);
                 }
 
-                var ignored = context.Request.RawUrl.ExtractPattern(AssetsSettings.Regex.IgnoreQuery);
+                var ignored = context.Request.RawUrl.ExtractPattern(Settings.Regex.IgnoreQuery);
 
                 if (!string.IsNullOrEmpty(ignored))
                 {
@@ -75,14 +76,15 @@ namespace Lotus.Foundation.Assets.Handlers
             catch (ThreadAbortException abortException)
             {
                 #if DEBUG
-                Global.Logger.Debug("Asset processing thread aborted", abortException);
+                Global.Logger.Warn("Asset processing thread aborted", abortException);
                 #endif
             }
             catch (Exception exception)
             {
                 Global.Logger.Error("Error processing asset", exception);
+                
+                context.NotFound();
             }
-            context.NotFound();
         }
     }
 }

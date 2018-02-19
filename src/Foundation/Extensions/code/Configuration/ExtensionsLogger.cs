@@ -8,12 +8,12 @@ using Sitecore;
 
 namespace Lotus.Foundation.Extensions.Configuration
 {
-    public sealed class ExtensionsLogger : DefaultLogger
+    public sealed class ExtensionsLogger : LotusLogger
     {
-        public ExtensionsLogger()
-            : base("Lotus.Foundation.Extensions.Logger")
+        public ExtensionsLogger(string id, string includeStacktrace = "false")
+            : base(id, includeStacktrace)
         {
-            Prefix = "[ExtensionsLogger] ";
+            
         }
     }
 }

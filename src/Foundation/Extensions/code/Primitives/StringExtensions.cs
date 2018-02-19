@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using Lotus.Foundation.Extensions.RegularExpression;
 
 namespace Lotus.Foundation.Extensions.Primitives
 {
@@ -28,6 +30,26 @@ namespace Lotus.Foundation.Extensions.Primitives
                 }
             }
             return @string;
+        }
+        
+        public static string WhenEmpty(this string @string, string fallback)
+        {
+            return string.IsNullOrEmpty(@string) ? fallback : @string;
+        }
+        
+        public static string WhenEmpty(this string @string, Func<string, string> invoke)
+        {
+            return string.IsNullOrEmpty(@string) ? invoke.Invoke(@string) : @string;
+        }
+        
+        public static bool ToBool(this string @string, bool @default = default(bool))
+        {
+            if (@string == "1")
+                return true;
+            if (@string == "0")
+                return false;
+            bool b;
+            return bool.TryParse(@string, out b) ? b : @default;
         }
     }
 }

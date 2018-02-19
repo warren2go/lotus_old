@@ -53,8 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssetRequest.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Configuration\AssetsLogger.cs" />
-    <Compile Include="Configuration\AssetsSettings.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Handlers\AssetsRequestHandler.cs" />

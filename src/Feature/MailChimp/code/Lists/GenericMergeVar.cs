@@ -24,19 +24,20 @@ namespace Lotus.Feature.MailChimp.Lists
         
         public void MapField(XmlNode variableNode)
         {
-            if (string.IsNullOrEmpty(variableNode.LocalName))
+            var name = variableNode.GetAttribute("name");
+            if (string.IsNullOrEmpty(name))
             {
-                Global.Logger.Error("MapField received a bad node - missing localname [{0}]".FormatWith(variableNode.InnerXml));
+                Global.Logger.Error("MapField received a bad node - missing name attribute [{0}]".FormatWith(variableNode.InnerXml));
                 return;
             }
-            if (!ValidatorsByFieldName.ContainsKey(variableNode.LocalName))
+            if (!ValidatorsByFieldName.ContainsKey(name))
             {
-                ValidatorsByFieldName.Add(variableNode.LocalName, new List<IMailChimpValidator>());
+                ValidatorsByFieldName.Add(name, new List<IMailChimpValidator>());
             }
             var validators = variableNode.GetAttribute("validation");
             if (string.IsNullOrEmpty(validators))
             {
-                ValidatorsByFieldName[variableNode.LocalName].Add(MailChimpService.GetValidatorByKey("*"));
+                ValidatorsByFieldName[name].Add(MailChimpService.GetValidatorByKey("*"));
             }
             else
             {
@@ -51,7 +52,7 @@ namespace Lotus.Feature.MailChimp.Lists
                             Global.Logger.Warn("Validation incorrectly defined on node = {0} [{1}]".FormatWith(values.Dump(), variableNode.InnerXml));
                             continue;
                         }
-                        Global.Logger.Info("Generic validator detected - {0}:{1} for {2}".FormatWith(values.FirstOrDefault(), values.LastOrDefault(), variableNode.LocalName));
+                        Global.Logger.Info("Generic validator detected - {0}:{1} for {2}".FormatWith(values.FirstOrDefault(), values.LastOrDefault(), name));
                         validator = new Regex(values.LastOrDefault());
                     }
                     else
@@ -63,10 +64,10 @@ namespace Lotus.Feature.MailChimp.Lists
                             continue;
                         }   
                     }
-                    ValidatorsByFieldName[variableNode.LocalName].Add(validator);
+                    ValidatorsByFieldName[name].Add(validator);
                 }   
             }
-            Fields.Add(variableNode.LocalName, variableNode.InnerText);
+            Fields.Add(name, variableNode.InnerText);
         }
     }
 }

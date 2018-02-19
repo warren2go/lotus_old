@@ -6,17 +6,17 @@ using Lotus.Foundation.Extensions.Web;
 
 namespace Lotus.Foundation.Assets
 {
-    public static class Extensions
+    internal static class Extensions
     {
-        public static void RedirectBad(this HttpContextBase context, string url)
+        internal static void RedirectBad(this HttpContextBase context, string url)
         {
             context.RedirectIgnored(url);
         }
 
-        public static void RedirectIgnored(this HttpContextBase context, string url)
+        internal static void RedirectIgnored(this HttpContextBase context, string url)
         {
             var existingQuery = context.Request.Url.Query;
-            if (AssetsSettings.IgnoreType.IsMatch("^querystring$"))
+            if (Settings.IgnoreType.IsMatch("^querystring$"))
             {
                 if (string.IsNullOrEmpty(existingQuery))
                 {
@@ -24,33 +24,33 @@ namespace Lotus.Foundation.Assets
                 }
                 else
                 {
-                    var ignore = existingQuery.ExtractPattern(AssetsSettings.Regex.IgnoreQuery);
+                    var ignore = existingQuery.ExtractPattern(Settings.Regex.IgnoreQuery);
                     if (string.IsNullOrEmpty(ignore))
                     {
                         existingQuery += "&ignore=true";
                     }
                     else
                     {
-                        existingQuery.Replace(ignore, "&ignore=true");
+                        existingQuery = existingQuery.Replace(ignore, "&ignore=true");
                     }
                 }
             }
-            if (AssetsSettings.IgnoreType.IsMatch("^timestamp$"))
+            if (Settings.IgnoreType.IsMatch("^timestamp$"))
             {
-                if (url.IsMatch(AssetsSettings.Regex.Timestamp))
+                if (url.IsMatch(Settings.Regex.Timestamp))
                 {
-                    url = url.ReplacePattern(AssetsSettings.Regex.Timestamp, "0000000000");
+                    url = url.ReplacePattern(Settings.Regex.Timestamp, "0000000000");
                 }
                 else
                 {
-                    var extension = url.ExtractPattern(AssetsSettings.Regex.Extension);
+                    var extension = url.ExtractPattern(Settings.Regex.Extension);
                     url = url.ReplacePattern(extension.Escape(), "-{0}{1}".FormatWith("0000000000", extension));
                 }
             }
             context.RedirectPermanent(url + existingQuery);
         }
         
-        public static void RedirectWithUpdate(this HttpContextBase context, int timestamp, string relativePath, string extension)
+        internal static void RedirectWithUpdate(this HttpContextBase context, int timestamp, string relativePath, string extension)
         {
             var url = "~/-/assets/{0}".FormatWith(relativePath.ReplacePattern(extension.Escape(),
                 "-{0:0000000000}{1}".FormatWith(timestamp, extension)));

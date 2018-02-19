@@ -59,7 +59,7 @@ namespace Lotus.Feature.MailChimp.Services
                 Global.Logger.Warn("MailChimpManager could not be generated using the listId supplied [{0}]".FormatWith(listId));
                 return null;
             }
-            return new MailChimpManager(new global::MailChimp.MailChimpManager(list.APIKey), list);
+            return new MailChimpManager(new global::MailChimp.MailChimpManager(list.Key), list);
         }
     }
 }

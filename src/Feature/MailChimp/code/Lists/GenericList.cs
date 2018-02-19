@@ -2,14 +2,11 @@
 {
     internal class GenericList : IMailChimpList
     {
-        public string APIKey { get; set; }
+        public string Key { get; set; }
         public string ListId { get; set; }
         public IMailChimpMergeVar MergeVar { get; set; }
 
-        public GenericList()
-        {
-            
-        }
+        public GenericList() { }
         
         public GenericList(string listId)
         {
