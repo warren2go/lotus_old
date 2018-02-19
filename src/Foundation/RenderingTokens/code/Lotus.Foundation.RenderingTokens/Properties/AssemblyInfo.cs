@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Lotus.Foundation.RenderingTokens")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A tokenisation system for extension of views (MVC) which allows models to be defined/used within Sitecore fields.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Warren Dawes")]
 [assembly: AssemblyProduct("Lotus.Foundation.RenderingTokens")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("Copyright © Warren Dawes 2018")]
+[assembly: AssemblyTrademark("Euphoracle")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

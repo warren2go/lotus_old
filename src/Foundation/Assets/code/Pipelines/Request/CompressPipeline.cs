@@ -10,7 +10,7 @@ namespace Lotus.Foundation.Assets.Pipelines.Request
 {
     public class CompressPipeline : IAssetPipeline
     {
-        public void Process(AssetPipelineArgs args)
+        public virtual void Process(AssetPipelineArgs args)
         {
             ProcessCompress(args);
         }

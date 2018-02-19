@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Lotus.Feature.Amazon.S3")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("An implementation of the Amazon S3 API targeting Sitecore/.NET 4.5+.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Warren Dawes")]
 [assembly: AssemblyProduct("Lotus.Feature.Amazon.S3")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("Copyright © Warren Dawes 2018")]
+[assembly: AssemblyTrademark("Euphoracle")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

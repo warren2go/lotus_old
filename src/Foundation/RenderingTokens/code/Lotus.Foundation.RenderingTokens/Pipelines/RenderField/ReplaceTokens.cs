@@ -10,7 +10,7 @@ namespace Lotus.Foundation.RenderingTokens.Pipelines.RenderField
 {
     public class ReplaceTokens
     {
-        public void Process(RenderFieldArgs args)
+        public virtual void Process(RenderFieldArgs args)
         {
             if (!Settings.Enabled)
                 return;

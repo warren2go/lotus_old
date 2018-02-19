@@ -2,7 +2,7 @@
 {
     public class HeadersPipeline : IAssetPipeline
     {
-        public void Process(AssetPipelineArgs args)
+        public virtual void Process(AssetPipelineArgs args)
         {
             ProcessHeaders(args);
         }
