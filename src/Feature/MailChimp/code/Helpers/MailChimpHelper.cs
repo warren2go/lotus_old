@@ -1,12 +1,13 @@
-﻿using Lotus.Foundation.Extensions.RegularExpression;
+﻿using System;
+using Lotus.Foundation.Extensions.RegularExpression;
 
 namespace Lotus.Feature.MailChimp.Helpers
 {
     public static class MailChimpHelper
     {
-        public static string FilterDateTime(string date, string @default = "01/01/1900")
+        public static string FormatIsoDate(string isoDate, string format = "dd/MM/yyyy")
         {
-            return string.IsNullOrEmpty(date) ? @default : date.ReplacePattern(@"[/\- ]", @"/");
+            return Sitecore.DateUtil.IsoDateToDateTime(isoDate, DateTime.MinValue).ToString(format);
         }
     }
 }

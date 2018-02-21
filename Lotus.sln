@@ -155,8 +155,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "code", "code", "{BB641FE7-D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{F3E578E9-8A4B-477F-B97C-0181D02FA96D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lotus.Foundation.RenderingTokens", "src\Foundation\RenderingTokens\code\Lotus.Foundation.RenderingTokens\Lotus.Foundation.RenderingTokens.csproj", "{DD2FF588-9F63-4674-A3E3-DBBD418F7C70}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App_Config", "App_Config", "{8A0FB24A-8AD4-4076-8784-6A9446F3531F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{30E926E5-858C-462E-9B1F-8FC228D22C28}"
@@ -165,6 +163,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", 
 ProjectSection(SolutionItems) = preProject
 	src\Foundation\RenderingTokens\config\App_Config\Include\Foundation\Foundation.RenderingTokens.config = src\Foundation\RenderingTokens\config\App_Config\Include\Foundation\Foundation.RenderingTokens.config
 EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lotus.Foundation.RenderingTokens", "src\Foundation\RenderingTokens\code\Lotus.Foundation.RenderingTokens.csproj", "{DD2FF588-9F63-4674-A3E3-DBBD418F7C70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -277,9 +277,9 @@ Global
 		{5CF3CDEB-555E-464D-B64E-47EE7FF1EDD7} = {E73999C9-1D21-43AD-ABEA-34781105EB4B}
 		{BB641FE7-D7DF-4657-96A1-CD75B4FC9123} = {5CF3CDEB-555E-464D-B64E-47EE7FF1EDD7}
 		{F3E578E9-8A4B-477F-B97C-0181D02FA96D} = {5CF3CDEB-555E-464D-B64E-47EE7FF1EDD7}
-		{DD2FF588-9F63-4674-A3E3-DBBD418F7C70} = {BB641FE7-D7DF-4657-96A1-CD75B4FC9123}
 		{8A0FB24A-8AD4-4076-8784-6A9446F3531F} = {F3E578E9-8A4B-477F-B97C-0181D02FA96D}
 		{30E926E5-858C-462E-9B1F-8FC228D22C28} = {8A0FB24A-8AD4-4076-8784-6A9446F3531F}
 		{4512F1FF-2618-4132-970C-2BC8814AC86B} = {30E926E5-858C-462E-9B1F-8FC228D22C28}
+		{DD2FF588-9F63-4674-A3E3-DBBD418F7C70} = {BB641FE7-D7DF-4657-96A1-CD75B4FC9123}
 	EndGlobalSection
 EndGlobal
