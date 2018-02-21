@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Configuration\MailChimpLogger.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="Helpers\MailChimpHelper.cs" />
     <Compile Include="IMailChimpManager.cs" />
     <Compile Include="Lists\GenericList.cs" />
     <Compile Include="Lists\GenericMergeVar.cs" />
