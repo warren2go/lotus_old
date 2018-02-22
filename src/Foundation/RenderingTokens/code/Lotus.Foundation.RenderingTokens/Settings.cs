@@ -26,20 +26,39 @@
             }
         }
         
-        internal static string ExtractPattern
+        internal static string DefaultExtractPattern
         {
             get
             {
-                return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.RenderingTokens.ExtractPattern", "$(.+?)[.]?([a-zA-Z0-9()])?");
+                return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.RenderingTokens.DefaultExtractPattern", @"\$(.+?)[.]?([a-zA-Z0-9()])?");
             }
         }
         
-        internal static string ResolveFormat
+        internal static string ResolveTokenFormat
         {
             get
             {
-                return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.RenderingTokens.ResolveFormat", "{0}.{1}");
+                return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.RenderingTokens.ResolveTokenFormat", "token:{0}");
             }
+        }
+
+        internal static class ParameterKeys
+        {
+            internal static string Tokens
+            {
+                get
+                {
+                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.RenderingTokens.ParameterKeys.Tokens", "lotusRenderingTokens");
+                }
+            }
+        
+            internal static string ExtractPattern
+            {
+                get
+                {
+                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.RenderingTokens.ParameterKeys.ExtractPattern", "lotusRenderingExtractPattern");
+                }
+            }   
         }
     }
 }

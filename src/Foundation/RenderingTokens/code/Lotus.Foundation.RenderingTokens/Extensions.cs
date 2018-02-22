@@ -14,10 +14,10 @@ namespace Lotus.Foundation.RenderingTokens
         /// </summary>
         public static HtmlString FieldTokenized(this SitecoreHelper sitecoreHelper, string fieldName, Item item, params object[] tokenModels)
         {
-            var tokenRepository = new TokenRepository();
+            var tokenRenderingArgs = new TokenRenderingArgs();
             foreach (var model in tokenModels)
-                tokenRepository.Add(model.GetHashCode(), model);
-            return sitecoreHelper.Field(fieldName, item, (SafeDictionary<string, string>)tokenRepository);
+                tokenRenderingArgs.Add(model);
+            return sitecoreHelper.Field(fieldName, item, tokenRenderingArgs);
         }
         
         /// <summary>
@@ -25,18 +25,18 @@ namespace Lotus.Foundation.RenderingTokens
         /// </summary>
         public static HtmlString FieldTokenized(this SitecoreHelper sitecoreHelper, string fieldName, params object[] tokenModels)
         {
-            var tokenRepository = new TokenRepository();
+            var tokenRenderingArgs = new TokenRenderingArgs();
             foreach (var model in tokenModels)
-                tokenRepository.Add(model.GetHashCode(), model);
-            return sitecoreHelper.Field(fieldName, (SafeDictionary<string, string>)tokenRepository);
+                tokenRenderingArgs.Add(model);
+            return sitecoreHelper.Field(fieldName, tokenRenderingArgs);
         }
         
         /// <summary>
         /// Render a field with support for replacing $(token)'s with valid models based on their declared names
         /// </summary>
-        public static HtmlString FieldTokenized(this SitecoreHelper sitecoreHelper, string fieldName, TokenRepository tokenRepository)
+        public static HtmlString FieldTokenized(this SitecoreHelper sitecoreHelper, string fieldName, TokenRenderingArgs tokenRenderingArgs)
         {
-            return sitecoreHelper.Field(fieldName, (SafeDictionary<string, string>)tokenRepository);
+            return sitecoreHelper.Field(fieldName, tokenRenderingArgs);
         }
     }
 }
