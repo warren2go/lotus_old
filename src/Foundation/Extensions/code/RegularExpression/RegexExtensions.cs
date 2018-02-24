@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using JetBrains.Annotations;
 using Lotus.Foundation.Extensions.Primitives;
+using Convert = System.Convert;
 
 namespace Lotus.Foundation.Extensions.RegularExpression
 {
@@ -13,26 +15,31 @@ namespace Lotus.Foundation.Extensions.RegularExpression
             return !string.IsNullOrEmpty(pattern) && Regex.Match(@string, pattern).Success;
         }
         
+        [Sitecore.NotNull]
         public static string ReplacePattern(this string @string, string pattern, object replacement = null)
         {
             return Regex.Replace(@string, pattern, replacement != null ? replacement.ToString() : string.Empty);
         }
         
+        [Sitecore.NotNull]
         public static string ExtractPattern(this string @string, string pattern, int index = 1, string @default = "")
         {
             return Regex.Match(@string, pattern).GetValueFromMatch(index, @default);
         }
         
+        [Sitecore.NotNull]
         public static IEnumerable<string> ExtractPatterns(this string @string, string pattern)
         {
-            return Regex.Match(@string, pattern).GetValuesFromMatch();
+            return Regex.Matches(@string, pattern).GetValuesFromMatch();
         }
         
+        [Sitecore.NotNull]
         public static IDictionary<int, string> ExtractPatternsWithIndexes(this string @string, string pattern)
         {
             return Regex.Match(@string, pattern).GetValuesFromMatchWithIndexes();
         }
         
+        [Sitecore.CanBeNull]
         public static T ExtractPattern<T>(this string @string, string pattern, int index = 1, T @default = default(T))
         {
             try
@@ -52,6 +59,7 @@ namespace Lotus.Foundation.Extensions.RegularExpression
             }
         }
         
+        [Sitecore.NotNull]
         public static string GetValueFromMatch(this Match match, int index = 1, string @default = "")
         {
             if (index < 0)
@@ -61,29 +69,34 @@ namespace Lotus.Foundation.Extensions.RegularExpression
             return match.Success && index < match.Groups.Count ? match.Groups[index].Value : @default;
         }
         
-        public static IEnumerable<string> GetValuesFromMatch(this Match match)
+        [Sitecore.NotNull]
+        public static IEnumerable<string> GetValuesFromMatch(this MatchCollection matches)
         {
             var values = new List<string>();
-            if (match.Success)
+            foreach (Match match in matches)
             {
-                for (int i = 1; i < match.Groups.Count; i++)
+                if (match.Success)
                 {
-                    var value = match.Groups[i].Value;
-                    if (!string.IsNullOrEmpty(value))
+                    for (var i = 1; i < match.Groups.Count; i++)
                     {
-                        values.Add(value);   
+                        var value = match.Groups[i].Value;
+                        if (!string.IsNullOrEmpty(value))
+                        {
+                            values.Add(value);   
+                        }
                     }
-                }
+                }   
             }
             return values;
         }
         
+        [Sitecore.NotNull]
         public static IDictionary<int, string> GetValuesFromMatchWithIndexes(this Match match)
         {
             var values = new Dictionary<int, string>();
             if (match.Success)
             {
-                for (int i = 1; i < match.Groups.Count; i++)
+                for (var i = 1; i < match.Groups.Count; i++)
                 {
                     var value = match.Groups[i].Value;
                     if (!string.IsNullOrEmpty(value))

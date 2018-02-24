@@ -30,7 +30,7 @@
         {
             get
             {
-                return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.RenderingTokens.DefaultExtractPattern", @"\$(.+?)[.]?([a-zA-Z0-9()])?");
+                return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.RenderingTokens.DefaultExtractPattern", @"\$\(.+\)(?:[.]?([a-zA-Z0-9_()]+)?)?");
             }
         }
         

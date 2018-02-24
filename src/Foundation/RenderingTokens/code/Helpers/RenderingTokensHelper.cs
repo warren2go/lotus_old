@@ -6,7 +6,12 @@ namespace Lotus.Foundation.RenderingTokens.Helpers
     {
         public static string ResolveTokenName(object model)
         {
-            return Settings.ResolveTokenFormat.FormatWith(model.GetType().FullName);
+            return ResolveTokenName(model.GetType().FullName);
+        }
+        
+        public static string ResolveTokenName(string key)
+        {
+            return Settings.ResolveTokenFormat.FormatWith(key);
         }
     }
 }

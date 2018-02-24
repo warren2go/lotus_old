@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JetBrains.Annotations, Version=11.1.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325">
+      <HintPath>..\..\..\..\packages\JetBrains.Annotations.11.1.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Kernel, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\..\..\lib\referenced\Sitecore.Kernel.dll</HintPath>
     </Reference>
@@ -40,6 +43,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -50,8 +54,13 @@
     <Compile Include="Structures\Collections\StaticList.cs" />
     <Compile Include="Structures\Collections\StaticQueue.cs" />
     <Compile Include="Structures\Tokenizer.cs" />
-    <Compile Include="Utils\MiscUtil.cs" />
+    <Compile Include="TokenContext.cs" />
+    <Compile Include="Utils\ReflectionUtils.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
     <Compile Include="Utils\SitecoreUtils\MainUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,32 +1,35 @@
 ﻿using System;
 using System.Linq;
 using Lotus.Foundation.Extensions.RegularExpression;
+using Sitecore;
 
 namespace Lotus.Foundation.Extensions.Primitives
 {
     public static class StringExtensions
     {
-        private static readonly string[] Escapable = { @".|\.", @"+|\+", @"*|\*", @"^|\^", @"?|\?",  @"$|\$", @"&|&amp;", @"-|\-" };
+        private static readonly string[] Escapable = { @".|\.", @"+|\+", @"*|\*", @"^|\^", @"?|\?",  @"$|\$", @"&|&amp;", @"-|\-", @"(|\(", @")|\)" };
         
         public static string SurroundsWith(this string @string, string with)
         {
             return string.Format("{0}{1}{2}",with, @string, with);
         }
 
+        [StringFormatMethod("format")]
         public static string FormatWith(this string format, params object[] @params)
         {
             return string.Format(format, @params);
         }
 
-        public static string Escape(this string @string)
+        public static string Escape(this string @string, params string[] ignore)
         {
             foreach (var escape in Escapable)
             {
-                var seek = escape.Split('|').FirstOrDefault();
-                var replace = escape.Split('|').LastOrDefault();
-                if (!string.IsNullOrEmpty(seek) && !string.IsNullOrEmpty(replace))
+                var seek = escape.Split('|').FirstOrDefault() ?? string.Empty;
+                if (ignore.Any(x => x.Equals(seek, StringComparison.InvariantCultureIgnoreCase)))
+                    continue;
+                if (!string.IsNullOrEmpty(seek))
                 {
-                    @string = @string.Replace(seek, replace);   
+                    @string = @string.Replace(seek, escape.Split('|').LastOrDefault() ?? seek);   
                 }
             }
             return @string;

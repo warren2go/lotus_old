@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\..\..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Kernel, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\..\..\lib\referenced\Sitecore.Kernel.dll</HintPath>
     </Reference>
@@ -50,24 +53,28 @@
     <Compile Include="Global.cs" />
     <Compile Include="Helpers\RenderingTokensHelper.cs" />
     <Compile Include="Pipelines\Initialize\Initialize.cs" />
+    <Compile Include="Pipelines\RenderField\InvokeTokens.cs" />
     <Compile Include="Pipelines\RenderField\ReplaceTokens.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Structures\TokenRenderingArgs.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Extensions\code\Lotus.Foundation.Extensions.csproj">
-      <Project>{A4B1C128-3A32-4760-9321-D5E65CD519B4}</Project>
+    <ProjectReference Include="..\..\Extensions\code\Lotus.Foundation.Extensions.csproj">
+      <Project>{a4b1c128-3a32-4760-9321-d5e65cd519b4}</Project>
       <Name>Lotus.Foundation.Extensions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Kernel\code\Lotus.Foundation.Kernel.csproj">
+    <ProjectReference Include="..\..\Kernel\code\Lotus.Foundation.Kernel.csproj">
       <Project>{ef8d739c-fdfd-40f2-934c-17af17aae61f}</Project>
       <Name>Lotus.Foundation.Kernel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Logging\code\Lotus.Foundation.Logging.csproj">
-      <Project>{65F23213-3B77-4DC2-A824-BE988400BBAF}</Project>
+    <ProjectReference Include="..\..\Logging\code\Lotus.Foundation.Logging.csproj">
+      <Project>{65f23213-3b77-4dc2-a824-be988400bbaf}</Project>
       <Name>Lotus.Foundation.Logging</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

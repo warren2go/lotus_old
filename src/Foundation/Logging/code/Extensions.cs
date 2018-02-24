@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sitecore;
 
 namespace Lotus.Foundation.Logging
 {
@@ -12,6 +13,7 @@ namespace Lotus.Foundation.Logging
             return dictionary.TryGetValue(key, out exists) ? exists : @default;
         }
         
+        [StringFormatMethod("format")]
         internal static string FormatWith(this string format, params object[] @params)
         {
             return string.Format(format, @params);

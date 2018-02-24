@@ -3,16 +3,19 @@ using Lotus.Foundation.Assets.Configuration;
 using Lotus.Foundation.Extensions.Primitives;
 using Lotus.Foundation.Extensions.RegularExpression;
 using Lotus.Foundation.Extensions.Web;
+using Sitecore;
 
 namespace Lotus.Foundation.Assets
 {
     internal static class Extensions
     {
+        [TerminatesProgram]
         internal static void RedirectBad(this HttpContextBase context, string url)
         {
             context.RedirectIgnored(url);
         }
 
+        [TerminatesProgram]
         internal static void RedirectIgnored(this HttpContextBase context, string url)
         {
             var existingQuery = context.Request.Url.Query;
@@ -50,6 +53,7 @@ namespace Lotus.Foundation.Assets
             context.RedirectPermanent(url + existingQuery);
         }
         
+        [TerminatesProgram]
         internal static void RedirectWithUpdate(this HttpContextBase context, int timestamp, string relativePath, string extension)
         {
             var url = "~/-/assets/{0}".FormatWith(relativePath.ReplacePattern(extension.Escape(),

@@ -5,6 +5,7 @@ using System.Web;
 using Lotus.Foundation.Extensions.Configuration;
 using Lotus.Foundation.Extensions.Primitives;
 using Lotus.Foundation.Extensions.RegularExpression;
+using Sitecore;
 using Sitecore.Diagnostics;
 
 namespace Lotus.Foundation.Extensions.Web
@@ -45,6 +46,7 @@ namespace Lotus.Foundation.Extensions.Web
             }
         }
         
+        [TerminatesProgram]
         public static void End(this HttpContextBase context, bool abortThread = true)
         {
             if (abortThread)
@@ -67,6 +69,7 @@ namespace Lotus.Foundation.Extensions.Web
             }
         }
         
+        [TerminatesProgram]
         public static void NotFound(this HttpContextBase context, string statusDescription = "Not Found", bool endResponse = true)
         {
             context.Response.StatusCode = 404;
@@ -78,6 +81,7 @@ namespace Lotus.Foundation.Extensions.Web
             }
         }
 
+        [TerminatesProgram]
         public static void InternalServerError(this HttpContextBase context, string statusDescription = "Internal Server Error", bool endResponse = true)
         {
             context.Response.StatusCode = 500;
@@ -89,11 +93,13 @@ namespace Lotus.Foundation.Extensions.Web
             }
         }
 
+        [TerminatesProgram]
         public static void Redirect(this HttpContextBase context, string url)
         {
             context.Response.Redirect(url);
         }
 
+        [TerminatesProgram]
         public static void RedirectPermanent(this HttpContextBase context, string url)
         {
             context.Response.RedirectPermanent(url);
