@@ -173,7 +173,7 @@ namespace Lotus.Foundation.Logging.Helpers
         {
             foreach (var loggerNode in nodes)
             {
-                DOMConfigurator.Configure(XmlUtil.GetChildElement("log4net", loggerNode) as XmlElement);
+                ConfigureLoggerFromXml(loggerNode);
             }
         }
         
@@ -182,6 +182,7 @@ namespace Lotus.Foundation.Logging.Helpers
         /// </summary>
         public static void ConfigureLoggerFromXml(XmlNode node)
         {
+            if (node == null) return;
             DOMConfigurator.Configure(node as XmlElement);
         }
         
@@ -190,6 +191,7 @@ namespace Lotus.Foundation.Logging.Helpers
         /// </summary>
         public static void ConfigureLoggerFromXml(ILoggerRepository repository, XmlNode node)
         {
+            if (node == null) return;
             DOMConfigurator.Configure(repository, node as XmlElement);
         }
     }

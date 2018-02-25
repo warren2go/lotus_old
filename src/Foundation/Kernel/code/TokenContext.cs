@@ -26,19 +26,44 @@ namespace Sitecore
             Tokenizer.Add(key, token);
         }
 
-        public static string Resolve(string format)
+        public static string Invoke(string format)
         {
-            return Tokenizer.Resolve(format);
+            return Tokenizer.Invoke(format);
         }
 
-        public static string ResolveToken(string format)
+        public static string Invoke(string format, SafeDictionary<string, object> tokens)
         {
-            return Tokenizer.ResolveToken(format);
+            return Tokenizer.Invoke(format, tokens);
+        }
+        
+        public static string Replace(string format)
+        {
+            return Tokenizer.Replace(format);
         }
 
-        public static string ResolveTokenElemet(string format, Func<string, string, object, string> func)
+        public static string Replace(string format, SafeDictionary<string, object> tokens)
         {
-            return Tokenizer.ResolveTokenElement(format, func);
+            return Tokenizer.Replace(format, tokens);
+        }
+
+        public static string ReplaceToken(string format)
+        {
+            return Tokenizer.ReplaceToken(format);
+        }
+
+        public static string ReplaceToken(string format, SafeDictionary<string, object> tokens)
+        {
+            return Tokenizer.ReplaceToken(format, tokens);
+        }
+
+        public static string ReplaceTokenElement(string format, Func<string, string, object, string> func)
+        {
+            return Tokenizer.ReplaceTokenElement(format, func);
+        }
+
+        public static string ReplaceTokenElement(string format, SafeDictionary<string, object> tokens, Func<string, string, object, string> func)
+        {
+            return Tokenizer.ReplaceTokenElement(format, tokens, func);
         }
     }
 }

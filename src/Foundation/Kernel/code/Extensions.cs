@@ -90,7 +90,7 @@ namespace Lotus.Foundation.Kernel
         
         internal static IDictionary<int, string> ExtractPatternsWithIndexes(this string @string, string pattern)
         {
-            return Regex.Match(@string, pattern).GetValuesFromMatchWithIndexes();
+            return Regex.Matches(@string, pattern).GetValuesFromMatchWithIndexes();
         }
         
         internal static T ExtractPattern<T>(this string @string, string pattern, int index = 1, T @default = default(T))
@@ -140,17 +140,20 @@ namespace Lotus.Foundation.Kernel
             return values;
         }
         
-        internal static IDictionary<int, string> GetValuesFromMatchWithIndexes(this Match match)
+        internal static IDictionary<int, string> GetValuesFromMatchWithIndexes(this MatchCollection matches)
         {
             var values = new Dictionary<int, string>();
-            if (match.Success)
+            foreach (Match match in matches)
             {
-                for (var i = 1; i < match.Groups.Count; i++)
+                if (match.Success)
                 {
-                    var value = match.Groups[i].Value;
-                    if (!string.IsNullOrEmpty(value))
+                    for (var i = 1; i < match.Groups.Count; i++)
                     {
-                        values.Add(i, value);   
+                        var value = match.Groups[i].Value;
+                        if (!string.IsNullOrEmpty(value))
+                        {
+                            values.Add(i, value);
+                        }
                     }
                 }
             }

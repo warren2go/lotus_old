@@ -26,22 +26,13 @@ namespace Lotus.Foundation.RenderingTokens.Pipelines.RenderField
             if (!Settings.Enabled)
                 return;
 
-            var before = args.Result.ToString();
-            
             args.Result.FirstPart = Replace(args.Result.FirstPart);
             args.Result.LastPart = Replace(args.Result.LastPart);
-
-            var after = args.Result.ToString();
-            
-            if (Settings.IsDebug && before != after)
-            {
-                Global.Logger.Debug("Replace: {0} -> {1}".FormatWith(before, after));
-            }
         }
 
         private static string Replace(string replace)
         {
-            return Sitecore.TokenContext.Resolve(replace);
+            return Sitecore.TokenContext.Replace(replace);
         }
     }
 }

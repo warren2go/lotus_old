@@ -166,6 +166,17 @@ EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lotus.Foundation.RenderingTokens", "src\Foundation\RenderingTokens\code\Lotus.Foundation.RenderingTokens.csproj", "{DD2FF588-9F63-4674-A3E3-DBBD418F7C70}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{C1846315-359F-4559-8DCB-3F380A04D682}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App_Config", "App_Config", "{4EF3D44E-9AFD-43EA-9F07-4FEDE81214E6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{8905FA0A-B5F4-482C-AE4E-3886D259D9BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{93F4F235-02AF-4C25-9687-C80098E3CD44}"
+ProjectSection(SolutionItems) = preProject
+	src\Foundation\Kernel\config\App_Config\Include\Foundation\Foundation.Kernel.config = src\Foundation\Kernel\config\App_Config\Include\Foundation\Foundation.Kernel.config
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -281,5 +292,9 @@ Global
 		{30E926E5-858C-462E-9B1F-8FC228D22C28} = {8A0FB24A-8AD4-4076-8784-6A9446F3531F}
 		{4512F1FF-2618-4132-970C-2BC8814AC86B} = {30E926E5-858C-462E-9B1F-8FC228D22C28}
 		{DD2FF588-9F63-4674-A3E3-DBBD418F7C70} = {BB641FE7-D7DF-4657-96A1-CD75B4FC9123}
+		{C1846315-359F-4559-8DCB-3F380A04D682} = {1BB0813E-5F3D-4720-93AE-982DA27DA0C0}
+		{4EF3D44E-9AFD-43EA-9F07-4FEDE81214E6} = {C1846315-359F-4559-8DCB-3F380A04D682}
+		{8905FA0A-B5F4-482C-AE4E-3886D259D9BD} = {4EF3D44E-9AFD-43EA-9F07-4FEDE81214E6}
+		{93F4F235-02AF-4C25-9687-C80098E3CD44} = {8905FA0A-B5F4-482C-AE4E-3886D259D9BD}
 	EndGlobalSection
 EndGlobal

@@ -7,11 +7,12 @@ using log4net.Appender;
 using log4net.spi;
 using Lotus.Foundation.Kernel.Structures.Collections;
 using Sitecore.Configuration;
+using Sitecore.Diagnostics;
 using ConfigReader = log4net.Appender.ConfigReader;
 
 namespace Lotus.Foundation.Logging.Appenders
 {
-  public class LotusLogFileAppender : FileAppender
+  public class LotusLogFileAppender : SitecoreLogFileAppender
   {
     private StaticDictionary<string, string> AppenderVariables = new StaticDictionary<string, string>();
     
@@ -31,6 +32,7 @@ namespace Lotus.Foundation.Logging.Appenders
       }
       set
       {
+        Log.Error("File: " + value, this);
         if (this.m_originalFileName == null)
         {
           var str = value;
@@ -39,6 +41,7 @@ namespace Lotus.Foundation.Logging.Appenders
           {
             var oldValue = "$(" + key + ")";
             str = str.Replace(oldValue, variables[key]);
+            Log.Error("File-Variable: " + oldValue + ":" + variables[key], this);
           }
           this.m_originalFileName = this.MapPath(str.Trim());
         }
@@ -121,7 +124,7 @@ namespace Lotus.Foundation.Logging.Appenders
 
     private string MapPath(string fileName)
     {
-      if (fileName == "" || fileName.IndexOf(":/", StringComparison.Ordinal) >= 0 || fileName.IndexOf("://", StringComparison.Ordinal) >= 0)
+      if (fileName == "" || fileName.IndexOf(":/") >= 0 || fileName.IndexOf("://") >= 0)
         return fileName;
       int index = fileName.IndexOfAny(new char[2]
       {
@@ -131,8 +134,6 @@ namespace Lotus.Foundation.Logging.Appenders
       if (index >= 0 && (int) fileName[index] == 92)
         return fileName.Replace('/', '\\');
       fileName = fileName.Replace('\\', '/');
-      if (HttpContext.Current != null)
-        return HttpContext.Current.Server.MapPath(fileName);
       if (fileName[0] == '/')
         return MakePath(State.HttpRuntime.AppDomainAppPath, fileName.Replace('/', '\\'), '\\');
       return fileName;

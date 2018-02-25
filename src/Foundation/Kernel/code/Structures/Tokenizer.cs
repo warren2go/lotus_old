@@ -4,24 +4,22 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Lotus.Foundation.Kernel.Structures.Collections;
+using Lotus.Foundation.Kernel.Utils;
 using Sitecore;
 using Sitecore.Collections;
-using Sitecore.Reflection;
 
 namespace Lotus.Foundation.Kernel.Structures
 {
     public class Tokenizer : IDisposable
     {
-        private const string _tokenCharacters = "[a-zA-Z0-9_]";
-        private const string _tokenElementCharacters = "[a-zA-Z0-9._()]";
-        
-        public static readonly string TokenSelectRegex = @"(\$\(" + _tokenCharacters + @"+?\))";
-        public static readonly string TokenElementSelectRegex = @"(?:\$\(" + _tokenCharacters + @"+?\))(" + _tokenElementCharacters + @"+)";
-        public static readonly string TokenAndElementSelectRegex = @"(\$\(" + _tokenCharacters + @"+?\)" + _tokenElementCharacters + @"+)";
-        public static readonly string TokenFormat = "$({0})";
-        public static readonly string TokenElementFormat = ".{0}";
-
-        public static readonly string TokenContextKey = "lotus-context-tokenizer";
+        public static readonly string TokenFormat = Settings.Tokenization.TokenFormat;
+        public static readonly string TokenElementFormat = Settings.Tokenization.TokenElementFormat;
+        public static readonly string TokenContextKey = Settings.Tokenization.TokenContextKey;
+        public static readonly string TokenCharacters = Settings.Tokenization.TokenCharacters;
+        public static readonly string TokenElementCharacters = Settings.Tokenization.TokenElementCharacters;
+        public static readonly string TokenSelectRegex = @"(" + TokenFormat.Escape("{", "}").FormatWith(TokenCharacters + @"+?") + @")";
+        public static readonly string TokenElementSelectRegex = @"(?:" + TokenFormat.Escape("{", "}").FormatWith(TokenCharacters + @"+?") + @")(" + TokenElementCharacters + @"+)";
+        public static readonly string TokenAndElementSelectRegex = @"(" + TokenFormat.Escape("{", "}").FormatWith(TokenCharacters + @"+?") + TokenElementCharacters + @"+)";
         
         private SafeDictionary<string, object> _tokens = new SafeDictionary<string, object>();
         
@@ -34,6 +32,11 @@ namespace Lotus.Foundation.Kernel.Structures
             _tokens.Clear();
         }
 
+        /// <summary>
+        /// Add a token to the tokenizer
+        /// </summary>
+        /// <param name="key">Token identifier to seek - without format (eg 'property' and not '$(property)'.</param>
+        /// <param name="token">Instance of the token to use.</param>
         public void Add(string key, object token)
         {
             if (key.IsMatch(TokenSelectRegex))
@@ -41,61 +44,134 @@ namespace Lotus.Foundation.Kernel.Structures
             _tokens.Add(key, token);
         }
 
-        public static void Add(Tokenizer tokenizer, string key, object token)
+        /// <summary>
+        /// Seek any methods to invoke for results.
+        /// </summary>
+        /// <param name="format">Content that contains the tokens.</param>
+        /// <returns>A resulting string with all methods invoked and tokens replaced by their corresponding results.</returns>
+        public string Invoke(string format)
         {
-            tokenizer.Add(key, token);
+            return Invoke(format, _tokens);
         }
 
-        public string Resolve(string format)
+        /// <summary>
+        /// Seek any methods to invoke for results.
+        /// </summary>
+        /// <param name="format">Content that contains the tokens.</param>
+        /// <param name="tokens">Tokens to seek.</param>
+        /// <returns>A resulting string with all methods invoked and tokens replaced by their corresponding results.</returns>
+        public static string Invoke(string format, SafeDictionary<string, object> tokens)
         {
-            return Resolve(format, _tokens);
-        }
-
-        public static string Resolve(string format, SafeDictionary<string, object> tokens)
-        {
-            foreach (var tokenStr in ExtractTokensAndElements(format))
+            var value = (object) string.Empty;
+            return ExtractTokensAndElements(format).Aggregate(format, (current, tokenAndElement) =>
             {
-                var tokenElementStr = ExtractTokenElement(tokenStr);
-                
-                if (string.IsNullOrEmpty(tokenElementStr))
+                var token = ExtractToken(tokenAndElement);
+                var element = ExtractTokenElement(tokenAndElement);
+
+                if (string.IsNullOrEmpty(element))
                 {
-                    format = ResolveToken(format, tokens);
+                    value = tokens[ExtractTokenName(TokenFormat.FormatWith(token))];
                 }
                 else
                 {
-                    format = ResolveTokenElement(format, tokens, (current, key, value) =>
+                    if (element.EndsWith("()"))
                     {
-                        var tokenObject = value;
-                        var tokenElements = tokenElementStr.Split('.').Where(x => !string.IsNullOrEmpty(x));
-                        foreach (var tokenElement in tokenElements)
-                            tokenObject = ReflectionUtil.GetProperty(tokenObject, tokenElement) ?? ReflectionUtil.GetField(tokenObject, tokenElement);
-                        return current.Replace(tokenStr, (tokenObject ?? tokenStr).ToString());
-                    });
+                        value = ReflectionUtil.InvokeMethod(value, ExtractTokenElementName(TokenElementFormat.FormatWith(element)));
+                    }
+                    else
+                    {
+                        value = ReflectionUtil.GetValue(value, element);
+                    }
+                }
+
+                return current.Replace(tokenAndElement, (value ?? string.Empty).ToString());
+            });
+        }
+        
+        /// <summary>
+        /// Seek any tokens to replace with variable results.
+        /// </summary>
+        /// <param name="format">Content that contains the tokens.</param>
+        /// <returns>A resulting string with all tokens replaced by their corresponding variables.</returns>
+        public string Replace(string format)
+        {
+            return Replace(format, _tokens);
+        }
+
+        /// <summary>
+        /// Seek any tokens to replace with variable results.
+        /// </summary>
+        /// <param name="format">Content that contains the tokens.</param>
+        /// <param name="tokens">Tokens to seek.</param>
+        /// <returns>A resulting string with all tokens replaced by their corresponding variables.</returns>
+        public static string Replace(string format, SafeDictionary<string, object> tokens)
+        {
+            foreach (var tokenAndElement in ExtractTokensAndElements(format))
+            {
+                var element = ExtractTokenElement(tokenAndElement);
+                
+                if (string.IsNullOrEmpty(element))
+                {
+                    format = ReplaceToken(format, tokens);
+                }
+                else
+                {
+                    format = ReplaceTokenElement(format, tokens, (current, key, value) => current.Replace(tokenAndElement, (ReflectionUtil.GetValueWithPath(value, element) ?? tokenAndElement).ToString()));
                 }
             }
             return format;
         }
 
-        public string ResolveToken(string format)
+        /// <summary>
+        /// Seek any tokens to replace with variable results.
+        /// </summary>
+        /// <param name="format">Content that contains the tokens.</param>
+        /// <returns>A resulting string with all tokens replaced by their corresponding variables.</returns>
+        public string ReplaceToken(string format)
         {
-            return ResolveToken(format, _tokens);
+            return ReplaceToken(format, _tokens);
         }
 
-        public static string ResolveToken(string format, SafeDictionary<string, object> tokens)
+        /// <summary>
+        /// Seek any tokens to replace with variable results.
+        /// </summary>
+        /// <param name="format">Content that contains the tokens.</param>
+        /// <param name="tokens">Tokens to seek.</param>
+        /// <returns>A resulting string with all tokens replaced by their corresponding variables.</returns>
+        public static string ReplaceToken(string format, SafeDictionary<string, object> tokens)
         {
-            return tokens.Aggregate(format, (current, token) => current.Replace(TokenFormat.FormatWith(token.Key), token.Value.ToString()));
+            return tokens.Aggregate(format, (current, token) => current.Replace(TokenFormat.FormatWith(token.Key), (token.Value ?? string.Empty).ToString()));
         }
 
-        public string ResolveTokenElement(string format, Func<string, string, object, string> func)
+        /// <summary>
+        /// Seek any tokens elements to replace with variable results.
+        /// </summary>
+        /// <param name="format">Content that contains the tokens.</param>
+        /// <param name="func">A func to replace elements with - customize the result of the token element.</param>
+        /// <returns>A resulting string with all token elements replaced by their corresponding variables.</returns>
+        public string ReplaceTokenElement(string format, Func<string, string, object, string> func)
         {
-            return ResolveTokenElement(format, _tokens, func);
+            return ReplaceTokenElement(format, _tokens, func);
         }
 
-        public static string ResolveTokenElement(string format, SafeDictionary<string, object> tokens, Func<string, string, object, string> func)
+        /// <summary>
+        /// Seek any tokens elements to replace with variable results.
+        /// </summary>
+        /// <param name="format">Content that contains the tokens.</param>
+        /// <param name="tokens">Tokens to seek.</param>
+        /// <param name="func">A func to replace elements with - customize the result of the token element.</param>
+        /// <returns>A resulting string with all token elements replaced by their corresponding variables.</returns>
+        public static string ReplaceTokenElement(string format, SafeDictionary<string, object> tokens, Func<string, string, object, string> func)
         {
             return tokens.Aggregate(format, (current, token) => func.Invoke(current, token.Key, token.Value));
         }
         
+        /// <summary>
+        /// Extract a token with a specified index - 0 is default
+        /// </summary>
+        /// <param name="string">Content that contains the tokens.</param>
+        /// <param name="index">Zero-based index for token to retrieve - 0 is default</param>
+        /// <returns>The specified token or string.Empty.</returns>
         public static string ExtractToken(string @string, int index = 0)
         {
             var tokens = ExtractTokens(@string).ToArray();
@@ -106,11 +182,22 @@ namespace Lotus.Foundation.Kernel.Structures
             return tokens.FirstOrDefault() ?? string.Empty;
         }
 
+        /// <summary>
+        /// Extract all tokens found
+        /// </summary>
+        /// <param name="string">Content that contains the tokens.</param>
+        /// <returns>A collection of tokens.</returns>
         public static IEnumerable<string> ExtractTokens(string @string)
         {
             return @string.ExtractPatterns(TokenSelectRegex);
         }
 
+        /// <summary>
+        /// Extract a token element with a specified index - 0 is default
+        /// </summary>
+        /// <param name="string">Content that contains the tokens.</param>
+        /// <param name="index">Zero-based index for token element to retrieve - 0 is default</param>
+        /// <returns>The specified token element or string.Empty.</returns>
         public static string ExtractTokenElement(string @string, int index = 0)
         {
             var tokenElements = ExtractTokenElements(@string).ToArray();
@@ -121,11 +208,22 @@ namespace Lotus.Foundation.Kernel.Structures
             return tokenElements.FirstOrDefault() ?? string.Empty;
         }
         
+        /// <summary>
+        /// Extract all token elements found
+        /// </summary>
+        /// <param name="string">Content that contains the token elements.</param>
+        /// <returns>A collection of token elements.</returns>
         public static IEnumerable<string> ExtractTokenElements(string @string)
         {
             return @string.ExtractPatterns(TokenElementSelectRegex);
         }
 
+        /// <summary>
+        /// Extract a token with its element with a specified index - 0 is default
+        /// </summary>
+        /// <param name="string">Content that contains the tokens and their elements.</param>
+        /// <param name="index">Zero-based index for token element to retrieve - 0 is default</param>
+        /// <returns>The specified token and element or string.Empty.</returns>
         public static string ExtractTokenAndElement(string @string, int index = 0)
         {
             var tokenAndElements = ExtractTokensAndElements(@string).ToArray();
@@ -136,19 +234,34 @@ namespace Lotus.Foundation.Kernel.Structures
             return tokenAndElements.FirstOrDefault() ?? string.Empty;
         }
         
+        /// <summary>
+        /// Extract all tokens and their elements found
+        /// </summary>
+        /// <param name="string">Content that contains the tokens and their elements.</param>
+        /// <returns>A collection of tokens and their elements.</returns>
         public static IEnumerable<string> ExtractTokensAndElements(string @string)
         {
             return @string.ExtractPatterns(TokenAndElementSelectRegex);
         }
         
+        /// <summary>
+        /// Extract the token identifier from the token
+        /// </summary>
+        /// <param name="token">Token to extract from.</param>
+        /// <returns>Token identifier or string.Empty.</returns>
         public static string ExtractTokenName(string token)
         {
-            return token.ExtractPattern(TokenFormat.Escape("{", "}").FormatWith(@"(" + _tokenCharacters + @"+)"));
+            return token.ExtractPattern(TokenFormat.Escape("{", "}").FormatWith(@"(" + TokenCharacters + @"+)"));
         }
         
+        /// <summary>
+        /// Extract the token element name from the token element
+        /// </summary>
+        /// <param name="token">Token element to extract name from.</param>
+        /// <returns>Token element name or string.Empty.</returns>
         public static string ExtractTokenElementName(string token)
         {
-            return token.ExtractPattern(TokenElementFormat.Escape("{", "}").FormatWith(@"(" + _tokenCharacters + @"+)"));
+            return token.ExtractPattern(TokenElementFormat.Escape("{", "}").FormatWith(@"(" + TokenCharacters + @"+)"));
         }
     }
 }
