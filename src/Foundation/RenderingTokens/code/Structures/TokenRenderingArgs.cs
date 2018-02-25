@@ -4,10 +4,10 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters;
 using Lotus.Foundation.RenderingTokens.Helpers;
+using Newtonsoft.Json;
 using Sitecore.Collections;
 using Sitecore.Diagnostics;
 using Sitecore.Pipelines;
-using Formatting = System.Xml.Formatting;
 
 namespace Lotus.Foundation.RenderingTokens.Structures
 {
@@ -44,13 +44,11 @@ namespace Lotus.Foundation.RenderingTokens.Structures
             object obj = (object) null;
             if (tokens != null)
                 obj = (object) tokens.ToArray<KeyValuePair<string, object>>();
-            //todo: reference newtonsoft package
-//            return JsonConvert.SerializeObject(obj, Formatting.Indented, new JsonSerializerSettings()
-//            {
-//                TypeNameHandling = TypeNameHandling.All,
-//                TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple
-//            });
-            return string.Empty;
+            return JsonConvert.SerializeObject(obj, Formatting.Indented, new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.All,
+                TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple
+            });
         }
         
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
