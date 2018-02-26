@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Sitecore;
@@ -8,6 +9,8 @@ namespace Lotus.Foundation.Kernel.Utils
 {
     public class ReflectionUtil
     {
+        private const string _validNameRegex = @"[\.]?([a-zA-Z0-9_]+)[\(]?";
+        
         private static string[] GetNames(string name)
         {
             return name.Split('.').Where(x => !string.IsNullOrEmpty(x)).ToArray();
@@ -38,26 +41,30 @@ namespace Lotus.Foundation.Kernel.Utils
             return GetMethodNames(name).FirstOrDefault() ?? string.Empty;
         }
         
-        public static object GetValue([NotNull] object target, string name)
+        public static object GetResult([NotNull] object target, string name)
         {
-            return Sitecore.Reflection.ReflectionUtil.GetProperty(target, GetName(name)) ?? Sitecore.Reflection.ReflectionUtil.GetField(target, GetName(name));
+            if (name.EndsWith(")"))
+            {
+                return InvokeMethod(target, name.ExtractPattern(_validNameRegex));
+            }
+            return Sitecore.Reflection.ReflectionUtil.GetProperty(target, name.ExtractPattern(_validNameRegex)) ?? Sitecore.Reflection.ReflectionUtil.GetField(target, name.ExtractPattern(_validNameRegex));
         }
 
-        public static object GetValueWithPath([NotNull] object target, string path)
+        public static object GetResultWithPath([NotNull] object target, string path)
         {
-            return GetNames(path).Aggregate(target, GetValue);
+            return GetNames(path).Aggregate(target, GetResult);
         }
 
-        public static T GetValueAndCast<T>([NotNull] object target, string name, T @default = default(T)) where T : class
+        public static T GetResultAndCast<T>([NotNull] object target, string name, T @default = default(T)) where T : class
         {
-            return GetValue(target, name) as T ?? @default;
+            return GetResult(target, name) as T ?? @default;
         }
 
         public static MethodInfo GetMethod([NotNull] object target, string methodName, params object[] parameters)
         {
             return Sitecore.Reflection.ReflectionUtil.GetMethod(target, methodName, parameters);
         }
-        
+
         public static object InvokeMethod([NotNull] object target, string methodName, params object[] parameters)
         {
             return Sitecore.Reflection.ReflectionUtil.InvokeMethod(GetMethod(target, methodName, parameters), parameters, target);

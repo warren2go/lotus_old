@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Lotus.Feature.Amazon.S3")]
-[assembly: AssemblyDescription("An implementation of the Amazon S3 API targeting Sitecore/.NET 4.5+.")]
+[assembly: AssemblyDescription("An implementation of the Amazon S3 API, targeting support for Sitecore.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Warren Dawes")]
 [assembly: AssemblyProduct("Lotus.Feature.Amazon.S3")]

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web;
+using Lotus.Foundation.Kernel.Services;
 using Lotus.Foundation.Kernel.Structures;
 using Sitecore.Collections;
 
@@ -26,14 +27,14 @@ namespace Sitecore
             Tokenizer.Add(key, token);
         }
 
-        public static string Invoke(string format)
+        public static string Invoke(string format, string[] allowedInvokes = null)
         {
-            return Tokenizer.Invoke(format);
+            return Tokenizer.Invoke(format, allowedInvokes);
         }
 
-        public static string Invoke(string format, SafeDictionary<string, object> tokens)
+        public static string Invoke(string format, SafeDictionary<string, object> tokens, string[] allowedInvokes = null)
         {
-            return Tokenizer.Invoke(format, tokens);
+            return Tokenizer.Invoke(format, tokens, allowedInvokes);
         }
         
         public static string Replace(string format)

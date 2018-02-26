@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Lotus.Foundation.RenderingTokens")]
-[assembly: AssemblyDescription("A tokenisation system for extension of views (MVC) which allows models to be defined/used within Sitecore fields.")]
+[assembly: AssemblyDescription("Rendering tokenisation support utilizing Sitecore and the Context of requests to dynamically inject models into renderings.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Warren Dawes")]
 [assembly: AssemblyProduct("Lotus.Foundation.RenderingTokens")]

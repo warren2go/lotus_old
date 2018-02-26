@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using Lotus.Foundation.Kernel.Structures.Collections;
 using Lotus.Foundation.Kernel.Utils;
 using Sitecore;
 using Sitecore.Collections;
 
-namespace Lotus.Foundation.Kernel.Structures
+namespace Lotus.Foundation.Kernel.Services
 {
     public class Tokenizer : IDisposable
     {
@@ -48,10 +45,11 @@ namespace Lotus.Foundation.Kernel.Structures
         /// Seek any methods to invoke for results.
         /// </summary>
         /// <param name="format">Content that contains the tokens.</param>
+        /// <param name="allowedInvokes">(optional) The collection of allowed method-calls. default is null and will alllow all.</param>
         /// <returns>A resulting string with all methods invoked and tokens replaced by their corresponding results.</returns>
-        public string Invoke(string format)
+        public string Invoke(string format, [CanBeNull] string [] allowedInvokes = null)
         {
-            return Invoke(format, _tokens);
+            return Invoke(format, _tokens, allowedInvokes);
         }
 
         /// <summary>
@@ -59,32 +57,31 @@ namespace Lotus.Foundation.Kernel.Structures
         /// </summary>
         /// <param name="format">Content that contains the tokens.</param>
         /// <param name="tokens">Tokens to seek.</param>
+        /// <param name="allowedInvokes">(optional) The collection of allowed method-calls. default is null and will alllow all.</param>
         /// <returns>A resulting string with all methods invoked and tokens replaced by their corresponding results.</returns>
-        public static string Invoke(string format, SafeDictionary<string, object> tokens)
+        public static string Invoke(string format, SafeDictionary<string, object> tokens, [CanBeNull] string[] allowedInvokes = null)
         {
-            var value = (object) string.Empty;
             return ExtractTokensAndElements(format).Aggregate(format, (current, tokenAndElement) =>
             {
-                var token = ExtractToken(tokenAndElement);
-                var element = ExtractTokenElement(tokenAndElement);
+                var value = tokens[ExtractTokenName(tokenAndElement)];
+                
+                var elements = ExtractTokenElements(tokenAndElement);
 
-                if (string.IsNullOrEmpty(element))
+                foreach (var element in elements)
                 {
-                    value = tokens[ExtractTokenName(TokenFormat.FormatWith(token))];
-                }
-                else
-                {
-                    if (element.EndsWith("()"))
+                    if (allowedInvokes != null && StringUtil.Contains(ExtractTokenElementName(element), allowedInvokes))
                     {
-                        value = ReflectionUtil.InvokeMethod(value, ExtractTokenElementName(TokenElementFormat.FormatWith(element)));
+                        //todo: introduce a Sitecore.DebugContext that can be used to fetch details as to whether debugging is on for modules (eg Sitecore.DebugContext.IsEnabled("Tokenizer"))
+                        return current;   
                     }
-                    else
+                
+                    if (!string.IsNullOrEmpty(element))
                     {
-                        value = ReflectionUtil.GetValue(value, element);
-                    }
+                        value = ReflectionUtil.GetResultWithPath(value, ExtractTokenElementName(element, false));
+                    }   
                 }
 
-                return current.Replace(tokenAndElement, (value ?? string.Empty).ToString());
+                return current.Replace(tokenAndElement, (value ?? tokenAndElement).ToString());
             });
         }
         
@@ -116,7 +113,7 @@ namespace Lotus.Foundation.Kernel.Structures
                 }
                 else
                 {
-                    format = ReplaceTokenElement(format, tokens, (current, key, value) => current.Replace(tokenAndElement, (ReflectionUtil.GetValueWithPath(value, element) ?? tokenAndElement).ToString()));
+                    format = ReplaceTokenElement(format, tokens, (current, key, value) => current.Replace(tokenAndElement, (ReflectionUtil.GetResultWithPath(value, element) ?? tokenAndElement).ToString()));
                 }
             }
             return format;
@@ -140,7 +137,7 @@ namespace Lotus.Foundation.Kernel.Structures
         /// <returns>A resulting string with all tokens replaced by their corresponding variables.</returns>
         public static string ReplaceToken(string format, SafeDictionary<string, object> tokens)
         {
-            return tokens.Aggregate(format, (current, token) => current.Replace(TokenFormat.FormatWith(token.Key), (token.Value ?? string.Empty).ToString()));
+            return tokens.Aggregate(format, (current, token) => current.Replace(TokenFormat.FormatWith(token.Key), (token.Value ?? token.Key).ToString()));
         }
 
         /// <summary>
@@ -259,8 +256,10 @@ namespace Lotus.Foundation.Kernel.Structures
         /// </summary>
         /// <param name="token">Token element to extract name from.</param>
         /// <returns>Token element name or string.Empty.</returns>
-        public static string ExtractTokenElementName(string token)
+        public static string ExtractTokenElementName(string token, bool justName = true)
         {
+            if (justName)
+                token = token.ExtractPattern("[a-zA-Z0-9_]+");
             return token.ExtractPattern(TokenElementFormat.Escape("{", "}").FormatWith(@"(" + TokenCharacters + @"+)"));
         }
     }

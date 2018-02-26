@@ -1,12 +1,35 @@
-﻿namespace Lotus.Foundation.RenderingTokens
+﻿using System.Linq;
+
+namespace Lotus.Foundation.RenderingTokens
 {
     internal static class Settings
     {
-        internal static bool Enabled
+        internal static bool InvokeEnabled
         {
             get
             {
-                return Sitecore.Configuration.Settings.GetBoolSetting("Lotus.Foundation.RenderingTokens.Enabled", false);
+                return Sitecore.Configuration.Settings.GetBoolSetting("Lotus.Foundation.RenderingTokens.InvokeEnabled", true);
+            }
+        }
+
+        private static string[] _invokeWhitelist;
+        internal static string[] InvokeWhitelist
+        {
+            get
+            {
+                if (_invokeWhitelist == null)
+                {
+                    _invokeWhitelist = Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.RenderingTokens.InvokeWhitelist").Split('|').Where(x => !string.IsNullOrEmpty(x)).ToArray();
+                }
+                return _invokeWhitelist;
+            }
+        }
+        
+        internal static bool ReplaceEnabled
+        {
+            get
+            {
+                return Sitecore.Configuration.Settings.GetBoolSetting("Lotus.Foundation.RenderingTokens.ReplaceEnabled", true);
             }
         }
         
@@ -18,47 +41,20 @@
             }
         }
         
-        internal static bool ForceReplace
+        internal static bool ParameterCheck
         {
             get
             {
-                return Sitecore.Configuration.Settings.GetBoolSetting("Lotus.Foundation.RenderingTokens.ForceReplace", true);
-            }
-        }
-        
-        internal static string DefaultExtractPattern
-        {
-            get
-            {
-                return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.RenderingTokens.DefaultExtractPattern", @"\$\(.+\)(?:[.]?([a-zA-Z0-9_()]+)?)?");
-            }
-        }
-        
-        internal static string ResolveTokenFormat
-        {
-            get
-            {
-                return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.RenderingTokens.ResolveTokenFormat", "token:{0}");
+                return Sitecore.Configuration.Settings.GetBoolSetting("Lotus.Foundation.RenderingTokens.ParameterCheck", false);
             }
         }
 
-        internal static class ParameterKeys
+        internal static string ParameterKey
         {
-            internal static string Tokens
+            get
             {
-                get
-                {
-                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.RenderingTokens.ParameterKeys.Tokens", "lotusRenderingTokens");
-                }
+                return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.RenderingTokens.ParameterKey");
             }
-        
-            internal static string ExtractPattern
-            {
-                get
-                {
-                    return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.RenderingTokens.ParameterKeys.ExtractPattern", "lotusRenderingExtractPattern");
-                }
-            }   
         }
     }
 }

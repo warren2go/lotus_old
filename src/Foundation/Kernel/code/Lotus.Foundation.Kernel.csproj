@@ -51,12 +51,12 @@
     <Compile Include="Global.cs" />
     <Compile Include="Pipelines\Initialize\Initialize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Tokenizer.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Structures\Collections\RandomList.cs" />
     <Compile Include="Structures\Collections\StaticDictionary.cs" />
     <Compile Include="Structures\Collections\StaticList.cs" />
     <Compile Include="Structures\Collections\StaticQueue.cs" />
-    <Compile Include="Structures\Tokenizer.cs" />
     <Compile Include="TokenContext.cs" />
     <Compile Include="Utils\ReflectionUtil.cs" />
     <Compile Include="Utils\TokenUtil.cs" />

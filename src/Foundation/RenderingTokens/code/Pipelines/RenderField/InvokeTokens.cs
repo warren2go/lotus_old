@@ -5,8 +5,6 @@ using Lotus.Foundation.Extensions.Collections;
 using Lotus.Foundation.Extensions.RegularExpression;
 using Lotus.Foundation.Kernel.Structures;
 using Lotus.Foundation.Kernel.Utils;
-using Lotus.Foundation.RenderingTokens.Helpers;
-using Lotus.Foundation.RenderingTokens.Structures;
 using Sitecore;
 using Sitecore.Collections;
 using Sitecore.Mvc.Common;
@@ -24,16 +22,19 @@ namespace Lotus.Foundation.RenderingTokens.Pipelines.RenderField
     {
         public virtual void Process(RenderFieldArgs args)
         {
-            if (!Settings.Enabled)
+            if (!Settings.InvokeEnabled)
                 return;
-
+            
+            if (Settings.ParameterCheck && string.IsNullOrEmpty(args.RenderParameters[Settings.ParameterKey] ?? args.Parameters[Settings.ParameterKey]))
+                return;
+            
             args.Result.FirstPart = Invoke(args.Result.FirstPart);
             args.Result.LastPart = Invoke(args.Result.LastPart);
         }
 
         private static string Invoke(string invoke)
         {
-            return Sitecore.TokenContext.Invoke(invoke);
+            return Sitecore.TokenContext.Invoke(invoke, Settings.InvokeWhitelist);
         }
     }
 }
