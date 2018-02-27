@@ -10,6 +10,7 @@ namespace Lotus.Foundation.Kernel.Utils
     public class ReflectionUtil
     {
         private const string _validNameRegex = @"[\.]?([a-zA-Z0-9_]+)[\(]?";
+        private const string _validParametersRegex = @"(\(.*\))";
         
         private static string[] GetNames(string name)
         {
@@ -28,7 +29,7 @@ namespace Lotus.Foundation.Kernel.Utils
         
         private static string[] GetMethodNames(string name)
         {
-            return name.Split('.').Where(x => !string.IsNullOrEmpty(x) && x.EndsWith("()")).ToArray();
+            return name.Split('.').Where(x => !string.IsNullOrEmpty(x) && x.IsMatch(_validParametersRegex)).ToArray();
         }
 
         private static string GetMethodName(IEnumerable<string> names)
@@ -64,7 +65,7 @@ namespace Lotus.Foundation.Kernel.Utils
         {
             return Sitecore.Reflection.ReflectionUtil.GetMethod(target, methodName, parameters);
         }
-
+        
         public static object InvokeMethod([NotNull] object target, string methodName, params object[] parameters)
         {
             return Sitecore.Reflection.ReflectionUtil.InvokeMethod(GetMethod(target, methodName, parameters), parameters, target);

@@ -17,6 +17,7 @@ namespace Lotus.Foundation.Kernel.Services
         public static readonly string TokenSelectRegex = @"(" + TokenFormat.Escape("{", "}").FormatWith(TokenCharacters + @"+?") + @")";
         public static readonly string TokenElementSelectRegex = @"(?:" + TokenFormat.Escape("{", "}").FormatWith(TokenCharacters + @"+?") + @")(" + TokenElementCharacters + @"+)";
         public static readonly string TokenAndElementSelectRegex = @"(" + TokenFormat.Escape("{", "}").FormatWith(TokenCharacters + @"+?") + TokenElementCharacters + @"+)";
+        public static readonly string TokenElementParametersRegex = @"(\(.*\))";
         
         private SafeDictionary<string, object> _tokens = new SafeDictionary<string, object>();
         
@@ -259,8 +260,18 @@ namespace Lotus.Foundation.Kernel.Services
         public static string ExtractTokenElementName(string token, bool justName = true)
         {
             if (justName)
-                token = token.ExtractPattern("[a-zA-Z0-9_]+");
+                token = token.ReplacePattern(TokenElementParametersRegex, string.Empty);
             return token.ExtractPattern(TokenElementFormat.Escape("{", "}").FormatWith(@"(" + TokenCharacters + @"+)"));
+        }
+
+        public static string ExtractTokenElementParamaterString(string token, bool justparameters = false)
+        {
+            if (justparameters)
+            {
+                var parameters = StringUtil.RemovePrefix(token.ExtractPattern(TokenAndElementSelectRegex), "("); 
+                return StringUtil.RemovePostfix(parameters, ")");
+            }
+            return token.ExtractPattern(TokenElementParametersRegex);
         }
     }
 }
