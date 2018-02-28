@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using Lotus.Foundation.Assets.Paths;
-using Lotus.Foundation.Extensions.Collections;
-using Lotus.Foundation.Extensions.Primitives;
-using Lotus.Foundation.Extensions.Serialization;
+using Lotus.Foundation.Kernel.Extensions.Collections;
+using Lotus.Foundation.Kernel.Extensions.Primitives;
+using Lotus.Foundation.Kernel.Extensions.Serialization;
+using Lotus.Foundation.Logging;
 
 namespace Lotus.Foundation.Assets.Repository
 {
@@ -33,7 +34,7 @@ namespace Lotus.Foundation.Assets.Repository
         public void MapHost(XmlNode hostNode)
         {
             Sitecore.Diagnostics.Assert.IsNotNull((object) hostNode,
-                "Bad host node detected in lotus.assets.repository! Check your App_Config/Include/Lotus.Foundation.Assets.config?");
+                "Bad host node detected in lotus.assets.repository! Check your App_Config/Include/Lotus/Lotus.Foundation.Assets.config?");
 
             var host = hostNode.CastFromInnerText<string>();
             if (!string.IsNullOrEmpty(host))
@@ -45,7 +46,7 @@ namespace Lotus.Foundation.Assets.Repository
         public void MapMime(XmlNode mimeNode)
         {
             Sitecore.Diagnostics.Assert.IsNotNull((object) mimeNode,
-                "Bad host node detected in lotus.assets.repository! Check your App_Config/Include/Lotus.Foundation.Assets.config?");
+                "Bad host node detected in lotus.assets.repository! Check your App_Config/Include/Lotus/Lotus.Foundation.Assets.config?");
 
             var extension = mimeNode.GetAttributeAndCast<string>("extension");
             var type = mimeNode.GetAttributeAndCast<string>("type");
@@ -59,7 +60,7 @@ namespace Lotus.Foundation.Assets.Repository
         public void MapHeader(XmlNode headerNode)
         {
             Sitecore.Diagnostics.Assert.IsNotNull((object) headerNode,
-                "Bad header node detected in lotus.assets.repository! Check your App_Config/Include/Lotus.Foundation.Assets.config?");
+                "Bad header node detected in lotus.assets.repository! Check your App_Config/Include/Lotus/Lotus.Foundation.Assets.config?");
             
             var name = headerNode.GetAttribute("name");
             var value = headerNode.GetAttribute("value");
@@ -70,14 +71,14 @@ namespace Lotus.Foundation.Assets.Repository
         public void MapPath(XmlNode pathNode)
         {
             Sitecore.Diagnostics.Assert.IsNotNull((object) pathNode,
-                "Bad path node detected in lotus.assets.repository! Check your App_Config/Include/Lotus.Foundation.Assets.config?");
+                "Bad path node detected in lotus.assets.repository! Check your App_Config/Include/Lotus/Lotus.Foundation.Assets.config?");
             
             var path = pathNode.ToObject<IAssetPath>();
             var key = path.GetKey();
             
             if (string.IsNullOrEmpty(key))
             {
-                Global.Logger.Error("Key not specified on path:{0}{1}".FormatWith(Environment.NewLine, pathNode.ToString()));
+                LLog.Error("Key not specified on path:{0}{1}".FormatWith(Environment.NewLine, pathNode.ToString()));
                 return;
             }
             

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using Lotus.Foundation.Kernel.Extensions.Collections;
 
 namespace Lotus.Foundation.Kernel.Structures.Collections
 {
@@ -303,7 +304,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
 
         public override string ToString()
         {
-            return ", ".Join(this);
+            return this.Join();
         }
 
         public T[] ToArray()

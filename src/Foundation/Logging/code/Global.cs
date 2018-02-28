@@ -17,6 +17,7 @@ using log4net.Repository;
 using log4net.Repository.Hierarchy;
 using Lotus.Foundation.Logging.Factories;
 using Lotus.Foundation.Logging.Helpers;
+using Sitecore;
 using Sitecore.Configuration;
 using Sitecore.Diagnostics;
 using Sitecore.Xml;
@@ -25,18 +26,13 @@ namespace Lotus.Foundation.Logging
 {
     internal static class Global
     {
-        private static ILotusLogger _logger;
+        [NotNull]
         internal static ILotusLogger Logger
         {
             get
             {
-                if (_logger == null)
-                {
-                    _logger = LotusLogManager.GetLogger("Logger");
-                }
-                return _logger;
+                return LoggerContext.Logger;
             }
-            private set { _logger = value; }
         }
         
         internal static bool Initialized { get; private set; }
@@ -47,7 +43,7 @@ namespace Lotus.Foundation.Logging
             {
                 var nodes = Factory.GetConfigNode("/sitecore/lotus.logging");
                 Sitecore.Diagnostics.Assert.IsNotNull((object) nodes,
-                    "Missing lotus.logging config node! Missing or outdated App_Config/Include/Foundation/Foundation.Logging.config?");
+                    "Missing lotus.logging config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.Logging.config?");
 
                 LotusLoggerFactory.Initialize(XmlUtil.GetChildElement("logfactory", nodes));
                 

@@ -1,7 +1,8 @@
 ﻿using Lotus.Feature.MailChimp.Lists;
 using Lotus.Feature.MailChimp.Validators;
-using Lotus.Foundation.Extensions.Collections;
-using Lotus.Foundation.Extensions.Primitives;
+using Lotus.Foundation.Kernel.Extensions.Collections;
+using Lotus.Foundation.Kernel.Extensions.Primitives;
+using Lotus.Foundation.Logging;
 using MailChimp;
 using Sitecore.Collections;
 
@@ -17,7 +18,7 @@ namespace Lotus.Feature.MailChimp.Services
             var list = default(IMailChimpList);
             if (!ListRepository.TryGetValue(id, out list))
             {
-                Global.Logger.Warn("MailChimpList not found with ID supplied [{0}]".FormatWith(id));
+                LLog.Warn("MailChimpList not found with ID supplied [{0}]".FormatWith(id));
             }
             return list;
         }
@@ -46,7 +47,7 @@ namespace Lotus.Feature.MailChimp.Services
             var validator = default(IMailChimpValidator);
             if (!ValidatorRepository.TryGetValue(key, out validator))
             {
-                Global.Logger.Warn("MailChimpValidator not found with Key supplied [{0}]".FormatWith(key));
+                LLog.Warn("MailChimpValidator not found with Key supplied [{0}]".FormatWith(key));
             }
             return validator;
         }
@@ -56,7 +57,7 @@ namespace Lotus.Feature.MailChimp.Services
             var list = GetListByID(listId);
             if (list == null)
             {
-                Global.Logger.Warn("MailChimpManager could not be generated using the listId supplied [{0}]".FormatWith(listId));
+                LLog.Warn("MailChimpManager could not be generated using the listId supplied [{0}]".FormatWith(listId));
                 return null;
             }
             return new MailChimpManager(new global::MailChimp.MailChimpManager(list.Key), list);

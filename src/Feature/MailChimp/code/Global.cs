@@ -9,10 +9,10 @@ using Lotus.Feature.MailChimp.Configuration;
 using Lotus.Feature.MailChimp.Lists;
 using Lotus.Feature.MailChimp.Services;
 using Lotus.Feature.MailChimp.Validators;
-using Lotus.Foundation.Extensions.Casting;
-using Lotus.Foundation.Extensions.Collections;
-using Lotus.Foundation.Extensions.Primitives;
-using Lotus.Foundation.Extensions.Serialization;
+using Lotus.Foundation.Kernel.Extensions.Casting;
+using Lotus.Foundation.Kernel.Extensions.Collections;
+using Lotus.Foundation.Kernel.Extensions.Primitives;
+using Lotus.Foundation.Kernel.Extensions.Serialization;
 using Lotus.Foundation.Logging;
 using Lotus.Foundation.Logging.Helpers;
 using Sitecore;
@@ -27,18 +27,13 @@ namespace Lotus.Feature.MailChimp
 {
     internal static class Global
     {
-        private static ILotusLogger _logger;
+        [NotNull]
         internal static ILotusLogger Logger
         {
             get
             {
-                if (_logger == null)
-                {
-                    _logger = LotusLogManager.GetLogger("Logger");
-                }
-                return _logger;
+                return LoggerContext.Logger;
             }
-            private set { _logger = value; }
         }
 
         internal static bool Initialized { get; private set; }
@@ -49,7 +44,7 @@ namespace Lotus.Feature.MailChimp
             {
                 var nodes = Sitecore.Configuration.Factory.GetConfigNode("/sitecore/lotus.mailchimp");
                 Sitecore.Diagnostics.Assert.IsNotNull(nodes,
-                    "Missing lotus.mailchimp config node! Missing or outdated App_Config/Include/Feature/Feature.MailChimp.config?");
+                    "Missing lotus.mailchimp config node! Missing or outdated App_Config/Include/Lotus/Lotus..MailChimp.config?");
 
                 LoadLoggers(nodes.GetChildElement("logging"));
                 LoadValidators(nodes.GetChildElement("validators"));
@@ -59,7 +54,7 @@ namespace Lotus.Feature.MailChimp
             }
             catch (Exception exception)
             {
-                Log.Error("Error initializing lotus mailchimp", exception, typeof(string));
+                LLog.Error("Error initializing lotus mailchimp", exception);
             }
         }
 
@@ -70,7 +65,7 @@ namespace Lotus.Feature.MailChimp
 
         private static void LoadValidators(XmlNode validatorsNode)
         {
-            Assert.IsNotNull(validatorsNode, "Validators node is not defined! Missing or outdated App_Config/Include/Feature/Feature.MailChimp.config?");
+            Assert.IsNotNull(validatorsNode, "Validators node is not defined! Missing or outdated App_Config/Include/Lotus/Lotus..MailChimp.config?");
 
             foreach (var validatorNode in XmlUtil.GetChildElements("validator", validatorsNode))
                 
@@ -92,7 +87,7 @@ namespace Lotus.Feature.MailChimp
 
         private static void LoadAPIs(IEnumerable<XmlNode> apiNodes)
         {
-            Assert.IsNotNull(apiNodes, "Lists node is not defined! Missing or outdated App_Config/Include/Feature/Feature.MailChimp.config?");
+            Assert.IsNotNull(apiNodes, "Lists node is not defined! Missing or outdated App_Config/Include/Lotus/Lotus.Feature.MailChimp.config?");
 
             foreach (var apiNode in apiNodes)
             {

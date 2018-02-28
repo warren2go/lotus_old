@@ -3,10 +3,11 @@ using System.Linq;
 using System.Xml;
 using Lotus.Feature.MailChimp.Services;
 using Lotus.Feature.MailChimp.Validators;
-using Lotus.Foundation.Extensions.Collections;
-using Lotus.Foundation.Extensions.Primitives;
-using Lotus.Foundation.Extensions.RegularExpression;
-using Lotus.Foundation.Extensions.Serialization;
+using Lotus.Foundation.Kernel.Extensions.Collections;
+using Lotus.Foundation.Kernel.Extensions.Primitives;
+using Lotus.Foundation.Kernel.Extensions.RegularExpression;
+using Lotus.Foundation.Kernel.Extensions.Serialization;
+using Lotus.Foundation.Logging;
 using Sitecore.Configuration;
 
 namespace Lotus.Feature.MailChimp.Lists
@@ -27,7 +28,7 @@ namespace Lotus.Feature.MailChimp.Lists
             var name = variableNode.GetAttribute("name");
             if (string.IsNullOrEmpty(name))
             {
-                Global.Logger.Error("MapField received a bad node - missing name attribute [{0}]".FormatWith(variableNode.InnerXml));
+                LLog.Error("MapField received a bad node - missing name attribute [{0}]".FormatWith(variableNode.InnerXml));
                 return;
             }
             if (!ValidatorsByFieldName.ContainsKey(name))
@@ -49,10 +50,10 @@ namespace Lotus.Feature.MailChimp.Lists
                         var values = validatorKey.ExtractPatterns(@"(\w+)=(.*)").ToArray();
                         if (values.Length != 2)
                         {
-                            Global.Logger.Warn("Validation incorrectly defined on node = {0} [{1}]".FormatWith(values.Dump(), variableNode.InnerXml));
+                            LLog.Warn("Validation incorrectly defined on node = {0} [{1}]".FormatWith(values.Join(), variableNode.InnerXml));
                             continue;
                         }
-                        Global.Logger.Info("Generic validator detected - {0}:{1} for {2}".FormatWith(values.FirstOrDefault(), values.LastOrDefault(), name));
+                        LLog.Info("Generic validator detected - {0}:{1} for {2}".FormatWith(values.FirstOrDefault(), values.LastOrDefault(), name));
                         validator = new Regex(values.LastOrDefault());
                     }
                     else
@@ -60,7 +61,7 @@ namespace Lotus.Feature.MailChimp.Lists
                         validator = MailChimpService.GetValidatorByKey(validatorKey);
                         if (validator == null)
                         {
-                            Global.Logger.Warn("Validator not found with key supplied [{0}]".FormatWith(validatorKey));
+                            LLog.Warn("Validator not found with key supplied [{0}]".FormatWith(validatorKey));
                             continue;
                         }   
                     }

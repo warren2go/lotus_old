@@ -1,8 +1,8 @@
 ﻿using System.Web;
 using Lotus.Foundation.Assets.Configuration;
-using Lotus.Foundation.Extensions.Primitives;
-using Lotus.Foundation.Extensions.RegularExpression;
-using Lotus.Foundation.Extensions.Web;
+using Lotus.Foundation.Kernel.Extensions.Primitives;
+using Lotus.Foundation.Kernel.Extensions.RegularExpression;
+using Lotus.Foundation.Kernel.Extensions.Web;
 using Sitecore;
 
 namespace Lotus.Foundation.Assets

@@ -3,8 +3,8 @@ using System.Linq;
 using System.Web;
 using Lotus.Foundation.Assets.Configuration;
 using Lotus.Foundation.Assets.Helpers;
-using Lotus.Foundation.Extensions.Primitives;
-using Lotus.Foundation.Extensions.RegularExpression;
+using Lotus.Foundation.Kernel.Extensions.Primitives;
+using Lotus.Foundation.Kernel.Extensions.RegularExpression;
 
 namespace Lotus.Foundation.Assets.Pipelines.Request
 {

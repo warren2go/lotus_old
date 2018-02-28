@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Lotus.Foundation.Extensions.Primitives;
+using Lotus.Foundation.Kernel.Extensions.Primitives;
 using Lotus.Foundation.Logging;
 using Sitecore;
 

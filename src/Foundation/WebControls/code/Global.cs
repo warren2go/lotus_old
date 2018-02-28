@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
-using Lotus.Foundation.Extensions.Collections;
-using Lotus.Foundation.Extensions.Configuration;
-using Lotus.Foundation.Extensions.Serialization;
+using Lotus.Foundation.Kernel.Extensions.Collections;
+using Lotus.Foundation.Kernel.Extensions.Serialization;
 using Lotus.Foundation.Logging;
 using Lotus.Foundation.Logging.Helpers;
+using Sitecore;
 using Sitecore.Configuration;
 using Sitecore.Diagnostics;
 
@@ -14,18 +14,13 @@ namespace Lotus.Foundation.WebControls
 {
     internal static class Global
     {
-        private static ILotusLogger _logger;
+        [NotNull]
         internal static ILotusLogger Logger
         {
             get
             {
-                if (_logger == null)
-                {
-                    _logger = LotusLogManager.GetLogger("Logger");
-                }
-                return _logger;
+                return LoggerContext.Logger;
             }
-            private set { _logger = value; }
         }
         
         internal static bool Initialized { get; private set; }
@@ -36,7 +31,7 @@ namespace Lotus.Foundation.WebControls
             {
                 var nodes = Factory.GetConfigNode("/sitecore/lotus.webcontrols");
                 Sitecore.Diagnostics.Assert.IsNotNull((object) nodes,
-                    "Missing lotus.extensions config node! Missing or outdated App_Config/Include/Foundation/Foundation.WebControls.config?");
+                    "Missing lotus.extensions config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.WebControls.config?");
                 
                 LoadLoggers(nodes.GetChildElement("logging"));
                 

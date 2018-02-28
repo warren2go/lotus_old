@@ -5,6 +5,7 @@ using System.Web;
 using Lotus.Foundation.Extensions.Configuration;
 using Lotus.Foundation.Extensions.Primitives;
 using Lotus.Foundation.Extensions.RegularExpression;
+using Lotus.Foundation.Logging;
 using Sitecore;
 using Sitecore.Diagnostics;
 
@@ -20,13 +21,13 @@ namespace Lotus.Foundation.Extensions.Web
 
             if (relativePath.StartsWith("~"))
             {
-                Global.Logger.Warn("RelativePath contains begins with webroot - stripping this {0}[{1}]".FormatWith(relativePath, contentType ?? "null"));
+                LLog.Warn("RelativePath contains begins with webroot - stripping this {0}[{1}]".FormatWith(relativePath, contentType ?? "null"));
                 relativePath = relativePath.ReplacePattern(@"\~", "");
             }
             
             if (relativePath.Contains("..") || relativePath.Contains("://") || relativePath.Contains(@":\\"))
             {
-                Global.Logger.Warn("RelativePath contains crawling or invalid charcters - stripping these {0}[{1}]".FormatWith(relativePath, contentType ?? "null"));
+                LLog.Warn("RelativePath contains crawling or invalid charcters - stripping these {0}[{1}]".FormatWith(relativePath, contentType ?? "null"));
                 relativePath = relativePath.ReplacePattern(@"\.\.", "");
                 relativePath = relativePath.ReplacePattern("://", "");
                 relativePath = relativePath.ReplacePattern(@":\\\\", "");
@@ -63,7 +64,7 @@ namespace Lotus.Foundation.Extensions.Web
                 catch (Exception exception)
                 {
                     #if DEBUG
-                    Global.Logger.Debug("Terminated request - [{0}]".FormatWith(rawUrl), exception);
+                    LLog.Debug("Terminated request - [{0}]".FormatWith(rawUrl), exception);
                     #endif
                 }
             }

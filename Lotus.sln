@@ -25,12 +25,6 @@ EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{4AEF624B-C06F-428F-8EB6-A72DD6D8F22A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{03ADD3DD-E6DE-4A67-9BF6-4FC32BA408D9}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "code", "code", "{2744EF12-1874-4BC2-8A86-7E7196F07F4E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lotus.Foundation.Extensions", "src\Foundation\Extensions\code\Lotus.Foundation.Extensions.csproj", "{A4B1C128-3A32-4760-9321-D5E65CD519B4}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logging", "Logging", "{BC7D1C22-4950-436E-BBAE-27CA816DFDF7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "code", "code", "{01344683-B785-423C-BE1F-5B618BA8075D}"
@@ -55,22 +49,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App_Config", "App_Config", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{779B5C80-5E2F-467C-9F73-C233921CEF92}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{09B27215-3579-4314-A3C7-761AF2C6A419}"
-ProjectSection(SolutionItems) = preProject
-	src\Foundation\Assets\config\App_Config\Include\Foundation\Foundation.Assets.config = src\Foundation\Assets\config\App_Config\Include\Foundation\Foundation.Assets.config
-EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{6D614AA9-7AC6-4347-BD21-CC18F3690986}"
-ProjectSection(SolutionItems) = preProject
-	src\Foundation\Logging\config\App_Config\Include\Foundation\Foundation.Logging.config = src\Foundation\Logging\config\App_Config\Include\Foundation\Foundation.Logging.config
-EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lotus.Feature.Assets", "src\Feature\Assets\code\Lotus.Feature.Assets.csproj", "{9CF8449C-1F0A-443C-B801-7D191ED18B9E}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Feature", "Feature", "{0A452F94-4E51-40D9-BE00-FBE63BFE862B}"
-ProjectSection(SolutionItems) = preProject
-	src\Feature\Assets\config\App_Config\Include\Feature\Feature.Assets.config = src\Feature\Assets\config\App_Config\Include\Feature\Feature.Assets.config
-EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebControls", "WebControls", "{1F69FEDF-36C6-4101-B04A-FB7E297127DE}"
 EndProject
@@ -95,22 +74,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App_Config", "App_Config", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{695F0371-B955-467A-B6AD-270B68A4E7D1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{D26FC6C3-80D7-43A2-BE0D-321FAFFC3BC5}"
-ProjectSection(SolutionItems) = preProject
-	src\Foundation\Caching\config\App_Config\Include\Foundation\Foundation.Cache.config = src\Foundation\Caching\config\App_Config\Include\Foundation\Foundation.Cache.config
-EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{6EB3A6D9-2DC8-4B29-98B9-735C6B5E3CE5}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App_Config", "App_Config", "{B7C7DD5C-AC34-4280-B10A-7217D70671C9}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{0A4BD712-15F2-4F22-925F-F99704B00078}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{905BFDA7-7B8F-48F1-96CE-46B75359E3BA}"
-ProjectSection(SolutionItems) = preProject
-	src\Foundation\Extensions\config\App_Config\Include\Foundation\Foundation.Extensions.config = src\Foundation\Extensions\config\App_Config\Include\Foundation\Foundation.Extensions.config
-EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MailChimp", "MailChimp", "{0E697866-9138-4CC5-8894-763AF24453D3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "code", "code", "{F99158D9-C39A-4145-90EE-8EF394D06AB9}"
@@ -123,19 +86,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App_Config", "App_Config", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{9A9B2968-8AB2-49AD-B38A-AC681273D9E3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Feature", "Feature", "{DEA891A5-C985-4BF4-B33E-CADC44B7E361}"
-ProjectSection(SolutionItems) = preProject
-	src\Feature\MailChimp\config\App_Config\Include\Feature\Feature.MailChimp.config = src\Feature\MailChimp\config\App_Config\Include\Feature\Feature.MailChimp.config
-EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App_Config", "App_Config", "{E617E10C-976E-41CA-932D-0F12BB3275D5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{FD7313B6-3B98-4360-9969-D45E49A1C091}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{4A207183-C2F5-45DB-BE4E-788C2266DF01}"
-ProjectSection(SolutionItems) = preProject
-	src\Foundation\WebControls\config\App_Config\Include\Foundation\Foundation.WebControls.config = src\Foundation\WebControls\config\App_Config\Include\Foundation\Foundation.WebControls.config
-EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kernel", "Kernel", "{1BB0813E-5F3D-4720-93AE-982DA27DA0C0}"
 EndProject
@@ -159,11 +112,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App_Config", "App_Config", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{30E926E5-858C-462E-9B1F-8FC228D22C28}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{4512F1FF-2618-4132-970C-2BC8814AC86B}"
-ProjectSection(SolutionItems) = preProject
-	src\Foundation\RenderingTokens\config\App_Config\Include\Foundation\Foundation.RenderingTokens.config = src\Foundation\RenderingTokens\config\App_Config\Include\Foundation\Foundation.RenderingTokens.config
-EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lotus.Foundation.RenderingTokens", "src\Foundation\RenderingTokens\code\Lotus.Foundation.RenderingTokens.csproj", "{DD2FF588-9F63-4674-A3E3-DBBD418F7C70}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{C1846315-359F-4559-8DCB-3F380A04D682}"
@@ -172,10 +120,71 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App_Config", "App_Config", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{8905FA0A-B5F4-482C-AE4E-3886D259D9BD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{93F4F235-02AF-4C25-9687-C80098E3CD44}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Snapshots", "Snapshots", "{16509661-D897-45F6-B20C-7E0333F53940}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "code", "code", "{7333727C-9E31-418E-AE60-C0E6F8A50754}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{AC4B8C7A-8DF9-4594-A05D-4559B69AF331}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lotus.Feature.Snapshots", "src\Feature\Snapshots\code\Lotus.Feature.Snapshots.csproj", "{2CABD475-1FA1-495B-AA1F-7E3C44A1019F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "serialize", "serialize", "{26EF769A-B5C6-4D6A-BF96-D4EC12E0D14F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lotus", "Lotus", "{563DC6AE-3F05-4526-9305-387780F7FC0E}"
 ProjectSection(SolutionItems) = preProject
-	src\Foundation\Kernel\config\App_Config\Include\Foundation\Foundation.Kernel.config = src\Foundation\Kernel\config\App_Config\Include\Foundation\Foundation.Kernel.config
+	src\Foundation\Assets\config\App_Config\Include\Lotus\Lotus.Foundation.Assets.config = src\Foundation\Assets\config\App_Config\Include\Lotus\Lotus.Foundation.Assets.config
 EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lotus", "Lotus", "{58307B11-743D-49CE-9810-8CB29C3591B7}"
+ProjectSection(SolutionItems) = preProject
+	src\Foundation\Caching\config\App_Config\Include\Lotus\Lotus.Foundation.Cache.config = src\Foundation\Caching\config\App_Config\Include\Lotus\Lotus.Foundation.Cache.config
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lotus", "Lotus", "{4B05B663-DBB2-47C6-B4DD-582F9441F014}"
+ProjectSection(SolutionItems) = preProject
+	src\Foundation\Kernel\config\App_Config\Include\Lotus\Lotus.Foundation.Kernel.config = src\Foundation\Kernel\config\App_Config\Include\Lotus\Lotus.Foundation.Kernel.config
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lotus", "Lotus", "{9AC38EF9-ED77-407F-B3ED-BAEF93E8E381}"
+ProjectSection(SolutionItems) = preProject
+	src\Foundation\Logging\config\App_Config\Include\Lotus\Lotus.Foundation.Logging.config = src\Foundation\Logging\config\App_Config\Include\Lotus\Lotus.Foundation.Logging.config
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lotus", "Lotus", "{6816F92E-86CA-4541-AECF-E57973D3218B}"
+ProjectSection(SolutionItems) = preProject
+	src\Foundation\RenderingTokens\config\App_Config\Include\Lotus\Lotus.Foundation.RenderingTokens.config = src\Foundation\RenderingTokens\config\App_Config\Include\Lotus\Lotus.Foundation.RenderingTokens.config
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lotus", "Lotus", "{FAE967C9-C3EB-42E6-88C3-1EEE5374F7EB}"
+ProjectSection(SolutionItems) = preProject
+	src\Foundation\WebControls\config\App_Config\Include\Lotus\Lotus.Foundation.WebControls.config = src\Foundation\WebControls\config\App_Config\Include\Lotus\Lotus.Foundation.WebControls.config
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lotus", "Lotus", "{D21865D4-0AC8-4550-8E7D-8F03B07D41AA}"
+ProjectSection(SolutionItems) = preProject
+	src\Feature\MailChimp\config\App_Config\Include\Lotus\Lotus.Feature.MailChimp.config = src\Feature\MailChimp\config\App_Config\Include\Lotus\Lotus.Feature.MailChimp.config
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lotus", "Lotus", "{BEAA1E3A-CFB0-4DB9-9298-328B2A559C7C}"
+ProjectSection(SolutionItems) = preProject
+	src\Feature\Assets\config\App_Config\Include\Lotus\Lotus.Feature.Assets.config = src\Feature\Assets\config\App_Config\Include\Lotus\Lotus.Feature.Assets.config
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenGraph", "OpenGraph", "{68746873-6C50-430B-B0E0-D8606F60969F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "code", "code", "{FA914B88-5C12-4971-A0DA-D82542E17E48}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "serialize", "serialize", "{EA142364-EC22-46B6-9DEE-8B0D17484D53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lotus.Feature.OpenGraph", "src\Feature\OpenGraph\code\Lotus.Feature.OpenGraph.csproj", "{5D0869BA-74D0-429A-94DC-5688C44CFA59}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TwitterCards", "TwitterCards", "{280E172C-7759-459F-9C2D-4A6DD420ACBE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "code", "code", "{C65D1341-A1D5-4C4B-B11B-9E2EB6384B8E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "serialize", "serialize", "{17026C30-7611-46AC-B049-7E761C503400}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lotus.Feature.TwitterCards", "src\Feature\TwitterCards\code\Lotus.Feature.TwitterCards.csproj", "{3188E934-BBAE-44E3-AECC-EC3DA870CA97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -187,10 +196,6 @@ Global
 		{D9DF2F85-F6BB-4BEF-AE30-C60709313EEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9DF2F85-F6BB-4BEF-AE30-C60709313EEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9DF2F85-F6BB-4BEF-AE30-C60709313EEF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A4B1C128-3A32-4760-9321-D5E65CD519B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4B1C128-3A32-4760-9321-D5E65CD519B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4B1C128-3A32-4760-9321-D5E65CD519B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4B1C128-3A32-4760-9321-D5E65CD519B4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{65F23213-3B77-4DC2-A824-BE988400BBAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{65F23213-3B77-4DC2-A824-BE988400BBAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65F23213-3B77-4DC2-A824-BE988400BBAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -223,6 +228,18 @@ Global
 		{DD2FF588-9F63-4674-A3E3-DBBD418F7C70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD2FF588-9F63-4674-A3E3-DBBD418F7C70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD2FF588-9F63-4674-A3E3-DBBD418F7C70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CABD475-1FA1-495B-AA1F-7E3C44A1019F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CABD475-1FA1-495B-AA1F-7E3C44A1019F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CABD475-1FA1-495B-AA1F-7E3C44A1019F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CABD475-1FA1-495B-AA1F-7E3C44A1019F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D0869BA-74D0-429A-94DC-5688C44CFA59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D0869BA-74D0-429A-94DC-5688C44CFA59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D0869BA-74D0-429A-94DC-5688C44CFA59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D0869BA-74D0-429A-94DC-5688C44CFA59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3188E934-BBAE-44E3-AECC-EC3DA870CA97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3188E934-BBAE-44E3-AECC-EC3DA870CA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3188E934-BBAE-44E3-AECC-EC3DA870CA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3188E934-BBAE-44E3-AECC-EC3DA870CA97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -235,9 +252,6 @@ Global
 		{ADE8F03B-0C2E-4680-87C3-A9FF293208F9} = {F7BC7E03-D674-4188-8237-DCB0103D6521}
 		{A80EA416-7F1B-4112-B4C8-CDB9AD1E27D1} = {ADE8F03B-0C2E-4680-87C3-A9FF293208F9}
 		{4AEF624B-C06F-428F-8EB6-A72DD6D8F22A} = {A80EA416-7F1B-4112-B4C8-CDB9AD1E27D1}
-		{03ADD3DD-E6DE-4A67-9BF6-4FC32BA408D9} = {E73999C9-1D21-43AD-ABEA-34781105EB4B}
-		{2744EF12-1874-4BC2-8A86-7E7196F07F4E} = {03ADD3DD-E6DE-4A67-9BF6-4FC32BA408D9}
-		{A4B1C128-3A32-4760-9321-D5E65CD519B4} = {2744EF12-1874-4BC2-8A86-7E7196F07F4E}
 		{BC7D1C22-4950-436E-BBAE-27CA816DFDF7} = {E73999C9-1D21-43AD-ABEA-34781105EB4B}
 		{01344683-B785-423C-BE1F-5B618BA8075D} = {BC7D1C22-4950-436E-BBAE-27CA816DFDF7}
 		{65F23213-3B77-4DC2-A824-BE988400BBAF} = {01344683-B785-423C-BE1F-5B618BA8075D}
@@ -250,10 +264,7 @@ Global
 		{BE709F3A-3ABD-42EC-830F-320C7B974223} = {C96AA482-B4B1-4C5D-AB96-E6239FE116F3}
 		{6452DD4A-CA24-4ABB-A7C8-5D4E79EA4A50} = {BE709F3A-3ABD-42EC-830F-320C7B974223}
 		{779B5C80-5E2F-467C-9F73-C233921CEF92} = {6452DD4A-CA24-4ABB-A7C8-5D4E79EA4A50}
-		{09B27215-3579-4314-A3C7-761AF2C6A419} = {4AEF624B-C06F-428F-8EB6-A72DD6D8F22A}
-		{6D614AA9-7AC6-4347-BD21-CC18F3690986} = {681B3AA1-9B62-4BE2-9D11-08807D9D6AAB}
 		{9CF8449C-1F0A-443C-B801-7D191ED18B9E} = {4EC66CAB-DB30-4A24-8176-B3385173611E}
-		{0A452F94-4E51-40D9-BE00-FBE63BFE862B} = {779B5C80-5E2F-467C-9F73-C233921CEF92}
 		{1F69FEDF-36C6-4101-B04A-FB7E297127DE} = {E73999C9-1D21-43AD-ABEA-34781105EB4B}
 		{DF9596AF-C7DB-4033-932E-99CDF4556DEE} = {1F69FEDF-36C6-4101-B04A-FB7E297127DE}
 		{F5C3FCBC-AFD8-490E-823E-0AD7B084381D} = {DF9596AF-C7DB-4033-932E-99CDF4556DEE}
@@ -264,21 +275,14 @@ Global
 		{F9E04DDF-E136-40CE-B51D-A0263B0F4CD4} = {72955615-3797-4061-AABE-8AA77658C611}
 		{50FBD98F-D28D-41C8-864D-CF5E9AA4E160} = {F9E04DDF-E136-40CE-B51D-A0263B0F4CD4}
 		{695F0371-B955-467A-B6AD-270B68A4E7D1} = {50FBD98F-D28D-41C8-864D-CF5E9AA4E160}
-		{D26FC6C3-80D7-43A2-BE0D-321FAFFC3BC5} = {695F0371-B955-467A-B6AD-270B68A4E7D1}
-		{6EB3A6D9-2DC8-4B29-98B9-735C6B5E3CE5} = {03ADD3DD-E6DE-4A67-9BF6-4FC32BA408D9}
-		{B7C7DD5C-AC34-4280-B10A-7217D70671C9} = {6EB3A6D9-2DC8-4B29-98B9-735C6B5E3CE5}
-		{0A4BD712-15F2-4F22-925F-F99704B00078} = {B7C7DD5C-AC34-4280-B10A-7217D70671C9}
-		{905BFDA7-7B8F-48F1-96CE-46B75359E3BA} = {0A4BD712-15F2-4F22-925F-F99704B00078}
 		{0E697866-9138-4CC5-8894-763AF24453D3} = {4B40C97C-950F-42FE-B8D0-B2B1EC5D9231}
 		{F99158D9-C39A-4145-90EE-8EF394D06AB9} = {0E697866-9138-4CC5-8894-763AF24453D3}
 		{5DB1C586-6876-4982-AB6C-A28D48B257B1} = {F99158D9-C39A-4145-90EE-8EF394D06AB9}
 		{B2181DAA-C7DA-4C2A-9B83-98C005278AAB} = {0E697866-9138-4CC5-8894-763AF24453D3}
 		{0F1DA1CF-F079-4094-89BE-CB0E216FEE06} = {B2181DAA-C7DA-4C2A-9B83-98C005278AAB}
 		{9A9B2968-8AB2-49AD-B38A-AC681273D9E3} = {0F1DA1CF-F079-4094-89BE-CB0E216FEE06}
-		{DEA891A5-C985-4BF4-B33E-CADC44B7E361} = {9A9B2968-8AB2-49AD-B38A-AC681273D9E3}
 		{E617E10C-976E-41CA-932D-0F12BB3275D5} = {85F342B8-03AD-45D7-8B4E-2AEE4E99957E}
 		{FD7313B6-3B98-4360-9969-D45E49A1C091} = {E617E10C-976E-41CA-932D-0F12BB3275D5}
-		{4A207183-C2F5-45DB-BE4E-788C2266DF01} = {FD7313B6-3B98-4360-9969-D45E49A1C091}
 		{1BB0813E-5F3D-4720-93AE-982DA27DA0C0} = {E73999C9-1D21-43AD-ABEA-34781105EB4B}
 		{EF87547F-FDF5-4E1D-84C7-1D4E8AD1AE17} = {1BB0813E-5F3D-4720-93AE-982DA27DA0C0}
 		{EF8D739C-FDFD-40F2-934C-17AF17AAE61F} = {EF87547F-FDF5-4E1D-84C7-1D4E8AD1AE17}
@@ -290,11 +294,30 @@ Global
 		{F3E578E9-8A4B-477F-B97C-0181D02FA96D} = {5CF3CDEB-555E-464D-B64E-47EE7FF1EDD7}
 		{8A0FB24A-8AD4-4076-8784-6A9446F3531F} = {F3E578E9-8A4B-477F-B97C-0181D02FA96D}
 		{30E926E5-858C-462E-9B1F-8FC228D22C28} = {8A0FB24A-8AD4-4076-8784-6A9446F3531F}
-		{4512F1FF-2618-4132-970C-2BC8814AC86B} = {30E926E5-858C-462E-9B1F-8FC228D22C28}
 		{DD2FF588-9F63-4674-A3E3-DBBD418F7C70} = {BB641FE7-D7DF-4657-96A1-CD75B4FC9123}
 		{C1846315-359F-4559-8DCB-3F380A04D682} = {1BB0813E-5F3D-4720-93AE-982DA27DA0C0}
 		{4EF3D44E-9AFD-43EA-9F07-4FEDE81214E6} = {C1846315-359F-4559-8DCB-3F380A04D682}
 		{8905FA0A-B5F4-482C-AE4E-3886D259D9BD} = {4EF3D44E-9AFD-43EA-9F07-4FEDE81214E6}
-		{93F4F235-02AF-4C25-9687-C80098E3CD44} = {8905FA0A-B5F4-482C-AE4E-3886D259D9BD}
+		{16509661-D897-45F6-B20C-7E0333F53940} = {4B40C97C-950F-42FE-B8D0-B2B1EC5D9231}
+		{7333727C-9E31-418E-AE60-C0E6F8A50754} = {16509661-D897-45F6-B20C-7E0333F53940}
+		{AC4B8C7A-8DF9-4594-A05D-4559B69AF331} = {16509661-D897-45F6-B20C-7E0333F53940}
+		{2CABD475-1FA1-495B-AA1F-7E3C44A1019F} = {7333727C-9E31-418E-AE60-C0E6F8A50754}
+		{26EF769A-B5C6-4D6A-BF96-D4EC12E0D14F} = {16509661-D897-45F6-B20C-7E0333F53940}
+		{563DC6AE-3F05-4526-9305-387780F7FC0E} = {4AEF624B-C06F-428F-8EB6-A72DD6D8F22A}
+		{58307B11-743D-49CE-9810-8CB29C3591B7} = {695F0371-B955-467A-B6AD-270B68A4E7D1}
+		{4B05B663-DBB2-47C6-B4DD-582F9441F014} = {8905FA0A-B5F4-482C-AE4E-3886D259D9BD}
+		{9AC38EF9-ED77-407F-B3ED-BAEF93E8E381} = {681B3AA1-9B62-4BE2-9D11-08807D9D6AAB}
+		{6816F92E-86CA-4541-AECF-E57973D3218B} = {30E926E5-858C-462E-9B1F-8FC228D22C28}
+		{FAE967C9-C3EB-42E6-88C3-1EEE5374F7EB} = {FD7313B6-3B98-4360-9969-D45E49A1C091}
+		{D21865D4-0AC8-4550-8E7D-8F03B07D41AA} = {9A9B2968-8AB2-49AD-B38A-AC681273D9E3}
+		{BEAA1E3A-CFB0-4DB9-9298-328B2A559C7C} = {779B5C80-5E2F-467C-9F73-C233921CEF92}
+		{68746873-6C50-430B-B0E0-D8606F60969F} = {4B40C97C-950F-42FE-B8D0-B2B1EC5D9231}
+		{FA914B88-5C12-4971-A0DA-D82542E17E48} = {68746873-6C50-430B-B0E0-D8606F60969F}
+		{EA142364-EC22-46B6-9DEE-8B0D17484D53} = {68746873-6C50-430B-B0E0-D8606F60969F}
+		{5D0869BA-74D0-429A-94DC-5688C44CFA59} = {FA914B88-5C12-4971-A0DA-D82542E17E48}
+		{280E172C-7759-459F-9C2D-4A6DD420ACBE} = {4B40C97C-950F-42FE-B8D0-B2B1EC5D9231}
+		{C65D1341-A1D5-4C4B-B11B-9E2EB6384B8E} = {280E172C-7759-459F-9C2D-4A6DD420ACBE}
+		{17026C30-7611-46AC-B049-7E761C503400} = {280E172C-7759-459F-9C2D-4A6DD420ACBE}
+		{3188E934-BBAE-44E3-AECC-EC3DA870CA97} = {C65D1341-A1D5-4C4B-B11B-9E2EB6384B8E}
 	EndGlobalSection
 EndGlobal

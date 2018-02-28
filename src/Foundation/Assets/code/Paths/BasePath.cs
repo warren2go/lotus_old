@@ -3,9 +3,9 @@ using System.Linq;
 using System.Web;
 using Lotus.Foundation.Assets.Configuration;
 using Lotus.Foundation.Assets.Helpers;
-using Lotus.Foundation.Extensions.Collections;
-using Lotus.Foundation.Extensions.RegularExpression;
-using Lotus.Foundation.Extensions.Web;
+using Lotus.Foundation.Kernel.Extensions.Collections;
+using Lotus.Foundation.Kernel.Extensions.RegularExpression;
+using Lotus.Foundation.Kernel.Extensions.Web;
 
 namespace Lotus.Foundation.Assets.Paths
 {

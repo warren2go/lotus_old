@@ -95,6 +95,7 @@
     <Compile Include="SitecoreExtensions\MediaItemExtensions.cs" />
     <Compile Include="SitecoreExtensions\NameValueListFieldExtensions.cs" />
     <Compile Include="SitecoreExtensions\Rendering\RenderingExtensions.cs" />
+    <Compile Include="SitecoreExtensions\SafeDictionaryExtensions.cs" />
     <Compile Include="Web\WebExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

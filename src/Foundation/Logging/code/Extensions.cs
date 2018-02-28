@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore;
+using Sitecore.Collections;
+using Sitecore.Drawing.Exif.Attributes;
 
 namespace Lotus.Foundation.Logging
 {
@@ -10,6 +12,18 @@ namespace Lotus.Foundation.Logging
         internal static TValue TryGetValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue @default = default(TValue))
         {
             TValue exists;
+            return dictionary.TryGetValue(key, out exists) ? exists : @default;
+        }
+
+        internal static TValue TryGetValueOrDefault<TKey, TValue>(this SafeDictionary<TKey, TValue> dictionary, TKey key, TValue @default = default(TValue))
+        {
+            TValue exists;
+            return dictionary.TryGetValue(key, out exists) ? exists : @default;
+        }
+        
+        internal static TKeyAndValue TryGetValueOrDefault<TKeyAndValue>(this SafeDictionary<TKeyAndValue> dictionary, TKeyAndValue key, TKeyAndValue @default = default(TKeyAndValue))
+        {
+            TKeyAndValue exists;
             return dictionary.TryGetValue(key, out exists) ? exists : @default;
         }
         

@@ -1,5 +1,5 @@
 ﻿using System;
-using Lotus.Foundation.Extensions.RegularExpression;
+using Lotus.Foundation.Kernel.Extensions.RegularExpression;
 
 namespace Lotus.Feature.MailChimp.Helpers
 {
