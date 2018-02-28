@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Lotus.Feature.MailChimp.Lists;
-using Lotus.Foundation.Extensions.Collections;
-using Lotus.Foundation.Extensions.Primitives;
+using Lotus.Foundation.Kernel.Extensions.Collections;
+using Lotus.Foundation.Kernel.Extensions.Primitives;
+using Lotus.Foundation.Logging;
 using MailChimp.Errors;
 using MailChimp.Helper;
 using MailChimp.Lists;
@@ -41,10 +42,10 @@ namespace Lotus.Feature.MailChimp
                     var errors = subscriber.Validate(MergeVar).ToArray();
                     if (errors.Length > 0)
                     {
-                        Global.Logger.Warn("MailChimpManager failed to validate subscriber = {0} [{1} dump({2})]".FormatWith(List.ListId, List.Key, subscriber.Fields.Dump()));
+                        LLog.Warn("MailChimpManager failed to validate subscriber = {0} [{1} dump({2})]".FormatWith(List.ListId, List.Key, subscriber.Fields.Dump()));
                         foreach (var error in errors)
                         {
-                            Global.Logger.Warn("Error: {0}".FormatWith(error));
+                            LLog.Warn("Error: {0}".FormatWith(error));
                         }
                         return false;
                     }
@@ -53,7 +54,7 @@ namespace Lotus.Feature.MailChimp
                 var email = subscriber.GetAndCast<string>(emailField);
                 if (string.IsNullOrEmpty(email))
                 {
-                    Global.Logger.Warn("MailChimpManager failed to generate manager - email undefined = {0} [{1} dump({2})]".FormatWith(List.ListId, List.Key, subscriber.Fields.Dump()));
+                    LLog.Warn("MailChimpManager failed to generate manager - email undefined = {0} [{1} dump({2})]".FormatWith(List.ListId, List.Key, subscriber.Fields.Dump()));
                     return false;
                 }
 
@@ -78,12 +79,12 @@ namespace Lotus.Feature.MailChimp
             }
             catch (MailChimpAPIException apiException)
             {
-                Global.Logger.Error("Error with response from mailchimp API = dump({0}) [apiKey = {1}]".FormatWith(MergeVar != null ? MergeVar.Fields.Dump() : string.Empty, List != null ? List.Key : "null"), apiException);
+                LLog.Error("Error with response from mailchimp API = dump({0}) [apiKey = {1}]".FormatWith(MergeVar != null ? MergeVar.Fields.Dump() : string.Empty, List != null ? List.Key : "null"), apiException);
                 return false;                
             }
             catch (Exception exception)
             {
-                Global.Logger.Error("Error sending subscriber to mailchimp = dump({0}) [apiKey = {1}]".FormatWith(MergeVar != null ? MergeVar.Fields.Dump() : string.Empty, List != null ? List.Key : "null"), exception);
+                LLog.Error("Error sending subscriber to mailchimp = dump({0}) [apiKey = {1}]".FormatWith(MergeVar != null ? MergeVar.Fields.Dump() : string.Empty, List != null ? List.Key : "null"), exception);
                 return false;
             }
         }

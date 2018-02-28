@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reflection;
 using log4net;
-using Lotus.Foundation.Extensions.Primitives;
 using Lotus.Foundation.Logging;
 using Sitecore;
 

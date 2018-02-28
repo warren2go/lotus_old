@@ -2,10 +2,10 @@
 using System.Web;
 using Lotus.Foundation.Assets.Configuration;
 using Lotus.Foundation.Assets.Paths;
-using Lotus.Foundation.Extensions.Collections;
-using Lotus.Foundation.Extensions.Date;
-using Lotus.Foundation.Extensions.Primitives;
-using Lotus.Foundation.Extensions.RegularExpression;
+using Lotus.Foundation.Kernel.Extensions.Collections;
+using Lotus.Foundation.Kernel.Extensions.Date;
+using Lotus.Foundation.Kernel.Extensions.Primitives;
+using Lotus.Foundation.Kernel.Extensions.RegularExpression;
 
 namespace Lotus.Foundation.Assets.Helpers
 {

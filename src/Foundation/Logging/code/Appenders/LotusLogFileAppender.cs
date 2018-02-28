@@ -105,7 +105,7 @@ namespace Lotus.Foundation.Logging.Appenders
       }
     }
 
-    public static string MakePath(string part1, string part2, char separator)
+    public new static string MakePath(string part1, string part2, char separator)
     {
       if (string.IsNullOrEmpty(part1))
       {

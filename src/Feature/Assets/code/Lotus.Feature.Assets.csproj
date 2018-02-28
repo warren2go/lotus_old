@@ -59,6 +59,9 @@
     <Content Include="..\config\App_Config\Include\Feature\Feature.Assets.config">
       <Link>App_Config\Include\Feature\Feature.Assets.config</Link>
     </Content>
+    <Content Include="..\config\App_Config\Include\Lotus\Lotus.Feature.Assets.config">
+      <Link>App_Config\Include\Lotus\Lotus.Feature.Assets.config</Link>
+    </Content>
     <Content Include="packages.config" />
     <None Include="packages.config" />
     <None Include="Web.config" />

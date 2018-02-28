@@ -4,9 +4,9 @@ using System.Threading;
 using System.Web;
 using Lotus.Foundation.Assets.Configuration;
 using Lotus.Foundation.Assets.Helpers;
-using Lotus.Foundation.Extensions.Primitives;
-using Lotus.Foundation.Extensions.RegularExpression;
-using Lotus.Foundation.Extensions.Web;
+using Lotus.Foundation.Kernel.Extensions.Primitives;
+using Lotus.Foundation.Kernel.Extensions.RegularExpression;
+using Lotus.Foundation.Kernel.Extensions.Web;
 using Lotus.Foundation.Logging;
 using Sitecore.Diagnostics;
 
@@ -46,7 +46,7 @@ namespace Lotus.Foundation.Assets.Handlers
                 if (!Settings.Enabled)
                 {
 #if DEBUG
-                    Global.Logger.Debug("Error processing asset [{0}] - handler disabled".FormatWith(context.Request.Url.AbsolutePath));
+                    LLog.Debug("Error processing asset [{0}] - handler disabled".FormatWith(context.Request.Url.AbsolutePath));
 #endif
                     context.RedirectIgnored("~/" + relativePath);
                 }
@@ -54,7 +54,7 @@ namespace Lotus.Foundation.Assets.Handlers
                 if (!Global.Repository.Hosts.Any(x => context.Request.Url.Host.IsMatch(x)))
                 {
 #if DEBUG
-                    Global.Logger.Debug("Error processing asset [{0}{1}] - no matching host found".FormatWith(context.Request.Url.Host, context.Request.Url.AbsolutePath));
+                    LLog.Debug("Error processing asset [{0}{1}] - no matching host found".FormatWith(context.Request.Url.Host, context.Request.Url.AbsolutePath));
 #endif
                     context.RedirectIgnored("~/" + relativePath);
                 }
@@ -66,7 +66,7 @@ namespace Lotus.Foundation.Assets.Handlers
                     var timestamp = AssetsRequestHelper.ExtractTimestampFromRelativePath(context, relativePath, extension);
                     relativePath = relativePath.ReplacePattern("-{0:0000000000}".FormatWith(timestamp));
 #if DEBUG
-                    Global.Logger.Debug("Redirecting ignored asset {0} -> [{1}]".FormatWith(context.Request.RawUrl, relativePath));
+                    LLog.Debug("Redirecting ignored asset {0} -> [{1}]".FormatWith(context.Request.RawUrl, relativePath));
 #endif
                     context.RedirectIgnored("~/" + relativePath);
                 }
@@ -76,12 +76,12 @@ namespace Lotus.Foundation.Assets.Handlers
             catch (ThreadAbortException abortException)
             {
                 #if DEBUG
-                Global.Logger.Warn("Asset processing thread aborted", abortException);
+                LLog.Warn("Asset processing thread aborted", abortException);
                 #endif
             }
             catch (Exception exception)
             {
-                Global.Logger.Error("Error processing asset", exception);
+                LLog.Error("Error processing asset", exception);
                 
                 context.NotFound();
             }

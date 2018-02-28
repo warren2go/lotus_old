@@ -23,9 +23,12 @@ namespace Lotus.Foundation.Logging.Helpers
     {
         private static readonly ILotusLogger _LogLogger = new LotusLogger(Constants._LOTUSLOGGERID, "false");
         
-        public static ILotusLogger FallbackLogger()
+        public static ILotusLogger FallbackLogger
         {
-            return _LogLogger;
+            get
+            {
+                return _LogLogger;
+            }
         }
 
         public static string DetermineCallsites(int position, int height)
@@ -129,7 +132,7 @@ namespace Lotus.Foundation.Logging.Helpers
             ILotusLogger logger;
             if (string.IsNullOrEmpty(elementName))
             {
-                logger = CreateLogger(node) ?? FallbackLogger();
+                logger = CreateLogger(node) ?? FallbackLogger;
 
                 if (!logger.IncludeStacktrace)
                 {
@@ -139,7 +142,7 @@ namespace Lotus.Foundation.Logging.Helpers
             }
             else
             {
-                logger = CreateLogger(XmlUtil.GetChildElement(elementName, node)) ?? FallbackLogger();
+                logger = CreateLogger(XmlUtil.GetChildElement(elementName, node)) ?? FallbackLogger;
                 
                 if (!logger.IncludeStacktrace)
                 {

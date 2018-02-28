@@ -16,10 +16,11 @@ using Lotus.Foundation.Assets.Handlers;
 using Lotus.Foundation.Assets.Pipelines;
 using Lotus.Foundation.Assets.Resolvers;
 using Lotus.Foundation.Assets.Repository;
-using Lotus.Foundation.Extensions.Collections;
-using Lotus.Foundation.Extensions.Serialization;
+using Lotus.Foundation.Kernel.Extensions.Collections;
+using Lotus.Foundation.Kernel.Extensions.Serialization;
 using Lotus.Foundation.Logging;
 using Lotus.Foundation.Logging.Helpers;
+using Sitecore;
 using Sitecore.Configuration;
 using Sitecore.Diagnostics;
 
@@ -27,18 +28,13 @@ namespace Lotus.Foundation.Assets
 {
     internal static class Global
     {
-        private static ILotusLogger _logger;
+        [NotNull]
         internal static ILotusLogger Logger
         {
             get
             {
-                if (_logger == null)
-                {
-                    _logger = LotusLogManager.GetLogger("Logger");
-                }
-                return _logger;
+                return LoggerContext.Logger;
             }
-            private set { _logger = value; }
         }
         
         internal static IAssetResolver Resolver { get; set; }
@@ -53,7 +49,7 @@ namespace Lotus.Foundation.Assets
             {
                 var nodes = Factory.GetConfigNode("/sitecore/lotus.assets");
                 Sitecore.Diagnostics.Assert.IsNotNull((object) nodes,
-                    "Missing lotus.assets config node! Missing or outdated App_Config/Include/Foundation/Foundation.Assets.config?");
+                    "Missing lotus.assets config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.Assets.config?");
 
                 LoadLoggers(nodes.GetChildElement("logging"));
                 LoadResolver(nodes.GetChildElement("resolver"));
@@ -80,21 +76,21 @@ namespace Lotus.Foundation.Assets
         private static void LoadResolver(XmlNode resolverNode)
         {
             Sitecore.Diagnostics.Assert.IsNotNull((object) resolverNode,
-                "Missing lotus.assets.resolver config node! Missing or outdated App_Config/Include/Foundation/Foundation.Assets.config?");
+                "Missing lotus.assets.resolver config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.Assets.config?");
             Resolver = resolverNode.ToObject<IAssetResolver>();
         }
 
         private static void LoadRepository(XmlNode repositoryNode)
         {
             Sitecore.Diagnostics.Assert.IsNotNull((object) repositoryNode,
-                "Missing lotus.assets.repository config node! Missing or outdated App_Config/Include/Foundation/Foundation.Assets.config?");
+                "Missing lotus.assets.repository config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.Assets.config?");
             Repository = repositoryNode.ToObject<IAssetRepository>();
         }
 
         private static void LoadPipelines(XmlNode pipelinesNode)
         {
             Sitecore.Diagnostics.Assert.IsNotNull((object) pipelinesNode,
-                "Missing lotus.assets.pipelines config node! Missing or outdated App_Config/Include/Foundation/Foundation.Assets.config?");
+                "Missing lotus.assets.pipelines config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.Assets.config?");
             var requestPipelines = pipelinesNode.GetChildElement("request");
             if (requestPipelines.HasChildNodes)
             {

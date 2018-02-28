@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using Lotus.Foundation.Kernel.Extensions.Primitives;
+using Lotus.Foundation.Kernel.Extensions.RegularExpression;
 using Lotus.Foundation.Kernel.Structures.Collections;
 using Lotus.Foundation.Kernel.Utils;
 using Sitecore;

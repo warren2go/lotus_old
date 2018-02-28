@@ -2,6 +2,7 @@
 using System.Xml;
 using Lotus.Foundation.Logging;
 using Lotus.Foundation.Logging.Helpers;
+using Sitecore;
 using Sitecore.Configuration;
 using Sitecore.Diagnostics;
 using Sitecore.Xml;
@@ -10,18 +11,13 @@ namespace Lotus.Foundation.RenderingTokens
 {
     internal static class Global
     {
-        private static ILotusLogger _logger;
+        [NotNull]
         internal static ILotusLogger Logger
         {
             get
             {
-                if (_logger == null)
-                {
-                    _logger = LotusLogManager.GetLogger("Logger");
-                }
-                return _logger;
+                return LoggerContext.Logger;
             }
-            private set { _logger = value; }
         }
         
         internal static bool Initialized { get; private set; }
@@ -32,7 +28,7 @@ namespace Lotus.Foundation.RenderingTokens
             {
                 var nodes = Factory.GetConfigNode("/sitecore/lotus.renderingtokens");
                 Sitecore.Diagnostics.Assert.IsNotNull((object) nodes,
-                    "Missing lotus.renderingtokens config node! Missing or outdated App_Config/Include/Foundation/Foundation.RenderingTokens.config?");
+                    "Missing lotus.renderingtokens config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.RenderingTokens.config?");
                 
                 LoadLoggers(XmlUtil.GetChildElement("logging", nodes));
                 

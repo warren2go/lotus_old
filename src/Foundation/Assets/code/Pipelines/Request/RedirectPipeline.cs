@@ -1,7 +1,8 @@
 ﻿using System;
 using Lotus.Foundation.Assets.Configuration;
-using Lotus.Foundation.Extensions.RegularExpression;
-using Lotus.Foundation.Extensions.Web;
+using Lotus.Foundation.Kernel.Extensions.RegularExpression;
+using Lotus.Foundation.Kernel.Extensions.Web;
+using Lotus.Foundation.Logging;
 
 namespace Lotus.Foundation.Assets.Pipelines.Request
 {
@@ -31,7 +32,7 @@ namespace Lotus.Foundation.Assets.Pipelines.Request
             }
             catch (Exception exception)
             {
-                Global.Logger.Error("Error handling assets path request", exception);
+                LLog.Error("Error handling assets path request", exception);
             }
             if (!string.IsNullOrEmpty(redirect))
             {

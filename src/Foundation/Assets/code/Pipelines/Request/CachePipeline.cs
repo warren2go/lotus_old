@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Web;
-using Lotus.Foundation.Extensions.Primitives;
-using Lotus.Foundation.Extensions.Crypto;
-using Lotus.Foundation.Extensions.Web;
+using Lotus.Foundation.Kernel.Extensions.Primitives;
+using Lotus.Foundation.Kernel.Extensions.Crypto;
+using Lotus.Foundation.Kernel.Extensions.Web;
+using Lotus.Foundation.Logging;
 
 namespace Lotus.Foundation.Assets.Pipelines.Request
 {
@@ -28,7 +29,7 @@ namespace Lotus.Foundation.Assets.Pipelines.Request
             }
             catch (Exception exception)
             {
-                Global.Logger.Error("Error processing cache pipeline", exception);
+                LLog.Error("Error processing cache pipeline", exception);
             }
         }
     }

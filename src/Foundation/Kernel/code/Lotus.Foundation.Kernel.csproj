@@ -39,15 +39,37 @@
     <Reference Include="Sitecore.Kernel, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\..\..\lib\referenced\Sitecore.Kernel.dll</HintPath>
     </Reference>
+    <Reference Include="Sitecore.Mvc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Extensions\code\bin\Debug\Sitecore.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\..\..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions.cs" />
+    <Compile Include="Extensions\Casting\CastingExtensions.cs" />
+    <Compile Include="Extensions\Collections\CollectionExtensions.cs" />
+    <Compile Include="Extensions\Collections\DictionaryExtensions.cs" />
+    <Compile Include="Extensions\Crypto\CryptoExtensions.cs" />
+    <Compile Include="Extensions\Date\DateExtensions.cs" />
+    <Compile Include="Extensions\Primitives\IntegerExtensions.cs" />
+    <Compile Include="Extensions\Primitives\StringExtensions.cs" />
+    <Compile Include="Extensions\RegularExpression\RegexExtensions.cs" />
+    <Compile Include="Extensions\Serialization\XmlExtensions.cs" />
+    <Compile Include="Extensions\SitecoreExtensions\ImageFieldExtensions.cs" />
+    <Compile Include="Extensions\SitecoreExtensions\ItemExtensions.cs" />
+    <Compile Include="Extensions\SitecoreExtensions\LinkFieldExtensions.cs" />
+    <Compile Include="Extensions\SitecoreExtensions\MediaItemExtensions.cs" />
+    <Compile Include="Extensions\SitecoreExtensions\NameValueListFieldExtensions.cs" />
+    <Compile Include="Extensions\SitecoreExtensions\Rendering\RenderingExtensions.cs" />
+    <Compile Include="Extensions\SitecoreExtensions\SafeDictionaryExtensions.cs" />
+    <Compile Include="Extensions\Web\WebExtensions.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Pipelines\Initialize\Initialize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,6 +81,8 @@
     <Compile Include="Structures\Tokenizer.cs" />
     <Compile Include="TokenContext.cs" />
     <Compile Include="Utils\ReflectionUtil.cs" />
+    <Compile Include="Utils\SitecoreUtils\ItemUtil.cs" />
+    <Compile Include="Utils\SitecoreUtils\QueryUtil.cs" />
     <Compile Include="Utils\TokenUtil.cs" />
     <Compile Include="Utils\SitecoreUtils\MainUtil.cs" />
   </ItemGroup>

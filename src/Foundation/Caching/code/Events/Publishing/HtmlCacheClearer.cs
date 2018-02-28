@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
-using Lotus.Foundation.Extensions.Casting;
-using Lotus.Foundation.Extensions.Primitives;
+using Lotus.Foundation.Kernel.Extensions.Casting;
+using Lotus.Foundation.Kernel.Extensions.Primitives;
+using Lotus.Foundation.Logging;
 using Sitecore.Caching;
 using Sitecore.Configuration;
 using Sitecore.Diagnostics;
@@ -24,8 +25,11 @@ namespace Lotus.Foundation.Caching.Events.Publishing
             }
         }
         
-        // sender = Sitecore.Events.Event.EventSubscriber
-        // args = Sitecore.Events.SitecoreEventArgs
+        /// <summary>
+        /// Clear cache event - sender is <see cref="Event.EventSubscribers"/> and args is <see cref="SitecoreEventArgs"/>
+        /// </summary>
+        /// <param name="sender">The invoker of the event.</param>
+        /// <param name="args">Arguments supplied to the event.</param>
         public void ClearCache(object sender, EventArgs args)
         {
             Assert.ArgumentNotNull(sender, nameof (sender));
@@ -39,31 +43,32 @@ namespace Lotus.Foundation.Caching.Events.Publishing
                     var publisher = eventArgs.Parameters.FirstOrDefault(x => x is Publisher) as Publisher;
                     if (publisher != null)
                     {
-                        Global.Logger.Info("SitecoreEventArgs[{0}]: Mode = {1}, Deep = {2}, RootItem = {3}:{4}".FormatWith(eventArgs.EventName, publisher.Options.Mode, publisher.Options.Deep, publisher.Options.RootItem.ID, publisher.Options.RootItem.Name));   
+                        LLog.Info("SitecoreEventArgs[{0}]: Mode = {1}, Deep = {2}, RootItem = {3}:{4}".FormatWith(eventArgs.EventName, publisher.Options.Mode, publisher.Options.Deep, publisher.Options.RootItem.ID, publisher.Options.RootItem.Name));   
                     }
                 }
             }
             catch (Exception exception)
             {
-                Log.Error("Exception during arg generation", exception, typeof(HtmlCacheClearer));
+                LLog.Error("Exception during arg generation", exception);
             }
             
-            Log.Info("HtmlCacheClearer clearing HTML caches for all sites (" + (object) this._sites.Count + ").", (object) this);
-            for (int index = 0; index < this._sites.Count; ++index)
+            LLog.Info("HtmlCacheClearer clearing HTML caches for all sites (" + (object) this._sites.Count + ").");
+            for (var index = 0; index < this._sites.Count; ++index)
             {
-                string site1 = this._sites[index] as string;
-                if (site1 != null)
+                var siteName = this._sites[index] as string;
+                if (siteName != null)
                 {
-                    SiteContext site2 = Factory.GetSite(site1);
-                    if (site2 != null)
+                    var site = Factory.GetSite(siteName);
+                    if (site != null)
                     {
-                        HtmlCache htmlCache = CacheManager.GetHtmlCache(site2);
+                        LLog.Info("Site: {0}".FormatWith(site.Name));
+                        var htmlCache = CacheManager.GetHtmlCache(site);
                         if (htmlCache != null)
                             htmlCache.Clear();
                     }
                 }
             }
-            Log.Info("HtmlCacheClearer done.", (object) this);
+            LLog.Info("HtmlCacheClearer done.");
         }
     }
 }

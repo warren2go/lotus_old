@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Lotus.Foundation.Assets.Configuration;
-using Lotus.Foundation.Extensions.RegularExpression;
+using Lotus.Foundation.Kernel.Extensions.RegularExpression;
 
 namespace Lotus.Foundation.Assets.Paths.Extension
 {

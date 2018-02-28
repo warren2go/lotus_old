@@ -57,6 +57,7 @@
     <Compile Include="Global.cs" />
     <Compile Include="Helpers\LoggerHelper.cs" />
     <Compile Include="ILotusLogger.cs" />
+    <Compile Include="LoggerContext.cs" />
     <Compile Include="LotusLogger.cs" />
     <Compile Include="InternalLogger.cs" />
     <Compile Include="LLog.cs" />

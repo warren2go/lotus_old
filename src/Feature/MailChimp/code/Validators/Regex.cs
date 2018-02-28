@@ -1,5 +1,5 @@
 ﻿using Lotus.Feature.MailChimp.Lists;
-using Lotus.Foundation.Extensions.RegularExpression;
+using Lotus.Foundation.Kernel.Extensions.RegularExpression;
 
 namespace Lotus.Feature.MailChimp.Validators
 {

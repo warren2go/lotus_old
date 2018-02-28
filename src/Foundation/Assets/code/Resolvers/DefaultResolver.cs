@@ -1,9 +1,9 @@
 ﻿using System.Web;
 using Lotus.Foundation.Assets.Helpers;
 using Lotus.Foundation.Assets.Paths;
-using Lotus.Foundation.Extensions.Primitives;
-using Lotus.Foundation.Extensions.RegularExpression;
-using Lotus.Foundation.Extensions.Web;
+using Lotus.Foundation.Kernel.Extensions.Primitives;
+using Lotus.Foundation.Kernel.Extensions.RegularExpression;
+using Lotus.Foundation.Kernel.Extensions.Web;
 using Sitecore.Events;
 
 namespace Lotus.Foundation.Assets.Resolvers

@@ -1,4 +1,4 @@
-﻿using Lotus.Foundation.Extensions.Primitives;
+﻿using Lotus.Foundation.Kernel.Extensions.Primitives;
 
 namespace Lotus.Foundation.RenderingTokens.Helpers
 {

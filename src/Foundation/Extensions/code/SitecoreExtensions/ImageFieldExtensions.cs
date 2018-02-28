@@ -1,6 +1,7 @@
 ﻿using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Resources.Media;
+using Sitecore;
 
 namespace Lotus.Foundation.Extensions.SitecoreExtensions
 {
@@ -31,6 +32,13 @@ namespace Lotus.Foundation.Extensions.SitecoreExtensions
             if (imageField.MediaItem == null)
                 return string.Empty;
             return MediaManager.GetMediaUrl(imageField.MediaItem);
+        }
+        
+        public static string GetImageFieldUrl(this ImageField imageField, [CanBeNull] MediaUrlOptions mediaUrlOptions)
+        {
+            if (imageField.MediaItem == null)
+                return string.Empty;
+            return MediaManager.GetMediaUrl(imageField.MediaItem, mediaUrlOptions ?? MediaUrlOptions.Empty);
         }
     }
 }

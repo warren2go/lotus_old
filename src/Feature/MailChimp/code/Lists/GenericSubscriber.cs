@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using Lotus.Foundation.Extensions.Casting;
-using Lotus.Foundation.Extensions.Collections;
+using Lotus.Foundation.Kernel.Extensions.Casting;
+using Lotus.Foundation.Kernel.Extensions.Collections;
 using Lotus.Foundation.Kernel.Structures.Collections;
+using Lotus.Foundation.Logging;
 using Sitecore.StringExtensions;
 
 namespace Lotus.Feature.MailChimp.Lists
@@ -47,7 +48,7 @@ namespace Lotus.Feature.MailChimp.Lists
                 var subscribeField = Get(fieldName);
                 if (subscribeField == null && validators.Any(x => x.Key == "required"))
                 {
-                    Global.Logger.Error("GenericSubscriber is missing a field during validation = {0}".FormatWith(fieldName));
+                    LLog.Error("GenericSubscriber is missing a field during validation = {0}".FormatWith(fieldName));
                     errors.Add("'{0}' is a required field but is empty or missing.".FormatWith(fieldName));
                 }
                 if (subscribeField != null)

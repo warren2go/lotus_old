@@ -166,7 +166,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             return Add(key, value);
         }
 
-        public new bool TryAddWithLock(TKey key, TValue value, Func<TKey, TValue, bool?> func)
+        public bool TryAddWithLock(TKey key, TValue value, Func<TKey, TValue, bool?> func)
         {
             lock (this)
             {

@@ -61,9 +61,9 @@
     <Compile Include="Web\UI\WebControls\Sublayout.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Extensions\code\Lotus.Foundation.Extensions.csproj">
-      <Project>{A4B1C128-3A32-4760-9321-D5E65CD519B4}</Project>
-      <Name>Lotus.Foundation.Extensions</Name>
+    <ProjectReference Include="..\..\Kernel\code\Lotus.Foundation.Kernel.csproj">
+      <Project>{ef8d739c-fdfd-40f2-934c-17af17aae61f}</Project>
+      <Name>Lotus.Foundation.Kernel</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Logging\code\Lotus.Foundation.Logging.csproj">
       <Project>{65f23213-3b77-4dc2-a824-be988400bbaf}</Project>

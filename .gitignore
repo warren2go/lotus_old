@@ -26,3 +26,6 @@ packages/
 
 # Rider
 .idea/
+
+# Referenced Libs
+lib/referenced/

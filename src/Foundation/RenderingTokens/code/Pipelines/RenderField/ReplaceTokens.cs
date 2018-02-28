@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using Lotus.Foundation.Extensions.Collections;
-using Lotus.Foundation.Extensions.RegularExpression;
+using Lotus.Foundation.Kernel.Extensions.Collections;
+using Lotus.Foundation.Kernel.Extensions.RegularExpression;
 using Lotus.Foundation.Kernel.Structures;
 using Lotus.Foundation.Kernel.Utils;
 using Lotus.Foundation.RenderingTokens.Helpers;
@@ -15,7 +15,7 @@ using Sitecore.Mvc.Helpers;
 using Sitecore.Pipelines.RenderField;
 using Sitecore.Reflection;
 using Sitecore.StringExtensions;
-using StringExtensions = Lotus.Foundation.Extensions.Primitives.StringExtensions;
+using StringExtensions = Lotus.Foundation.Kernel.Extensions.Primitives.StringExtensions;
 
 namespace Lotus.Foundation.RenderingTokens.Pipelines.RenderField
 {

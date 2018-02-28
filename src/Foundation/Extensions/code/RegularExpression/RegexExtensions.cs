@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using Lotus.Foundation.Extensions.Primitives;
+using Lotus.Foundation.Logging;
 using Convert = System.Convert;
 
 namespace Lotus.Foundation.Extensions.RegularExpression
@@ -51,7 +52,7 @@ namespace Lotus.Foundation.Extensions.RegularExpression
             }
             catch (Exception exception)
             {
-                Global.Logger.Error("Extracting pattern failed from string = {0} with {1} at index {2}".FormatWith(@string, pattern, index), exception);
+                LLog.Error("Extracting pattern failed from string = {0} with {1} at index {2}".FormatWith(@string, pattern, index), exception);
                 #if DEBUG
                 throw;
                 #endif
