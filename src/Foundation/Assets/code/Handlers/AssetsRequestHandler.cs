@@ -27,7 +27,7 @@ namespace Lotus.Foundation.Assets.Handlers
 
         private void ProcessRequest(HttpContextBase context)
         {
-            Assert.ArgumentNotNull((object) context, nameof (context));
+            Assert.ArgumentNotNull(context, nameof (context));
             
             try
             {
@@ -37,8 +37,7 @@ namespace Lotus.Foundation.Assets.Handlers
                 if (!Global.Initialized)
                 {
 #if DEBUG
-                    LLog.Debug("Error processing asset [{0}] - handler not initialized".FormatWith(context.Request.Url
-                        .AbsolutePath));
+                    LLog.Debug("Error processing asset [{0}] - handler not initialized".FormatWith(context.Request.Url.AbsolutePath));
 #endif
                     context.RedirectIgnored("~/" + relativePath);
                 }
@@ -46,7 +45,7 @@ namespace Lotus.Foundation.Assets.Handlers
                 if (!Settings.Enabled)
                 {
 #if DEBUG
-                    LLog.Debug("Error processing asset [{0}] - handler disabled".FormatWith(context.Request.Url.AbsolutePath));
+                    if (context.Request.Url != null) LLog.Debug("Error processing asset [{0}] - handler disabled".FormatWith(context.Request.Url.AbsolutePath));
 #endif
                     context.RedirectIgnored("~/" + relativePath);
                 }
@@ -64,6 +63,7 @@ namespace Lotus.Foundation.Assets.Handlers
                 if (!string.IsNullOrEmpty(ignored))
                 {
                     var timestamp = AssetsRequestHelper.ExtractTimestampFromRelativePath(context, relativePath, extension);
+                    
                     relativePath = relativePath.ReplacePattern("-{0:0000000000}".FormatWith(timestamp));
 #if DEBUG
                     LLog.Debug("Redirecting ignored asset {0} -> [{1}]".FormatWith(context.Request.RawUrl, relativePath));
@@ -73,17 +73,14 @@ namespace Lotus.Foundation.Assets.Handlers
 
                 Global.Resolver.ResolveAsset(context, relativePath, extension);
             }
-            catch (ThreadAbortException abortException)
-            {
-                #if DEBUG
-                LLog.Warn("Asset processing thread aborted", abortException);
-                #endif
-            }
             catch (Exception exception)
             {
-                LLog.Error("Error processing asset", exception);
+                if (exception.GetType() != typeof(ThreadAbortException))
+                {
+                    LLog.Error("Error processing asset", exception);
                 
-                context.NotFound();
+                    context.NotFound();   
+                }
             }
         }
     }

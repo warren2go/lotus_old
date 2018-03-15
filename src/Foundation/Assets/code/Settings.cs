@@ -18,6 +18,11 @@
             }
         }
 
+        internal static int AssetLifetime
+        {
+            get { return Sitecore.Configuration.Settings.GetIntSetting("Lotus.Foundation.Asserts.AssetLifetime", 60000); }
+        }
+
         internal static string IgnoreType
         {
             get

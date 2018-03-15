@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DD2FF588-9F63-4674-A3E3-DBBD418F7C70}</ProjectGuid>
+    <ProjectGuid>{591C1740-CBF0-4EE7-9EF3-3720FA5C122F}</ProjectGuid>
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lotus.Foundation.RenderingTokens</RootNamespace>
-    <AssemblyName>Lotus.Foundation.RenderingTokens</AssemblyName>
+    <RootNamespace>Lotus.Foundation.Kernel.Tests</RootNamespace>
+    <AssemblyName>Lotus.Foundation.Kernel.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,41 +33,39 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
-      <HintPath>..\..\..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.10.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
+      <HintPath>..\..\..\..\packages\NUnit.3.10.0\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.ContentSearch, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\lib\referenced\Sitecore.ContentSearch.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.ContentSearch.Linq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\lib\referenced\Sitecore.ContentSearch.Linq.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\..\..\lib\referenced\Sitecore.Kernel.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.Mvc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\lib\referenced\Sitecore.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Global.cs" />
-    <Compile Include="Pipelines\Initialize\Initialize.cs" />
-    <Compile Include="Pipelines\RenderField\InvokeTokens.cs" />
-    <Compile Include="Pipelines\RenderField\ReplaceTokens.cs" />
+    <Compile Include="Examples\ContentSearchExamples.cs" />
+    <Compile Include="Examples\TokenizationExamples.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Kernel\code\Lotus.Foundation.Kernel.csproj">
-      <Project>{ef8d739c-fdfd-40f2-934c-17af17aae61f}</Project>
+    <ProjectReference Include="..\code\Lotus.Foundation.Kernel.csproj">
+      <Project>{EF8D739C-FDFD-40F2-934C-17AF17AAE61F}</Project>
       <Name>Lotus.Foundation.Kernel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Logging\code\Lotus.Foundation.Logging.csproj">
-      <Project>{65f23213-3b77-4dc2-a824-be988400bbaf}</Project>
-      <Name>Lotus.Foundation.Logging</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tests" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,6 +6,7 @@ using Lotus.Foundation.Kernel.Extensions.RegularExpression;
 using Lotus.Foundation.Kernel.Utils;
 using Sitecore;
 using Sitecore.Collections;
+using StringUtil = Sitecore.StringUtil;
 
 namespace Lotus.Foundation.Kernel.Services
 {
@@ -37,7 +38,7 @@ namespace Lotus.Foundation.Kernel.Services
         /// </summary>
         /// <param name="key">Token identifier to seek - without format (eg 'property' and not '$(property)'.</param>
         /// <param name="token">Instance of the token to use.</param>
-        public void Add(string key, object token)
+        public void Add(string key, [NotNull] object token)
         {
             if (key.IsMatch(TokenSelectRegex))
                 key = key.ExtractPattern(TokenSelectRegex);
@@ -104,7 +105,7 @@ namespace Lotus.Foundation.Kernel.Services
         /// <param name="format">Content that contains the tokens.</param>
         /// <param name="tokens">Tokens to seek.</param>
         /// <returns>A resulting string with all tokens replaced by their corresponding variables.</returns>
-        public static string Replace(string format, SafeDictionary<string, object> tokens)
+        public static string Replace(string format, [NotNull] SafeDictionary<string, object> tokens)
         {
             foreach (var tokenAndElement in ExtractTokensAndElements(format))
             {
@@ -138,7 +139,7 @@ namespace Lotus.Foundation.Kernel.Services
         /// <param name="format">Content that contains the tokens.</param>
         /// <param name="tokens">Tokens to seek.</param>
         /// <returns>A resulting string with all tokens replaced by their corresponding variables.</returns>
-        public static string ReplaceToken(string format, SafeDictionary<string, object> tokens)
+        public static string ReplaceToken(string format, [NotNull] SafeDictionary<string, object> tokens)
         {
             return tokens.Aggregate(format, (current, token) => current.Replace(TokenFormat.FormatWith(token.Key), (token.Value ?? token.Key).ToString()));
         }
@@ -149,7 +150,7 @@ namespace Lotus.Foundation.Kernel.Services
         /// <param name="format">Content that contains the tokens.</param>
         /// <param name="func">A func to replace elements with - customize the result of the token element.</param>
         /// <returns>A resulting string with all token elements replaced by their corresponding variables.</returns>
-        public string ReplaceTokenElement(string format, Func<string, string, object, string> func)
+        public string ReplaceTokenElement(string format, [NotNull] Func<string, string, object, string> func)
         {
             return ReplaceTokenElement(format, _tokens, func);
         }
@@ -161,7 +162,7 @@ namespace Lotus.Foundation.Kernel.Services
         /// <param name="tokens">Tokens to seek.</param>
         /// <param name="func">A func to replace elements with - customize the result of the token element.</param>
         /// <returns>A resulting string with all token elements replaced by their corresponding variables.</returns>
-        public static string ReplaceTokenElement(string format, SafeDictionary<string, object> tokens, Func<string, string, object, string> func)
+        public static string ReplaceTokenElement(string format, [NotNull] SafeDictionary<string, object> tokens, [NotNull] Func<string, string, object, string> func)
         {
             return tokens.Aggregate(format, (current, token) => func.Invoke(current, token.Key, token.Value));
         }

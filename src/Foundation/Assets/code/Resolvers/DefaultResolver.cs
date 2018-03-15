@@ -32,17 +32,11 @@ namespace Lotus.Foundation.Assets.Resolvers
             {
                 var assetRequest = GenerateAssetRequest(context, path, relativePath, extension, timestamp);
                 
-                Event.RaiseEvent("assets:request", new object[1]
-                {
-                    (object) assetRequest
-                });
+                Event.RaiseEvent("assets:request", assetRequest);
                 
                 path.ProcessRequest(assetRequest);
                 
-                Event.RaiseEvent("assets:request:end", new object[1]
-                {
-                    (object) assetRequest
-                });
+                Event.RaiseEvent("assets:request:end", assetRequest);
                 
                 context.End();
             }

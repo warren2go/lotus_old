@@ -7,7 +7,10 @@
  */
 
 using System;
+using System.Linq;
+using Lotus.Foundation.Kernel.Utils.SitecoreUtils;
 using Sitecore.Configuration;
+using Sitecore.ContentSearch.SearchTypes;
 using Sitecore.Diagnostics;
 
 namespace Lotus.Foundation.Kernel

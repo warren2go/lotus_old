@@ -7,6 +7,7 @@ using Sitecore.Links;
 using Sitecore.Mvc.Presentation;
 using Sitecore.Resources.Media;
 using Sitecore;
+using Sitecore.Data;
 
 namespace Lotus.Foundation.Kernel.Utils.SitecoreUtils
 {
@@ -18,6 +19,16 @@ namespace Lotus.Foundation.Kernel.Utils.SitecoreUtils
         public static bool HasField(Item item, string fieldName)
         {
             return item != null && item.Fields[fieldName] != null;
+        }
+
+        public static bool HasTemplate(Item item, params ID[] templateIds)
+        {
+            return item != null && item.HasTemplate(templateIds);
+        }
+        
+        public static bool HasTemplate(Item item, params string[] templateIdStrings)
+        {
+            return item != null && item.HasTemplate(templateIdStrings);
         }
         
         /// <summary>

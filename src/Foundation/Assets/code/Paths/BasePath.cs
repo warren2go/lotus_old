@@ -98,20 +98,24 @@ namespace Lotus.Foundation.Assets.Paths
         public virtual void ProcessTimestamp(AssetRequest request)
         {
             var modified = AssetsRequestHelper.ExtractTimestampFromFile(request.Context, request.RelativePath);
-            
+
             if (Settings.Strict)
             {
                 if (request.Timestamp != modified)
                 {
                     request.Context.RedirectWithUpdate(modified, request.RelativePath, request.Extension);
                 }
-                
+
                 var origional = request.Context.Request.RawUrl;
-            
+
                 if (!string.IsNullOrEmpty(origional) && !origional.IsMatch("^/-/assets/"))
                 {
                     request.Context.RedirectWithUpdate(modified, request.RelativePath, request.Extension);
                 }
+            }
+            else
+            {
+                
             }
 
             request.Timestamp = modified;

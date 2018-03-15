@@ -36,6 +36,12 @@
     <Reference Include="JetBrains.Annotations, Version=11.1.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325">
       <HintPath>..\..\..\..\packages\JetBrains.Annotations.11.1.0\lib\net20\JetBrains.Annotations.dll</HintPath>
     </Reference>
+    <Reference Include="Sitecore.ContentSearch, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\lib\referenced\Sitecore.ContentSearch.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.ContentSearch.Linq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\lib\referenced\Sitecore.ContentSearch.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Kernel, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\..\..\lib\referenced\Sitecore.Kernel.dll</HintPath>
     </Reference>
@@ -62,6 +68,7 @@
     <Compile Include="Extensions\Primitives\StringExtensions.cs" />
     <Compile Include="Extensions\RegularExpression\RegexExtensions.cs" />
     <Compile Include="Extensions\Serialization\XmlExtensions.cs" />
+    <Compile Include="Extensions\SitecoreExtensions\ContentSearchExtensions.cs" />
     <Compile Include="Extensions\SitecoreExtensions\ImageFieldExtensions.cs" />
     <Compile Include="Extensions\SitecoreExtensions\ItemExtensions.cs" />
     <Compile Include="Extensions\SitecoreExtensions\LinkFieldExtensions.cs" />
@@ -81,8 +88,11 @@
     <Compile Include="Structures\Collections\StaticQueue.cs" />
     <Compile Include="TokenContext.cs" />
     <Compile Include="Utils\ReflectionUtil.cs" />
+    <Compile Include="Utils\SitecoreUtils\ItemEditingUtil.cs" />
     <Compile Include="Utils\SitecoreUtils\ItemUtil.cs" />
     <Compile Include="Utils\SitecoreUtils\QueryUtil.cs" />
+    <Compile Include="Utils\SitecoreUtils\ContentSearchUtil.cs" />
+    <Compile Include="Utils\StringUtil.cs" />
     <Compile Include="Utils\TokenUtil.cs" />
     <Compile Include="Utils\SitecoreUtils\MainUtil.cs" />
   </ItemGroup>

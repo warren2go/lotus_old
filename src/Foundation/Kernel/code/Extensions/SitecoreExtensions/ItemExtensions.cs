@@ -6,6 +6,9 @@ using System.Web;
 using Lotus.Foundation.Kernel.Extensions.Casting;
 using Lotus.Foundation.Kernel.Extensions.Primitives;
 using Sitecore;
+using Sitecore.Collections;
+using Sitecore.ContentSearch;
+using Sitecore.ContentSearch.SearchTypes;
 using Sitecore.Data;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
@@ -28,9 +31,9 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
         /// <summary>
         /// Check whether an item has a template from the specified collection.
         /// </summary>
-        public static bool HasTemplate(this Item item, params string[] templateIds)
+        public static bool HasTemplate(this Item item, params string[] templateIdStrings)
         {
-            return templateIds.Any(x => x.Equals(item.TemplateID.ToString(), StringComparison.InvariantCultureIgnoreCase));
+            return templateIdStrings.Any(x => x.Equals(item.TemplateID.ToString(), StringComparison.InvariantCultureIgnoreCase));
         }
         
         /// <summary>
@@ -105,7 +108,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
                 templateid = string.Empty;
             }
 
-            var decendents = new List<Item>(item.Children.Where(x => templateid.Equals(x.TemplateID.ToString(), StringComparison.InvariantCultureIgnoreCase)));
+            var decendents = new List<Item>(item.GetChildren(ChildListOptions.SkipSorting).Where(x => x.HasTemplate(templateid)));
             foreach (Item child in item.Children)
             {
                 decendents.AddRange(child.GetDescendentsWithTemplate(templateid));
@@ -117,7 +120,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
         {
             if (recursive)
             {
-                var decendents = new List<Item>(item.Children);
+                var decendents = new List<Item>(item.GetChildren(ChildListOptions.SkipSorting));
                 foreach (Item child in item.Children)
                 {
                     decendents.AddRange(child.GetDescendents());
@@ -129,7 +132,24 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
                 return item.Children;
             }
         }
-        
+
+        [NotNull]
+        public static IEnumerable<Item> GetDescendentsFromIndex(this Item item, string indexName)
+        {
+            var index = ContentSearchManager.GetIndex(indexName);
+            if (index == null) return new Item[0];
+            return item.GetDescendentsFromIndex(index);
+        }
+
+        [NotNull]
+        public static IEnumerable<Item> GetDescendentsFromIndex(this Item item, [NotNull] ISearchIndex index)
+        {
+            using (var context = index.CreateSearchContext())
+            {
+                return context.GetQueryable<SearchResultItem>().Where(x => x.Paths.Contains(item.ID)).Select(x => x.GetItem()).ToList();
+            }
+        }
+
         public static string GetSafeItemUrl(this Item item, UrlOptions urlOptions = null, Func<string, string> customReplacer = null)
         {
             if (customReplacer != null)
@@ -287,7 +307,39 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
             }
             catch (Exception exception)
             {
-                Log.Error(exception.Message, typeof(ItemExtensions));
+                Log.Error(exception.Message, exception, typeof(ItemExtensions));
+            }
+            return item.Editing.EndEdit();
+        }
+
+        /// <summary>
+        /// Edit an item with a delegate void
+        /// </summary>
+        /// <exception cref="Exception"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        public static void Edit(this Item item, Action<Item> action)
+        {
+            Assert.ArgumentNotNull(action, nameof(action));
+            item.Editing.BeginEdit();
+            action.Invoke(item);
+            item.Editing.EndEdit();
+        }
+
+        /// <summary>
+        /// Try editing an item with a delegate void
+        /// </summary>
+        /// <returns>Whether Sitecore accepted the edit</returns>
+        public static bool TryEdit(this Item item, Action<Item> action)
+        {
+            try
+            {
+                if (action == null) return false;
+                item.Editing.BeginEdit();
+                action.Invoke(item);
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception.Message, exception, typeof(ItemExtensions));
             }
             return item.Editing.EndEdit();
         }
