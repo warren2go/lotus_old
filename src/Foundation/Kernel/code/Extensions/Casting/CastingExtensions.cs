@@ -26,8 +26,7 @@ namespace Lotus.Foundation.Kernel.Extensions.Casting
         [CanBeNull]
         public static T CastTo<T>(this object instance)
         {
-            T casted;
-
+            var casted = default(T);
             try
             {
                 // we need to specify exact conversions for strings
@@ -78,7 +77,6 @@ namespace Lotus.Foundation.Kernel.Extensions.Casting
                 throw;
                 #endif
             }
-
             return casted;
         }
     }
