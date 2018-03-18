@@ -6,11 +6,13 @@ using Sitecore.Diagnostics;
 using Sitecore.Resources.Media;
 using Sitecore.StringExtensions;
 using Sitecore.Web;
+using Sitecore;
 
 namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
 {
     public static class MediaItemExtensions
     {
+        [CanBeNull]
         public static MediaItem GetMediaItem(this Item item, string mediaFieldName)
         {
             var field = item.Fields[mediaFieldName];
@@ -22,6 +24,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
             return GetMediaItem(field);
         }
 
+        [CanBeNull]
         public static MediaItem GetMediaItem(this Field field)
         {
             if (field.Type.ToLower().Contains("image"))
@@ -34,12 +37,14 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
             }
         }
         
-        public static string GetSafeMediaUrl(this Item item, string mediaFieldName, MediaUrlOptions mediaUrlOptions = null)
+        [NotNull]
+        public static string GetSafeMediaUrl(this Item item, string mediaFieldName, [CanBeNull] MediaUrlOptions mediaUrlOptions = null)
         {
             return WebUtil.SafeEncode(item.GetMediaUrl(mediaFieldName, mediaUrlOptions).Replace(" ", "-"));
         }
         
-        public static string GetMediaUrl(this Item item, string mediaFieldName, MediaUrlOptions mediaUrlOptions = null)
+        [NotNull]
+        public static string GetMediaUrl(this Item item, string mediaFieldName, [CanBeNull] MediaUrlOptions mediaUrlOptions = null)
         {
             if (item.Fields[mediaFieldName] == null)
             {
@@ -49,12 +54,14 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
             return item.Fields[mediaFieldName].GetMediaUrl(mediaUrlOptions);
         }
         
-        public static string GetSafeMediaUrl(this Field field, MediaUrlOptions mediaUrlOptions = null)
+        [NotNull]
+        public static string GetSafeMediaUrl(this Field field, [CanBeNull] MediaUrlOptions mediaUrlOptions = null)
         {
             return HttpUtility.UrlEncode(field.GetMediaUrl(mediaUrlOptions).Replace(" ", "-"));
         }
 
-        public static string GetMediaUrl(this Field field, MediaUrlOptions mediaUrlOptions = null)
+        [NotNull]
+        public static string GetMediaUrl(this Field field, [CanBeNull] MediaUrlOptions mediaUrlOptions = null)
         {
             var mediaItem = GetMediaItem(field);
             if (mediaItem == null)
@@ -65,7 +72,8 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
             return GetMediaUrl(mediaItem, mediaUrlOptions);
         }
         
-        public static string GetSafeMediaUrl(this MediaItem mediaItem, MediaUrlOptions mediaUrlOptions = null, Func<string, string> customReplacer = null)
+        [NotNull]
+        public static string GetSafeMediaUrl(this MediaItem mediaItem, [CanBeNull] MediaUrlOptions mediaUrlOptions = null, [CanBeNull] Func<string, string> customReplacer = null)
         {
             if (customReplacer != null)
             {
@@ -74,7 +82,8 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
             return HttpUtility.UrlEncode(mediaItem.GetMediaUrl(mediaUrlOptions).Replace(" ", "-"));
         }
         
-        public static string GetMediaUrl(this MediaItem mediaItem, MediaUrlOptions mediaUrlOptions = null)
+        [NotNull]
+        public static string GetMediaUrl(this MediaItem mediaItem, [CanBeNull] MediaUrlOptions mediaUrlOptions = null)
         {
             try
             {
@@ -90,6 +99,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
         /// <summary>
         /// Get the URL for a MediaItem allowing for prefixing of a protocol and/or usage of SSL.
         /// </summary>
+        [NotNull]
         public static string GetMediaUrl(this Item item, string mediaFieldName, bool prefixProtocol, bool useSSL)
         {
             if (item.Fields[mediaFieldName] == null)
@@ -104,6 +114,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
         /// <summary>
         /// Get the URL for an ImageField allowing for prefixing of a protocol and/or usage of SSL.
         /// </summary>
+        [NotNull]
         public static string GetMediaUrl(this Field field, bool prefixProtocol, bool useSSL)
         {
             MediaItem mediaItem = field.GetItemFromLookup();
@@ -117,6 +128,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
             return mediaItem.GetMediaUrl(prefixProtocol, useSSL);
         }
 
+        [NotNull]
         public static string GetMediaUrl(this MediaItem mediaItem, bool prefixProtocol, bool useSSL)
         {
             try

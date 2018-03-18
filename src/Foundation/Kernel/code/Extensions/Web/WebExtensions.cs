@@ -11,7 +11,7 @@ namespace Lotus.Foundation.Kernel.Extensions.Web
 {
     public static class WebExtensions
     {
-        public static bool WriteFile(this HttpContextBase context, string relativePath, string contentType = null)
+        public static bool WriteFile(this HttpContextBase context, [NotNull] string relativePath, [CanBeNull] string contentType = null)
         {
             Assert.ArgumentNotNull((object) relativePath, nameof (relativePath));
             
@@ -93,18 +93,20 @@ namespace Lotus.Foundation.Kernel.Extensions.Web
         }
 
         [TerminatesProgram]
-        public static void Redirect(this HttpContextBase context, string url)
+        public static void Redirect(this HttpContextBase context, [NotNull] string url)
         {
+            Assert.ArgumentNotNull(url, nameof(url));
             context.Response.Redirect(url);
         }
 
         [TerminatesProgram]
-        public static void RedirectPermanent(this HttpContextBase context, string url)
+        public static void RedirectPermanent(this HttpContextBase context, [NotNull] string url)
         {
+            Assert.ArgumentNotNull(url, nameof(url));
             context.Response.RedirectPermanent(url);
         }
 
-        public static void SetHeader(this NameValueCollection collection, string header, object value = null)
+        public static void SetHeader(this NameValueCollection collection, string header, [CanBeNull] object value = null)
         {
             Assert.ArgumentNotNull((object) header, nameof (header));
             collection[header] = (value ?? string.Empty).ToString();

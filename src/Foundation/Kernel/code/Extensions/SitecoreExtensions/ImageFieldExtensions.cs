@@ -7,6 +7,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
 {
     public static class ImageFieldExtensions
     {
+        [NotNull]
         public static ImageField GetImageField(this Item item, string imageFieldName)
         {
             if (item.Fields[imageFieldName] == null)
@@ -14,6 +15,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
             return item.Fields[imageFieldName];
         }
 
+        [NotNull]
         public static string GetImageFieldUrl(this Item item, string imageFieldName)
         {
             if (item.Fields[imageFieldName] == null)
@@ -21,12 +23,14 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
             return item.Fields[imageFieldName].GetImageFieldUrl();
         }
 
+        [NotNull]
         public static string GetImageFieldUrl(this Field field)
         {
             var imageField = (ImageField)field;
             return imageField.GetImageFieldUrl();
         }
 
+        [NotNull]
         public static string GetImageFieldUrl(this ImageField imageField)
         {
             if (imageField.MediaItem == null)
@@ -34,6 +38,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
             return MediaManager.GetMediaUrl(imageField.MediaItem);
         }
         
+        [NotNull]
         public static string GetImageFieldUrl(this ImageField imageField, [CanBeNull] MediaUrlOptions mediaUrlOptions)
         {
             if (imageField.MediaItem == null)

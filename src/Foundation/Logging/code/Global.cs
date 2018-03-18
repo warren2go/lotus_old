@@ -42,8 +42,7 @@ namespace Lotus.Foundation.Logging
             try
             {
                 var nodes = Factory.GetConfigNode("/sitecore/lotus.logging");
-                Sitecore.Diagnostics.Assert.IsNotNull((object) nodes,
-                    "Missing lotus.logging config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.Logging.config?");
+                Sitecore.Diagnostics.Assert.IsNotNull((object) nodes, "Missing lotus.logging config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.Logging.config?");
 
                 LotusLoggerFactory.Initialize(XmlUtil.GetChildElement("logfactory", nodes));
                 

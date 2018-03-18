@@ -1,4 +1,6 @@
-﻿using Lotus.Foundation.Kernel.Extensions.RegularExpression;
+﻿using System.Linq;
+using System.Text.RegularExpressions;
+using Lotus.Foundation.Kernel.Extensions.RegularExpression;
 using Sitecore;
 
 namespace Lotus.Foundation.Kernel.Utils
@@ -81,6 +83,11 @@ namespace Lotus.Foundation.Kernel.Utils
             }
 
             return 0L;
+        }
+
+        public static bool ContainsRegex([NotNull] string @string, [NotNull] string[] expressions, params RegexOptions[] regexOptions)
+        {
+            return expressions.Any(x => @string.IsMatch(x, regexOptions));
         }
     }
 }

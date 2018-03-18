@@ -8,7 +8,8 @@ namespace Lotus.Foundation.Kernel.Extensions.Collections
 {
     public static class CollectionExtensions
     {
-        public static string Join<T>(this IEnumerable<T> collection, string delimiter = ", ", string pattern = "{0}")
+        [NotNull]
+        public static string Join<T>(this IEnumerable<T> collection, [NotNull] string delimiter = ", ", [NotNull] string pattern = "{0}")
         {
             var array = collection as T[];
             var sb = new StringBuilder(nameof(collection) + ":" + typeof(T));
@@ -28,7 +29,8 @@ namespace Lotus.Foundation.Kernel.Extensions.Collections
             return result.Substring(0, result.Length - delimiter.Length);
         }
         
-        public static string JoinWithInvoke<T>(this IEnumerable<T> collection, Func<T, string> invoke, string delimiter = ", ", string pattern = "{0}")
+        [NotNull]
+        public static string JoinWithInvoke<T>(this IEnumerable<T> collection, [NotNull] Func<T, string> invoke, [NotNull] string delimiter = ", ", [NotNull] string pattern = "{0}")
         {
             var array = collection as T[];
             var sb = new StringBuilder(nameof(collection) + ":" + typeof(T));
@@ -69,7 +71,7 @@ namespace Lotus.Foundation.Kernel.Extensions.Collections
             return JoinWithInvoke(collection, invoke, delimiter, pattern);
         }
         
-        public static void For<T>(this IEnumerable<T> collection, Action<T> action, bool reversed = true)
+        public static void For<T>(this IEnumerable<T> collection, [NotNull] Action<T> action, bool reversed = true)
         {
             var array = collection as T[];
             if (array != null)
@@ -92,7 +94,8 @@ namespace Lotus.Foundation.Kernel.Extensions.Collections
             }
         }
         
-        public static IEnumerable<T> ForAnd<T>(this IEnumerable<T> collection, Action<T> action, bool reversed = true)
+        [NotNull]
+        public static IEnumerable<T> ForAnd<T>(this IEnumerable<T> collection, [NotNull] Action<T> action, bool reversed = true)
         {
             var array = collection as T[];
             if (array != null)

@@ -43,8 +43,7 @@ namespace Lotus.Feature.MailChimp
             try
             {
                 var nodes = Sitecore.Configuration.Factory.GetConfigNode("/sitecore/lotus.mailchimp");
-                Sitecore.Diagnostics.Assert.IsNotNull(nodes,
-                    "Missing lotus.mailchimp config node! Missing or outdated App_Config/Include/Lotus/Lotus..MailChimp.config?");
+                Sitecore.Diagnostics.Assert.IsNotNull(nodes, "Missing lotus.mailchimp config node! Missing or outdated App_Config/Include/Lotus/Lotus..MailChimp.config?");
 
                 LoadLoggers(nodes.GetChildElement("logging"));
                 LoadValidators(nodes.GetChildElement("validators"));
@@ -99,7 +98,9 @@ namespace Lotus.Feature.MailChimp
                     {
                         list.Key = key;
                         if (string.IsNullOrEmpty(list.ListId))
+                        {
                             list.ListId = listNode.GetAttribute("listid");
+                        }
                         MailChimpService.AddListByID(list);   
                     }
                 }

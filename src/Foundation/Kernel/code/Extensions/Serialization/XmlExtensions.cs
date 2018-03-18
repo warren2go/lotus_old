@@ -4,9 +4,11 @@ using System.Linq;
 using System.Xml;
 using Lotus.Foundation.Kernel.Extensions.Casting;
 using Lotus.Foundation.Kernel.Extensions.Primitives;
+using Lotus.Foundation.Kernel.Utils;
 using Sitecore.Configuration;
 using Sitecore.Diagnostics;
 using Sitecore.Xml;
+using Sitecore;
 
 namespace Lotus.Foundation.Kernel.Extensions.Serialization
 {
@@ -17,7 +19,8 @@ namespace Lotus.Foundation.Kernel.Extensions.Serialization
             return XmlUtil.HasAttribute(attributeName, node);
         }
         
-        public static XmlNode ResolvePath(this XmlNode parentNode, string path)
+        [CanBeNull]
+        public static XmlNode ResolvePath(this XmlNode parentNode, [NotNull] string path)
         {
             var lastNode = string.Empty;
             try
@@ -40,6 +43,7 @@ namespace Lotus.Foundation.Kernel.Extensions.Serialization
             }
         }
         
+        [CanBeNull]
         public static XmlNode GetChildElement(this XmlNode parentNode, string elementName)
         {
             try
@@ -55,6 +59,7 @@ namespace Lotus.Foundation.Kernel.Extensions.Serialization
             }
         }
         
+        [CanBeNull]
         public static IEnumerable<XmlNode> GetChildElements(this XmlNode parentNode, string elementName, bool allowNull = true)
         {
             try
@@ -70,13 +75,14 @@ namespace Lotus.Foundation.Kernel.Extensions.Serialization
             }
         }
 
-        public static string GetAttribute(this XmlNode node, string attributeName, string defaultValue = null)
+        [CanBeNull]
+        public static string GetAttribute(this XmlNode node, string attributeName, [CanBeNull] string defaultValue = null)
         {
             try
             {
                 if (node.Attributes == null)
                     return defaultValue;
-                return XmlUtil.GetAttribute(attributeName, node, defaultValue ?? string.Empty);
+                return XmlUtil.GetAttribute(attributeName, node, defaultValue);
             }
             catch (Exception exception)
             {
@@ -85,22 +91,23 @@ namespace Lotus.Foundation.Kernel.Extensions.Serialization
             }
         }
         
-        public static T GetAttributeAndCast<T>(this XmlNode node, string attributeName, T defaultValue = default(T))
+        [CanBeNull]
+        public static T GetAttributeAndCast<T>(this XmlNode node, string attributeName, [CanBeNull] T @default = default(T))
         {
             try
             {
                 if (node.Attributes == null)
-                    return defaultValue;
-                var value = XmlUtil.GetAttribute(attributeName, node, string.Empty);;
-                return !string.IsNullOrEmpty(value) ? value.CastTo<T>() : defaultValue;
+                    return @default;
+                return ReflectionUtil.CastTo(XmlUtil.GetAttribute(attributeName, node, null), @default);
             }
             catch (Exception exception)
             {
                 Log.Error("Error getting attribute by name and casting [{0} as {1}]".FormatWith(attributeName, typeof(T)), exception, typeof(XmlExtensions));
-                return defaultValue;
+                return @default;
             }
         }
         
+        [CanBeNull]
         public static T ToObject<T>(this XmlNode node, bool assert = true) where T : class
         {
             try
@@ -118,7 +125,8 @@ namespace Lotus.Foundation.Kernel.Extensions.Serialization
             }
         }
 
-        public static IEnumerable<T> ToObject<T>(this IEnumerable<XmlNode> nodes, bool assert = true) where T : class
+        [CanBeNull]
+        public static IEnumerable<T> ToObjects<T>(this IEnumerable<XmlNode> nodes, bool assert = true, bool allowNull = true) where T : class
         {
             try
             {
@@ -131,24 +139,27 @@ namespace Lotus.Foundation.Kernel.Extensions.Serialization
                 {
                     throw; 
                 }
-                return null;
+                return !allowNull ? new T[0] : null;
             }
         }
 
+        [CanBeNull]
         public static T CastFromAttribute<T>(this XmlNode node, string attributeName)
         {
             var attribute = node.GetAttribute(attributeName);
-            return !string.IsNullOrEmpty(attribute) ? attribute.CastTo<T>() : default(T);
+            return ReflectionUtil.CastTo(attribute, default(T));
         }
         
+        [CanBeNull]
         public static T CastFromInnerText<T>(this XmlNode node)
         {
-            return node.InnerText.CastTo<T>();
+            return ReflectionUtil.CastTo(node.InnerText, default(T));
         }
         
+        [CanBeNull]
         public static T CastFromValue<T>(this XmlNode node)
         {
-            return node.Value.CastTo<T>();
+            return ReflectionUtil.CastTo(node.Value, default(T));
         }
     }
 }

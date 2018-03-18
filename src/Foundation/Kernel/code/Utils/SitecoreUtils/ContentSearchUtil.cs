@@ -18,6 +18,7 @@ namespace Lotus.Foundation.Kernel.Utils.SitecoreUtils
         /// <typeparam name="TItem">A class that inhertis the SearchResultItem.</typeparam>
         /// <typeparam name="T">The resulting type after the search is complete.</typeparam>
         /// <returns>Determined by the callbacks result.</returns>
+        [CanBeNull]
         public static T SearchIndex<TItem, T>([NotNull] IIndexable indexable, [NotNull] Func<IQueryable<TItem>, T> func)
         {
             var index = ContentSearchManager.GetIndex(indexable);
@@ -33,6 +34,7 @@ namespace Lotus.Foundation.Kernel.Utils.SitecoreUtils
         /// <typeparam name="TItem">A class that inhertis the SearchResultItem.</typeparam>
         /// <typeparam name="T">The resulting type after the search is complete.</typeparam>
         /// <returns>Determined by the callbacks result.</returns>
+        [CanBeNull]
         public static T SearchIndex<TItem, T>(string name, [NotNull] Func<IQueryable<TItem>, T> func)
         {
             var index = ContentSearchManager.GetIndex(name);
@@ -48,6 +50,7 @@ namespace Lotus.Foundation.Kernel.Utils.SitecoreUtils
         /// <typeparam name="TItem">A class that inhertis the SearchResultItem.</typeparam>
         /// <typeparam name="T">The resulting type after the search is complete.</typeparam>
         /// <returns>Determined by the callbacks result.</returns>
+        [CanBeNull]
         public static T SearchIndex<TItem, T>([NotNull] ISearchIndex index, [NotNull] Func<IQueryable<TItem>, T> func)
         {
             return SearchIndex(index.CreateSearchContext(), func);
@@ -61,6 +64,7 @@ namespace Lotus.Foundation.Kernel.Utils.SitecoreUtils
         /// <typeparam name="TItem">A class that inhertis the SearchResultItem.</typeparam>
         /// <typeparam name="T">The resulting type after the search is complete.</typeparam>
         /// <returns>Determined by the callbacks result.</returns>
+        [CanBeNull]
         public static T SearchIndex<TItem, T>([NotNull] IProviderSearchContext context, [NotNull] Func<IQueryable<TItem>, T> func)
         {
             return func.Invoke(context.GetQueryable<TItem>());

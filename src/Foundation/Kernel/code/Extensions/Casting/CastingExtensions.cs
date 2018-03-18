@@ -2,12 +2,13 @@
 using System.Globalization;
 using Lotus.Foundation.Kernel.Extensions.Primitives;
 using Sitecore.Diagnostics;
+using Sitecore;
 
 namespace Lotus.Foundation.Kernel.Extensions.Casting
 {
     public static class CastingExtensions
     {
-        public static bool TryCastTo<T>(this object instance, out T casted)
+        public static bool TryCastTo<T>(this object instance, [CanBeNull] out T casted)
         {
             try
             {
@@ -22,6 +23,7 @@ namespace Lotus.Foundation.Kernel.Extensions.Casting
             }
         }
 
+        [CanBeNull]
         public static T CastTo<T>(this object instance)
         {
             T casted;
@@ -67,7 +69,7 @@ namespace Lotus.Foundation.Kernel.Extensions.Casting
                     }
                 }
 
-                casted = (T)Convert.ChangeType(instance, typeof(T), CultureInfo.InvariantCulture);
+                casted = (T)System.Convert.ChangeType(instance, typeof(T), CultureInfo.InvariantCulture);
             }
             catch (Exception exception)
             {

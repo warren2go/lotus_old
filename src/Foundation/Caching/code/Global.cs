@@ -31,8 +31,7 @@ namespace Lotus.Foundation.Caching
             try
             {
                 var nodes = Factory.GetConfigNode("/sitecore/lotus.caching");
-                Sitecore.Diagnostics.Assert.IsNotNull((object) nodes,
-                    "Missing lotus.caching config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.Caching.config?");
+                Sitecore.Diagnostics.Assert.IsNotNull((object) nodes, "Missing lotus.caching config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.Caching.config?");
                 
                 LoadLoggers(nodes.GetChildElement("logging"));
 

@@ -6,7 +6,7 @@ using Lotus.Foundation.Kernel.Extensions.RegularExpression;
 using Lotus.Foundation.Kernel.Utils;
 using Sitecore;
 using Sitecore.Collections;
-using StringUtil = Sitecore.StringUtil;
+using StringUtil = Lotus.Foundation.Kernel.Utils.StringUtil;
 
 namespace Lotus.Foundation.Kernel.Services
 {
@@ -32,7 +32,7 @@ namespace Lotus.Foundation.Kernel.Services
 
             _tokens.Clear();
         }
-
+        
         /// <summary>
         /// Add a token to the tokenizer
         /// </summary>
@@ -61,27 +61,37 @@ namespace Lotus.Foundation.Kernel.Services
         /// </summary>
         /// <param name="format">Content that contains the tokens.</param>
         /// <param name="tokens">Tokens to seek.</param>
-        /// <param name="allowedInvokes">(optional) The collection of allowed method-calls. default is null and will alllow all.</param>
+        /// <param name="allowedMethods">(optional) The collection of allowed method-calls. default is null and will alllow all.</param>
         /// <returns>A resulting string with all methods invoked and tokens replaced by their corresponding results.</returns>
-        public static string Invoke(string format, SafeDictionary<string, object> tokens, [CanBeNull] string[] allowedInvokes = null)
+        public static string Invoke(string format, SafeDictionary<string, object> tokens, [CanBeNull] string[] allowedMethods = null)
         {
+            if (allowedMethods == null)
+            {
+                if (!Settings.Tokenization.Security.CheckMethods)
+                {
+                    allowedMethods = new[] { ".+" };
+                }
+                else
+                {
+                    allowedMethods = new string[0];
+                }
+            }
+            
             return ExtractTokensAndElements(format).Aggregate(format, (current, tokenAndElement) =>
             {
                 var value = tokens[ExtractTokenName(tokenAndElement)];
-                
                 var elements = ExtractTokenElements(tokenAndElement);
 
                 foreach (var element in elements)
                 {
-                    if (allowedInvokes != null && StringUtil.Contains(ExtractTokenElementName(element), allowedInvokes))
+                    if (!ExtractTokenElementName(element).ContainsRegex(allowedMethods))
                     {
-                        //todo: introduce a Sitecore.DebugContext that can be used to fetch details as to whether debugging is on for modules (eg Sitecore.DebugContext.IsEnabled("Tokenizer"))
                         return current;   
                     }
                 
                     if (!string.IsNullOrEmpty(element))
                     {
-                        value = ReflectionUtil.GetResultWithPath(value, ExtractTokenElementName(element, false));
+                        value = ReflectionUtil.GetResultWithPath(value, ExtractTokenElementName(element, false), allowedMethods);
                     }   
                 }
 
@@ -117,7 +127,7 @@ namespace Lotus.Foundation.Kernel.Services
                 }
                 else
                 {
-                    format = ReplaceTokenElement(format, tokens, (current, key, value) => current.Replace(tokenAndElement, (ReflectionUtil.GetResultWithPath(value, element) ?? tokenAndElement).ToString()));
+                    format = ReplaceTokenElement(format, tokens, (current, key, value) => current.Replace(tokenAndElement, (ReflectionUtil.GetResultWithPath(value, element, "ToString") ?? tokenAndElement).ToString()));
                 }
             }
             return format;
@@ -271,8 +281,8 @@ namespace Lotus.Foundation.Kernel.Services
         {
             if (justparameters)
             {
-                var parameters = StringUtil.RemovePrefix(token.ExtractPattern(TokenAndElementSelectRegex), "("); 
-                return StringUtil.RemovePostfix(parameters, ")");
+                var parameters = Sitecore.StringUtil.RemovePrefix(token.ExtractPattern(TokenAndElementSelectRegex), "("); 
+                return Sitecore.StringUtil.RemovePostfix(parameters, ")");
             }
             return token.ExtractPattern(TokenElementParametersRegex);
         }

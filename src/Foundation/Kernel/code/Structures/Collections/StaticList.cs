@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using Lotus.Foundation.Kernel.Extensions.Collections;
+using Sitecore;
 
 namespace Lotus.Foundation.Kernel.Structures.Collections
 {
@@ -68,16 +69,19 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             Count = 0;
         }
 
+        [NotNull]
         public IOrderedEnumerable<T> Sort(Func<T, T> sortBy = null)
         {            
             return sortBy == null ? this.OrderBy(x => x) : this.OrderBy(sortBy);
         }
 
+        [NotNull]
         public StaticList<T> Sorted()
         {
             return new StaticList<T>(Sort());
         }
 
+        [NotNull]
         public IOrderedEnumerable<T> Shuffle()
         {
             return this.OrderBy(x => _random.Next());
@@ -95,13 +99,13 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             }
         }
 
-        public new void Add(T item)
+        public new void Add([NotNull] T item)
         {
             base.Add(item);
             Count++;
         }
         
-        public void Add(IEnumerable<T> collection)
+        public void Add([NotNull] IEnumerable<T> collection)
         {
             foreach (var item in collection)
             {
@@ -109,12 +113,12 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             }
         }
 
-        public new void CopyTo(T[] array, int index)
+        public new void CopyTo([NotNull] T[] array, int index)
         {
             CopyTo(array, index, _count);
         }
 
-        public void CopyTo(T[] array, int index, int count)
+        public void CopyTo([NotNull] T[] array, int index, int count)
         {
             lock (this)
             {
@@ -127,7 +131,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             }
         }
 
-        public void CopyTo(StaticList<T> list)
+        public void CopyTo([NotNull] StaticList<T> list)
         {
             lock (this)
             {
@@ -138,7 +142,8 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             }
         }
 
-        public T FirstItemOrDefault(Func<T, bool> predicate)
+        [CanBeNull]
+        public T FirstItemOrDefault([NotNull] Func<T, bool> predicate)
         {
             for (var i = Count; i > 0; i--)
             {
@@ -148,12 +153,14 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             return default(T);
         }
 
-        public StaticList<T> Filter(Func<T, bool> predicate)
+        [NotNull]
+        public StaticList<T> Filter([NotNull] Func<T, bool> predicate)
         {
             return new StaticList<T>(base.Items.Where(predicate));
         }
 
-        public StaticList<T> Each(Action<T> action)
+        [NotNull]
+        public StaticList<T> Each([NotNull] Action<T> action)
         {
             var count = _count;
             for (var i = count; i > 0; i--)
@@ -164,6 +171,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             return this;
         }
 
+        [NotNull]
         public StaticList<T> GetRange(int index, int count)
         {
             lock (this)
@@ -185,11 +193,12 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
         /// <summary>
         /// Safely get by index by catching exception.
         /// </summary>
-        public T GetByIndex(int index, T @default = default(T), bool assert = false)
+        [CanBeNull]
+        public T GetByIndex(int index, [CanBeNull] T @default = default(T), bool assert = false)
         {
             try
             {
-                return this[index];
+                return base[index];
             }
             catch
             {
@@ -199,13 +208,28 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             }
         }
 
-        public new void Insert(int index, T item)
+        public void SetByIndex(int index, [NotNull] T item, bool assert = false)
+        {
+            try
+            {
+                if (index < Count)
+                {
+                    base[index] = item;   
+                }
+            }
+            catch
+            {
+                if (assert) throw;
+            }
+        }
+        
+        public new void Insert(int index, [NotNull] T item)
         {
             base.Insert(index, item);
             Count++;
         }
 
-        public new bool Remove(T item)
+        public new bool Remove([NotNull] T item)
         {
             if (base.Remove(item))
             {
@@ -221,7 +245,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             Count--;
         }
 
-        public new void InsertItem(int index, T item)
+        public new void InsertItem(int index, [NotNull] T item)
         {
             base.InsertItem(index, item);
             Count++;
@@ -255,7 +279,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             base.Clear();
         }
 
-        public void ClearWith(Action<T, bool> action, bool dispose = false)
+        public void ClearWith([NotNull] Action<T, bool> action, bool dispose = false)
         {
             if (dispose)
             {
@@ -283,22 +307,16 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             base.Clear();
         }
 
+        [CanBeNull]
         public new T this[int index]
         {
             get
             {
-                if (index >= _count)
-                {
-                    return default(T);
-                }
-                return base[index];
+                return GetByIndex(index);
             }
             set
             {
-                if (index < _count)
-                {
-                    base[index] = value;
-                }
+                SetByIndex(index, value);
             }
         }
 
@@ -307,6 +325,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             return this.Join();
         }
 
+        [NotNull]
         public T[] ToArray()
         {
             var array = new T[Count];
@@ -322,7 +341,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             Clear();
         }
 
-        public void DisposeWith(Action<T, bool> action, bool withDispose = false)
+        public void DisposeWith([NotNull] Action<T, bool> action, bool withDispose = false)
         {
             foreach (var item in this)
             {
@@ -331,7 +350,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             Dispose();
         }
 
-        public void RemoveAll(Predicate<T> match)
+        public void RemoveAll([NotNull] Predicate<T> match)
         {
             var count = Count;
             for (var i = count; i > 0; i--)

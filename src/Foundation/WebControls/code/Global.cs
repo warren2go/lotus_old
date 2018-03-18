@@ -30,8 +30,7 @@ namespace Lotus.Foundation.WebControls
             try
             {
                 var nodes = Factory.GetConfigNode("/sitecore/lotus.webcontrols");
-                Sitecore.Diagnostics.Assert.IsNotNull((object) nodes,
-                    "Missing lotus.extensions config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.WebControls.config?");
+                Sitecore.Diagnostics.Assert.IsNotNull((object) nodes, "Missing lotus.webcontrols config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.WebControls.config?");
                 
                 LoadLoggers(nodes.GetChildElement("logging"));
                 

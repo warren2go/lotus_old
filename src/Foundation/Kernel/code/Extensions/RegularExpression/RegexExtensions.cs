@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
-using JetBrains.Annotations;
 using Lotus.Foundation.Kernel.Extensions.Primitives;
+using Lotus.Foundation.Kernel.Utils;
 using Sitecore.Diagnostics;
+using Sitecore;
 using Convert = System.Convert;
 
 namespace Lotus.Foundation.Kernel.Extensions.RegularExpression
@@ -13,42 +15,51 @@ namespace Lotus.Foundation.Kernel.Extensions.RegularExpression
     {
         public static bool IsMatch(this string @string, string pattern)
         {
-            return !string.IsNullOrEmpty(pattern) && Regex.Match(@string, pattern).Success;
+            if (string.IsNullOrEmpty(@string))
+                return false;
+            return Regex.Match(@string, pattern).Success;
         }
-        
-        [Sitecore.NotNull]
-        public static string ReplacePattern(this string @string, string pattern, object replacement = null)
+     
+        public static bool IsMatch(this string @string, string pattern, RegexOptions[] regexOptions)
         {
-            return Regex.Replace(@string, pattern, replacement != null ? replacement.ToString() : string.Empty);
+            if (string.IsNullOrEmpty(@string))
+                return false;
+            return Regex.Match(@string, pattern, regexOptions.Aggregate(RegexOptions.None, (current, option) => current | option)).Success;
         }
         
-        [Sitecore.NotNull]
+        [NotNull]
+        public static string ReplacePattern(this string @string, string pattern, [CanBeNull] object replacement = null)
+        {
+            return Regex.Replace(@string, pattern, (replacement ?? string.Empty).ToString());
+        }
+        
+        [NotNull]
         public static string ExtractPattern(this string @string, string pattern, int index = 1, string @default = "")
         {
             return Regex.Match(@string, pattern).GetValueFromMatch(index, @default);
         }
         
-        [Sitecore.NotNull]
+        [NotNull]
         public static IEnumerable<string> ExtractPatterns(this string @string, string pattern)
         {
             return Regex.Matches(@string, pattern).GetValuesFromMatch();
         }
         
-        [Sitecore.NotNull]
+        [NotNull]
         public static IDictionary<int, string> ExtractPatternsWithIndexes(this string @string, string pattern)
         {
             return Regex.Matches(@string, pattern).GetValuesFromMatchWithIndexes();
         }
         
-        [Sitecore.CanBeNull]
-        public static T ExtractPattern<T>(this string @string, string pattern, int index = 1, T @default = default(T))
+        [CanBeNull]
+        public static T ExtractPattern<T>(this string @string, string pattern, int index = 1, [CanBeNull] T @default = default(T))
         {
             try
             {
                 var value = Regex.Match(@string, pattern).GetValueFromMatch(index);
                 if (string.IsNullOrEmpty(value))
                     return @default;
-                return (T) Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
+                return ReflectionUtil.CastTo(value, @default);
             }
             catch (Exception exception)
             {
@@ -61,7 +72,7 @@ namespace Lotus.Foundation.Kernel.Extensions.RegularExpression
             }
         }
         
-        [Sitecore.NotNull]
+        [NotNull]
         public static string GetValueFromMatch(this Match match, int index = 1, string @default = "")
         {
             if (index < 0)
@@ -71,7 +82,7 @@ namespace Lotus.Foundation.Kernel.Extensions.RegularExpression
             return match.Success && index < match.Groups.Count ? match.Groups[index].Value : @default;
         }
         
-        [Sitecore.NotNull]
+        [NotNull]
         public static IEnumerable<string> GetValuesFromMatch(this MatchCollection matches)
         {
             var values = new List<string>();
@@ -92,7 +103,7 @@ namespace Lotus.Foundation.Kernel.Extensions.RegularExpression
             return values;
         }
         
-        [Sitecore.NotNull]
+        [NotNull]
         internal static IDictionary<int, string> GetValuesFromMatchWithIndexes(this MatchCollection matches)
         {
             var values = new Dictionary<int, string>();

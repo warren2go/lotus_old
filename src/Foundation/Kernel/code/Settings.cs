@@ -43,6 +43,17 @@
                     return Sitecore.Configuration.Settings.GetSetting("Lotus.Foundation.Kernel.Tokenization.TokenElementFormat", ".{0}");
                 }
             }
+
+            internal static class Security
+            {
+                internal static bool CheckMethods
+                {
+                    get
+                    {
+                        return Sitecore.Configuration.Settings.GetBoolSetting("Lotus.Foundation.Kernel.Tokenization.Security.CheckMethods", true);
+                    }
+                }
+            }
         }
     }
 }

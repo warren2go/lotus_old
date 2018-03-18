@@ -5,6 +5,7 @@ using System.Text;
 using System.Web;
 using Lotus.Foundation.Kernel.Extensions.Casting;
 using Lotus.Foundation.Kernel.Extensions.Primitives;
+using Lotus.Foundation.Kernel.Utils.SitecoreUtils;
 using Sitecore;
 using Sitecore.Collections;
 using Sitecore.ContentSearch;
@@ -39,6 +40,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
         /// <summary>
         /// Get the item directly from the field via a lookup
         /// </summary>
+        [CanBeNull]
         public static Item GetItemFromLookup(this Item item, string fieldName)
         {
             if (item.Fields[fieldName] == null)
@@ -52,6 +54,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
         /// <summary>
         /// Get the item directly from the field via a lookup
         /// </summary>
+        [CanBeNull]
         public static Item GetItemFromLookup(this Field field)
         {
             try
@@ -69,6 +72,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
         /// <summary>
         /// Get the items directly from the field via a multilist field.
         /// </summary>
+        [CanBeNull]
         public static Item[] GetItemsFromMultilist(this Item item, string fieldName, bool allowNull = true)
         {
             if (item.Fields[fieldName] == null)
@@ -82,6 +86,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
         /// <summary>
         /// Get the items directly from the field via a multilist field.
         /// </summary>
+        [CanBeNull]
         public static Item[] GetItemsFromMultilist(this Field field, bool allowNull = true)
         {
             try
@@ -96,19 +101,16 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
             }
         }
 
+        [NotNull]
         public static IEnumerable<Item> GetDescendentsWithComparer(this Item item, Func<Item, bool> comparer)
         {
             return item.GetDescendents().Where(comparer);
         }
 
+        [NotNull]
         public static IEnumerable<Item> GetDescendentsWithTemplate(this Item item, string templateid)
         {
-            if (string.IsNullOrEmpty(templateid))
-            {
-                templateid = string.Empty;
-            }
-
-            var decendents = new List<Item>(item.GetChildren(ChildListOptions.SkipSorting).Where(x => x.HasTemplate(templateid)));
+            var decendents = new List<Item>(item.GetChildren(ChildListOptions.SkipSorting).Where(x => x.HasTemplate(templateid ?? string.Empty)));
             foreach (Item child in item.Children)
             {
                 decendents.AddRange(child.GetDescendentsWithTemplate(templateid));
@@ -116,6 +118,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
             return decendents;
         }
 
+        [NotNull]
         public static IEnumerable<Item> GetDescendents(this Item item, bool recursive = true)
         {
             if (recursive)
@@ -133,7 +136,16 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
             }
         }
 
-        [NotNull]
+        [CanBeNull]
+        public static IEnumerable<Item> GetDescendentsFromIndex(this Item item)
+        {
+            return ContentSearchUtil.SearchIndex<SearchResultItem, IEnumerable<Item>>(item.AsIndexable(), items =>
+            {
+                return items.Where(x => x.Paths.Contains(item.ID)).Select(x => x.GetItem()).ToList();
+            });
+        }
+        
+        [CanBeNull]
         public static IEnumerable<Item> GetDescendentsFromIndex(this Item item, string indexName)
         {
             var index = ContentSearchManager.GetIndex(indexName);
@@ -141,16 +153,17 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
             return item.GetDescendentsFromIndex(index);
         }
 
-        [NotNull]
+        [CanBeNull]
         public static IEnumerable<Item> GetDescendentsFromIndex(this Item item, [NotNull] ISearchIndex index)
         {
-            using (var context = index.CreateSearchContext())
+            return ContentSearchUtil.SearchIndex<SearchResultItem, IEnumerable<Item>>(index, items =>
             {
-                return context.GetQueryable<SearchResultItem>().Where(x => x.Paths.Contains(item.ID)).Select(x => x.GetItem()).ToList();
-            }
+                return items.Where(x => x.Paths.Contains(item.ID)).Select(x => x.GetItem()).ToList();
+            });
         }
 
-        public static string GetSafeItemUrl(this Item item, UrlOptions urlOptions = null, Func<string, string> customReplacer = null)
+        [NotNull]
+        public static string GetSafeItemUrl(this Item item, [CanBeNull] UrlOptions urlOptions = null, [CanBeNull] Func<string, string> customReplacer = null)
         {
             if (customReplacer != null)
             {
@@ -159,6 +172,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
             return WebUtil.SafeEncode(item.GetItemUrl(urlOptions).Replace(" ", "-"));
         }
         
+        [NotNull]
         public static string GetItemUrl(this Item item, UrlOptions urlOptions = null)
         {
             try
@@ -172,7 +186,8 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
             return string.Empty;
         }
 
-        public static string GetItemUrlPrefixedSecure(this Item item, UrlOptions urlOptions, bool prefixProtocol, bool secure)
+        [NotNull]
+        public static string GetItemUrlPrefixedSecure(this Item item, [CanBeNull] UrlOptions urlOptions, bool prefixProtocol, bool secure)
         {
             try
             {
@@ -215,6 +230,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
         /// <summary>
         /// Get a value and cast from an items field via lookup
         /// </summary>
+        [CanBeNull]
         public static T GetValueFromLookup<T>(this Item item, string fieldName, T @default = default(T))
         {
             if (item.Fields[fieldName] == null)
@@ -230,6 +246,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
         /// <summary>
         /// Get a value and cast from a field via lookup
         /// </summary>
+        [CanBeNull]
         public static T GetValueFromLookup<T>(this Field field, T @default = default(T))
         {
             try
@@ -261,6 +278,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
             }
         }
 
+        [NotNull]
         public static string Dump(this Item item, bool dataOnly = false, string format = "{0}={1}", string delimiter = ", ")
         {
             var sb = new StringBuilder();
@@ -303,7 +321,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
             try
             {
                 item.Editing.BeginEdit();
-                item.Fields[index].Value = value.ToString();
+                item.Fields[index].Value = (value ?? string.Empty).ToString();
             }
             catch (Exception exception)
             {
@@ -315,9 +333,7 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions
         /// <summary>
         /// Edit an item with a delegate void
         /// </summary>
-        /// <exception cref="Exception"></exception>
-        /// <exception cref="ArgumentException"></exception>
-        public static void Edit(this Item item, Action<Item> action)
+        public static void Edit(this Item item, [NotNull] Action<Item> action)
         {
             Assert.ArgumentNotNull(action, nameof(action));
             item.Editing.BeginEdit();

@@ -27,8 +27,7 @@ namespace Lotus.Foundation.RenderingTokens
             try
             {
                 var nodes = Factory.GetConfigNode("/sitecore/lotus.renderingtokens");
-                Sitecore.Diagnostics.Assert.IsNotNull((object) nodes,
-                    "Missing lotus.renderingtokens config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.RenderingTokens.config?");
+                Sitecore.Diagnostics.Assert.IsNotNull((object) nodes, "Missing lotus.renderingtokens config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.RenderingTokens.config?");
                 
                 LoadLoggers(XmlUtil.GetChildElement("logging", nodes));
                 

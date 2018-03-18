@@ -14,7 +14,7 @@ namespace Lotus.Foundation.Kernel.Utils.SitecoreUtils
         /// <summary>
         /// Sanitize a fast query, replacing illegal characters
         /// </summary>
-        public static string SanitizeFastQuery(string query)
+        public static string SanitizeFastQuery([NotNull] string query)
         {
             Assert.ArgumentNotNullOrEmpty(query, nameof(query));
             return SanitizeWithRegexPairs(query, SanitizeFastQueryReplacements);
@@ -23,7 +23,7 @@ namespace Lotus.Foundation.Kernel.Utils.SitecoreUtils
         /// <summary>
         /// Sanitize an xpath query, replacing illegal characters
         /// </summary>
-        public static string SanitizeXPathQuery(string query)
+        public static string SanitizeXPathQuery([NotNull] string query)
         {
             Assert.ArgumentNotNull(query, nameof(query));
             return SanitizeWithRegexPairs(query, SanitizeXPathRegex);
@@ -32,7 +32,7 @@ namespace Lotus.Foundation.Kernel.Utils.SitecoreUtils
         /// <summary>
         /// Sanitize standard Sitecore queries, replacing illegal characters
         /// </summary>
-        public static string SanitizeQuery(string query)
+        public static string SanitizeQuery([NotNull] string query)
         {
             Assert.ArgumentNotNullOrEmpty(query, nameof(query));
             if (string.IsNullOrEmpty(query)) return string.Empty;
@@ -47,8 +47,8 @@ namespace Lotus.Foundation.Kernel.Utils.SitecoreUtils
         {
             foreach (var sanitize in sanitizations)
             {
-                var regexSeek = StringUtil.GetPrefix(sanitize, '|');
-                var regexSubstitute = StringUtil.GetPostfix(sanitize, '|');
+                var regexSeek = Sitecore.StringUtil.GetPrefix(sanitize, '|');
+                var regexSubstitute = Sitecore.StringUtil.GetPostfix(sanitize, '|');
                 query = query.ReplacePattern(regexSeek, regexSubstitute);
             }
             return query;

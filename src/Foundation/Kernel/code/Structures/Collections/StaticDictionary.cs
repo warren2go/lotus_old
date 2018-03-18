@@ -60,7 +60,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             }
         }
 
-        public bool Add(TKey key, TValue value)
+        public bool Add([NotNull] TKey key, [NotNull] TValue value)
         {
             if (base.TryAdd(key, value))
             {
@@ -71,6 +71,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             return false;
         }
 
+        [NotNull]
         public new TValue GetOrAdd([NotNull] TKey key, [NotNull] Func<TKey, TValue> valueFactory)
         {
             Assert.IsNotNull(key, "{0} is required.", nameof(key));
@@ -92,7 +93,8 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             }
         }
 
-        public new TValue GetOrAdd([NotNull] TKey key, TValue value)
+        [NotNull]
+        public new TValue GetOrAdd([NotNull] TKey key, [NotNull] TValue value)
         {
             Assert.IsNotNull(key, "{0} is required.", nameof(key));
 
@@ -106,6 +108,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             }
         }
 
+        [NotNull]
         private new TValue AddOrUpdate([NotNull] TKey key, [NotNull] Func<TKey, TValue> addValueFactory, [NotNull] Func<TKey, TValue, TValue> updateValueFactory)
         {
             Assert.IsNotNull(key, "{0} is required.", nameof(key));
@@ -134,6 +137,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             }
         }
 
+        [NotNull]
         public new TValue AddOrUpdate([NotNull] TKey key, [NotNull] TValue addValue, [NotNull] Func<TKey, TValue, TValue> updateValueFactory)
         {
             Assert.IsNotNull(key, "{0} is required.", nameof(key));
@@ -161,12 +165,12 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             }
         }
 
-        public new bool TryAdd(TKey key, TValue value)
+        public new bool TryAdd([NotNull] TKey key, [NotNull] TValue value)
         {
             return Add(key, value);
         }
 
-        public bool TryAddWithLock(TKey key, TValue value, Func<TKey, TValue, bool?> func)
+        public bool TryAddWithLock([NotNull] TKey key, [NotNull] TValue value, [NotNull] Func<TKey, TValue, bool?> func)
         {
             lock (this)
             {
@@ -175,7 +179,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             }
         }
 
-        public bool Remove(TKey key)
+        public bool Remove([NotNull] TKey key)
         {
             TValue value;
             if (base.TryRemove(key, out value))
@@ -186,13 +190,14 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             return false;
         }
 
-        public TValue TryRemoveOrDefault(TKey key, TValue @default = default(TValue))
+        [CanBeNull]
+        public TValue TryRemoveOrDefault([NotNull] TKey key, [CanBeNull] TValue @default = default(TValue))
         {
             TValue value;
             return TryRemove(key, out value) ? value : @default;
         }
 
-        public new bool TryRemove(TKey key, out TValue item)
+        public new bool TryRemove([NotNull] TKey key, [CanBeNull] out TValue item)
         {
             if (base.TryRemove(key, out item))
             {
@@ -202,13 +207,14 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             return false;
         }
 
-        public TValue TryGetValueOrDefault(TKey key, TValue @default = default(TValue))
+        [CanBeNull]
+        public TValue TryGetValueOrDefault([NotNull] TKey key, [CanBeNull] TValue @default = default(TValue))
         {
             TValue value;
             return TryGetValue(key, out value) ? value : @default;
         }
 
-        public new bool TryGetValue(TKey key, out TValue item)
+        public new bool TryGetValue([NotNull] TKey key, [NotNull] out TValue item)
         {
             return base.TryGetValue(key, out item);
         }
@@ -244,7 +250,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             }
         }
 
-        public void ClearWith(Action<KeyValuePair<TKey, TValue>, bool> action, bool dispose = false)
+        public void ClearWith([NotNull] Action<KeyValuePair<TKey, TValue>, bool> action, bool dispose = false)
         {
             if (dispose)
             {
@@ -272,25 +278,26 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             base.Clear();
         }
 
-        public TValue GetValue(TKey key)
+        [CanBeNull]
+        public TValue GetValue([NotNull] TKey key)
         {
-            TValue _value;
-            if (base.TryGetValue(key, out _value))
+            TValue value;
+            if (base.TryGetValue(key, out value))
             {
-                return _value;
+                return value;
             }
-            return _value;
+            return value;
         }
 
-        public void SetValue(TKey key, TValue value)
+        public void SetValue([NotNull] TKey key, [NotNull] TValue value)
         {
             AddOrUpdate(key, value, (k, v) => value);
         }
 
         public new bool ContainsKey(TKey key)
         {
-            TValue _value;
-            return TryGetValue(key, out _value);
+            TValue value;
+            return TryGetValue(key, out value);
         }
 
         public void Dispose()
@@ -298,7 +305,8 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             Clear();
         }
         
-        public StaticDictionary<TKey, TValue> Each(Action<TKey, TValue> action)
+        [NotNull]
+        public StaticDictionary<TKey, TValue> Each([NotNull] Action<TKey, TValue> action)
         {
             foreach (var pair in this)
             {
@@ -310,6 +318,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
         /// <summary>
         /// Supports safe-access - will replace if key exists, otherwise will set.
         /// </summary>
+        [CanBeNull]
         public new TValue this[TKey key]
         {
             get
@@ -322,6 +331,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             }
         }
 
+        [NotNull]
         public new ICollection<TKey> Keys
         {
             get
@@ -333,6 +343,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             }
         }
 
+        [NotNull]
         public new ICollection<TValue> Values
         {
             get

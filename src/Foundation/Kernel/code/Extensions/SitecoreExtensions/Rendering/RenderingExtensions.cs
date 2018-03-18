@@ -26,23 +26,27 @@ namespace Lotus.Foundation.Kernel.Extensions.SitecoreExtensions.Rendering
         //todo: this is likely not the most elegant solution, but this will preserve the pipeline/events when rendering
         private static readonly SitecoreHelper _sitecoreHelper = new SitecoreHelper(new HtmlHelper(new ViewContext(), new ViewPage()));
 
-        public static HtmlString Render(this Item item, string fieldName, object parameters = null)
+        [NotNull]
+        public static HtmlString Render(this Item item, string fieldName, [CanBeNull] object parameters = null)
         {
             if (item.Fields[fieldName] == null)
                 return new HtmlString(string.Empty);
             return item.Fields[fieldName].Render(parameters);
         }
 
-        public static HtmlString Render(this Field field, object parameters = null)
+        [NotNull]
+        public static HtmlString Render(this Field field, [CanBeNull] object parameters = null)
         {
             return _sitecoreHelper.Field(field.Name, field.Item, parameters);
         }
 
+        [CanBeNull]
         public static Item GetContextItem(this RenderingContext renderingContext)
         {
             return renderingContext.ContextItem;
         }
 
+        [CanBeNull]
         public static Item GetPageItem(this PageContext pageContext)
         {
             return pageContext.Item;

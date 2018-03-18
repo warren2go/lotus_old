@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Sitecore;
 
 namespace Lotus.Foundation.Kernel.Structures.Collections
 {
@@ -70,6 +71,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
         /// <summary>
         /// Called to get a single item with a rate (usecombined will get the item that the rate intercepts)
         /// </summary>
+        [CanBeNull]
         public T GetRandomWithRate(int rate, bool usecombined = false)
         {
             T returnitem = default(T);
@@ -118,6 +120,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
         /// <summary>
         /// Called to get many items with a rate (usecombined will get the item that the rate intercepts)
         /// </summary>
+        [NotNull]
         public RandomList<T> GetRandomListWithRate(int rate, bool usecombined = false)
         {
             var returnitems = new RandomList<T>();
@@ -149,6 +152,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
             }
         }
 
+        [CanBeNull]
         public T GetRandom()
         {
             var returnitem = default(T);
@@ -185,7 +189,7 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
         /// </summary>
         /// <param name="item">Item to add (should be unique - duplicates are allowed but will combine the rates if detected)</param>
         /// <param name="rate">Rate of the item (used to randomly pick an item using rates - of 100/1000 or 1000000)</param>
-        public void Add(T item, int rate = 0)
+        public void Add([NotNull] T item, int rate = 0)
         {
             base.Add(item);
             _rates.Add(item, rate);
@@ -195,18 +199,6 @@ namespace Lotus.Foundation.Kernel.Structures.Collections
         {
             _rates.Clear(dispose);
             base.Clear(dispose);
-        }
-        
-        public new T this[int index]
-        {
-            get
-            {
-                return base[index];
-            }
-            set
-            {
-                base[index] = value;
-            }
         }
 
         public override string ToString()

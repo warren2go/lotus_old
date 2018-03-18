@@ -1,5 +1,6 @@
 ﻿using System;
 using Lotus.Foundation.Kernel.Extensions.SitecoreExtensions;
+using Sitecore;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
@@ -13,7 +14,7 @@ namespace Lotus.Foundation.Kernel.Utils.SitecoreUtils
         /// </summary>
         /// <exception cref="Exception"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public static void EditValue<T>(Item item, string fieldName, T value, Func<object, string> converter = null)
+        public static void EditValue<T>([NotNull] Item item, string fieldName, T value, Func<object, string> converter = null)
         {
             Assert.ArgumentNotNull(item, nameof(item));
             Assert.ArgumentNotNull(fieldName, nameof(fieldName));
@@ -23,7 +24,7 @@ namespace Lotus.Foundation.Kernel.Utils.SitecoreUtils
         /// <summary>
         /// Try editing the value on an item with a converter, catching the exception in the process
         /// </summary>
-        public static bool TryEditValue<T>(Item item, string fieldName, T value, Func<object, string> converter = null)
+        public static bool TryEditValue<T>([NotNull] Item item, string fieldName, T value, Func<object, string> converter = null)
         {
             try
             {
@@ -42,7 +43,7 @@ namespace Lotus.Foundation.Kernel.Utils.SitecoreUtils
         /// </summary>
         /// <exception cref="Exception"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public static void EditValue<T>(Field field, T value, Func<object, string> converter = null)
+        public static void EditValue<T>([NotNull] Field field, T value, Func<object, string> converter = null)
         {
             Assert.ArgumentNotNull(field, nameof(field));
             var item = field.Item;
@@ -57,7 +58,7 @@ namespace Lotus.Foundation.Kernel.Utils.SitecoreUtils
         /// <summary>
         /// Try editing the value on an field with a converter, catching the exception in the process
         /// </summary>
-        public static bool TryEditValue<T>(Field field, T value, Func<object, string> converter = null)
+        public static bool TryEditValue<T>([NotNull] Field field, T value, Func<object, string> converter = null)
         {
             try
             {
@@ -76,7 +77,7 @@ namespace Lotus.Foundation.Kernel.Utils.SitecoreUtils
         /// </summary>
         /// <exception cref="Exception"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public static void Edit(Item item, Action<Item> action)
+        public static void Edit([NotNull] Item item, [NotNull] Action<Item> action)
         {
             Assert.ArgumentNotNull(item, nameof(item));
             item.Edit(action);
@@ -85,7 +86,7 @@ namespace Lotus.Foundation.Kernel.Utils.SitecoreUtils
         /// <summary>
         /// Try edit an item with a delegate void
         /// </summary>
-        public static bool TryEdit(Item item, Action<Item> action)
+        public static bool TryEdit([NotNull] Item item, [NotNull] Action<Item> action)
         {
             if (item == null) return false;
             return item.TryEdit(action);

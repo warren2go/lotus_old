@@ -24,8 +24,7 @@ namespace Lotus.Foundation.Kernel
             try
             {
                 var nodes = Factory.GetConfigNode("/sitecore/lotus.kernel");
-                Sitecore.Diagnostics.Assert.IsNotNull((object) nodes,
-                    "Missing lotus.kernel config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.Kernel.config?");
+                Sitecore.Diagnostics.Assert.IsNotNull((object) nodes, "Missing lotus.kernel config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.Kernel.config?");
                 
                 Initialized = true;
             }

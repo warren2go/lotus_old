@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Lotus.Foundation.Kernel.Extensions.Collections;
 using Lotus.Foundation.Kernel.Extensions.RegularExpression;
+using Lotus.Foundation.Kernel.Utils;
 using Sitecore;
+using StringUtil = Lotus.Foundation.Kernel.Utils.StringUtil;
 
 namespace Lotus.Foundation.Kernel.Extensions.Primitives
 {
@@ -11,9 +14,10 @@ namespace Lotus.Foundation.Kernel.Extensions.Primitives
     {
         private static readonly string[] Escapable = { @".|\.", @"+|\+", @"*|\*", @"^|\^", @"?|\?",  @"$|\$", @"&|&amp;", @"-|\-", @"(|\(", @")|\)" };
         
+        [NotNull]
         public static string SurroundsWith(this string @string, string with)
         {
-            return string.Format("{0}{1}{2}",with, @string, with);
+            return string.Format("{0}{1}{2}", with, @string, with);
         }
 
         [StringFormatMethod("format")]
@@ -22,12 +26,13 @@ namespace Lotus.Foundation.Kernel.Extensions.Primitives
             return string.Format(format, @params);
         }
 
+        [NotNull]
         public static string Escape(this string @string, params string[] ignore)
         {
             foreach (var escape in Escapable)
             {
                 var seek = escape.Split('|').FirstOrDefault() ?? string.Empty;
-                if (ignore.Any(x => x.Equals(seek, StringComparison.InvariantCultureIgnoreCase)))
+                if (seek.ContainsRegex(ignore, RegexOptions.IgnoreCase))
                     continue;
                 if (!string.IsNullOrEmpty(seek))
                 {
@@ -37,12 +42,14 @@ namespace Lotus.Foundation.Kernel.Extensions.Primitives
             return @string;
         }
         
-        public static string WhenEmpty(this string @string, string fallback)
+        [CanBeNull]
+        public static string WhenEmpty(this string @string, [CanBeNull] string whenEmpty)
         {
-            return string.IsNullOrEmpty(@string) ? fallback : @string;
+            return string.IsNullOrEmpty(@string) ? whenEmpty : @string;
         }
         
-        public static string WhenEmpty(this string @string, Func<string, string> invoke)
+        [CanBeNull]
+        public static string WhenEmpty(this string @string, [NotNull] Func<string, string> invoke)
         {
             return string.IsNullOrEmpty(@string) ? invoke.Invoke(@string) : @string;
         }
@@ -55,6 +62,11 @@ namespace Lotus.Foundation.Kernel.Extensions.Primitives
                 return false;
             bool b;
             return bool.TryParse(@string, out b) ? b : @default;
+        }
+
+        public static bool ContainsRegex(this string @string, [NotNull] string[] expressions, params RegexOptions[] regexOptions)
+        {
+            return StringUtil.ContainsRegex(@string, expressions, regexOptions);
         }
     }
 }

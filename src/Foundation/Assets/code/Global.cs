@@ -48,8 +48,7 @@ namespace Lotus.Foundation.Assets
             try
             {
                 var nodes = Factory.GetConfigNode("/sitecore/lotus.assets");
-                Sitecore.Diagnostics.Assert.IsNotNull((object) nodes,
-                    "Missing lotus.assets config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.Assets.config?");
+                Sitecore.Diagnostics.Assert.IsNotNull((object) nodes, "Missing lotus.assets config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.Assets.config?");
 
                 LoadLoggers(nodes.GetChildElement("logging"));
                 LoadResolver(nodes.GetChildElement("resolver"));
@@ -75,26 +74,23 @@ namespace Lotus.Foundation.Assets
 
         private static void LoadResolver(XmlNode resolverNode)
         {
-            Sitecore.Diagnostics.Assert.IsNotNull((object) resolverNode,
-                "Missing lotus.assets.resolver config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.Assets.config?");
+            Sitecore.Diagnostics.Assert.IsNotNull((object) resolverNode, "Missing lotus.assets.resolver config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.Assets.config?");
             Resolver = resolverNode.ToObject<IAssetResolver>();
         }
 
         private static void LoadRepository(XmlNode repositoryNode)
         {
-            Sitecore.Diagnostics.Assert.IsNotNull((object) repositoryNode,
-                "Missing lotus.assets.repository config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.Assets.config?");
+            Sitecore.Diagnostics.Assert.IsNotNull((object) repositoryNode, "Missing lotus.assets.repository config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.Assets.config?");
             Repository = repositoryNode.ToObject<IAssetRepository>();
         }
 
         private static void LoadPipelines(XmlNode pipelinesNode)
         {
-            Sitecore.Diagnostics.Assert.IsNotNull((object) pipelinesNode,
-                "Missing lotus.assets.pipelines config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.Assets.config?");
+            Sitecore.Diagnostics.Assert.IsNotNull((object) pipelinesNode, "Missing lotus.assets.pipelines config node! Missing or outdated App_Config/Include/Lotus/Lotus.Foundation.Assets.config?");
             var requestPipelines = pipelinesNode.GetChildElement("request");
             if (requestPipelines.HasChildNodes)
             {
-                Pipelines = requestPipelines.ChildNodes.OfType<XmlElement>().ToObject<IAssetPipeline>();   
+                Pipelines = requestPipelines.ChildNodes.OfType<XmlElement>().ToObjects<IAssetPipeline>();   
             }
         }
     }
