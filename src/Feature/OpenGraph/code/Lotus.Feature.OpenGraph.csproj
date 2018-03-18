@@ -33,8 +33,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\..\..\..\packages\Newtonsoft.Json.4.5.9\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Kernel, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\Foundation\Assets\code\bin\Debug\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Sitecore.Kernel.NoReferences.7.2.160123\lib\NET45\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,6 +55,9 @@
       <Project>{EF8D739C-FDFD-40F2-934C-17AF17AAE61F}</Project>
       <Name>Lotus.Foundation.Kernel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

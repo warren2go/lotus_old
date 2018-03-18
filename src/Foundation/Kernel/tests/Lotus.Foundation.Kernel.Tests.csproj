@@ -37,13 +37,13 @@
       <HintPath>..\..\..\..\packages\NUnit.3.10.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.ContentSearch, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\lib\referenced\Sitecore.ContentSearch.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Sitecore.ContentSearch.NoReferences.7.2.160123\lib\NET45\Sitecore.ContentSearch.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.ContentSearch.Linq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\lib\referenced\Sitecore.ContentSearch.Linq.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Sitecore.ContentSearch.Linq.NoReferences.7.2.160123\lib\NET45\Sitecore.ContentSearch.Linq.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\lib\referenced\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Sitecore.Kernel.NoReferences.7.2.160123\lib\NET45\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

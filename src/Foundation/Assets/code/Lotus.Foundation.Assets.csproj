@@ -31,14 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
-      <HintPath>..\..\..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\..\..\..\packages\Newtonsoft.Json.4.5.9\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\lib\referenced\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Sitecore.Kernel.NoReferences.7.2.160123\lib\NET45\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Logging, Version=1.2.0.30715, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\lib\referenced\Sitecore.Logging.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Sitecore.Logging.NoReferences.7.2.160123\lib\NET45\Sitecore.Logging.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
